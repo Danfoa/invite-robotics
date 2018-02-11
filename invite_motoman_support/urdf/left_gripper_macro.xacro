@@ -1,0 +1,128 @@
+<?xml version="1.0" ?>
+<!--Develped by: Daniel Ordonez 11.01.2018 - dfordoneza@unal.edu.co
+INFORMATION: 
+	This file defines the macro instruction for creating instances of the left arm gripper of Invite's 
+	CSDA10F Motoman robot.
+
+NOTE: 
+	This file should only be changed if the gripper configuration  has changed (change in any of the parts,
+	for example the adapter plate or the gripper itself).
+
+INTRUCTIONS: 
+	The "Gripper base link" that is used to connect to the robot is: 
+		'[your_gripper_prefix]link_force_sensor_adapter_plate'
+	An example on how to use this macro is shown in the file: 'left_gripper.xacro', of this same package
+-->
+<robot xmlns:xacro="http://ros.org/wiki/xacro">
+	<xacro:macro name="invite_csda10f_left_gripper" params="prefix">
+		<!--Import macro from 2-finger adaptative robotiq gripper-->
+		<xacro:include filename="$(find robotiq_2f_model)/model/robotiq_2f_85.urdf.xacro" />
+
+<!--LINKS********************************************************************************************************************************-->
+		<!--Aluminium Adapter plate for Robotiq coupling and CSDA10F arm flange-->	
+		<link name="${prefix}link_gripper_adapter_plate">
+			<visual>
+				<origin rpy="0 0 0" xyz="0 0 0"/>
+				<geometry>
+					<mesh filename="package://invite_motoman_support/meshes/robotiq-yaskawa_adapter_plate.stl" scale="0.001 0.001 0.001"/>
+				</geometry>
+				<material name="Aluminium">
+  			        <color rgba="0.816 0.816 0.816 1.0"/>
+  				</material>
+			</visual>
+			<collision>
+				<origin rpy="${pi/2} 0 0" xyz="0 0.0045 0"/>
+				<geometry>
+					<cylinder length="0.009" radius="0.038"/>
+				</geometry>
+				<material name="yellow"/>
+			</collision>
+		</link>
+
+		<!--Robotiq coupling, that connects the gripper with the Adapter plate; this part host the cable connections of the gripper-->
+		<link name="${prefix}link_robotiq_coupling">
+			<visual>
+				<origin rpy="0 0 0" xyz="0 0 0"/>
+				<geometry>
+					<mesh filename="package://invite_motoman_support/meshes/robotiq_gripper_coupling.stl" scale="0.001 0.001 0.001"/>
+				</geometry>
+				<material name="light_balck">
+  			        <color rgba="0.17 0.17 0.17 1.0"/>
+  				</material>
+			</visual>
+			<collision>
+				<origin rpy="0 0 0" xyz="0 0 0"/>
+				<geometry>
+					<cylinder length="0.0135" radius="0.038"/>
+				</geometry>
+				<material name="yellow"/>
+			</collision>
+		</link>-->
+		<!--Dynpick adaptor plate, which connects the force sensor with the robot flange-->
+		<link name="${prefix}link_force_sensor_adapter_plate">
+			<visual>
+				<origin rpy="0 0 0" xyz="0.00 0 0.0095"/>
+				<geometry>
+					<cylinder length="0.019" radius="0.043"/>
+				</geometry>
+				<material name="aluminium">
+  			        <color rgba="0.917 0.917 0.917 1.0"/>
+  				</material>
+			</visual>
+			<collision>
+				<origin rpy="0 0 0" xyz="0 0 0.0095"/>
+				<geometry>
+					<cylinder length="0.019" radius="0.043"/>
+				</geometry>
+				<material name="yellow"/>
+			</collision>
+		</link>-->
+		<!--Dynpick adaptor plate, which connects the force sensor with the robot flange-->
+		<link name="${prefix}link_force_sensor">
+			<visual>
+				<origin rpy="0 0 0" xyz="0 0 0"/>
+				<geometry>
+					<cylinder length="0.040" radius="0.045"/>
+				</geometry>
+				<material name="red-aluminium">
+  			        <color rgba="0.721 0 0 1.0"/>
+  				</material>
+			</visual>
+			<collision>
+				<origin rpy="0 0 0" xyz="0 0 0"/>
+				<geometry>
+					<cylinder length="0.040" radius="0.0455"/>
+				</geometry>
+				<material name="yellow"/>
+			</collision>
+		</link>-->
+
+<!--Joints ******************************************************************************************************************-->
+		<!--Joint force sensor adaptor plate to force sensor-->
+		<joint name="${prefix}gripper_flange_joint" type="fixed">
+			<origin  xyz="0 0 0.039" rpy="0 0 0"/>
+			<parent link="${prefix}link_force_sensor_adapter_plate" />
+			<child link="${prefix}link_force_sensor" />
+		</joint>
+
+		<!--Joint from the force sensor to the gripper adaptor plate-->
+		<joint name="${prefix}gripper_force_sensor_joint" type="fixed">
+			<origin  xyz="0 0 0.02" rpy="${pi/2} 0 0"/>
+			<parent link="${prefix}link_force_sensor" />
+			<child link="${prefix}link_gripper_adapter_plate" />
+		</joint>
+
+		<!--Joint from the adapter plate to the robotiq gripper coupling-->
+		<joint name="${prefix}gripper_coupling_joint" type="fixed">
+			<origin  xyz="0 0.0160 0" rpy="${-pi/2} 0 0"/>
+			<parent link="${prefix}link_gripper_adapter_plate" />
+			<child link="${prefix}link_robotiq_coupling" />
+		</joint>
+
+		<!--ROBOTIQ 85mm Gripper instance creation-->
+		<xacro:robotiq_2f_85 name="arm_left" parent="${prefix}link_robotiq_coupling" precise_collision="true" adaptive_transmission="false">
+			<origin xyz="0 0 0.0039" rpy="0 0 ${pi}"/>
+		</xacro:robotiq_2f_85>
+
+	</xacro:macro>
+</robot>

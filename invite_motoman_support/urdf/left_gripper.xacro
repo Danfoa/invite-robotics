@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+<!--Develped by Daniel Ordonez 11.01.2018 - dfordoneza@unal.edu.co
+  INFORMATION:
+    This .xacro file is use to view the configuration of the left arm gripper of the CSDA10F robot. 
+    Launching the launch file "test_right_gripper" - 'roslaunch invite_motoman_support test_right_gripper.launch'
+    will allow for an isolated view of the gripper urdf description.
+
+    NOTE: For changing the gripper configuration itself the "right_gripper_macro.xacro" file should be changed.
+-->
+<robot name="robotiq_arg2f_80_model" xmlns:xacro="http://ros.org/wiki/xacro">
+  <!--Import macro for left arm gripper-->
+  <xacro:include filename="$(find invite_motoman_support)/urdf/left_gripper_macro.xacro" />
+  <!--Create an instance of the left arm gripper macro-->
+  <xacro:invite_csda10f_left_gripper prefix="arm_left_"/>
+
+  <!--Base frame for reference-->
+  <link name="base_link" />
+
+  <!--Reference Gripper to base joint-->
+  <joint name="world_joint" type="fixed">
+    <parent link="base_link" />
+    <child link="arm_left_link_force_sensor_adapter_plate" />
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+    <axis xyz="0 0 1"/>
+  </joint>
+</robot>
