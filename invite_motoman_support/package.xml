@@ -52,6 +52,9 @@
   <depend>motoman_csda10f_support</depend>
   <depend>robotiq_arg2f_model_visualization</depend>
   <depend>robotiq_2f_model</depend>
+  <run_depend>joint_state_publisher</run_depend>
+  <run_depend>robot_state_publisher</run_depend>
+  <depend>xacro</run_depend>
   <!-- The export tag contains other, unsspecified, tags -->
   <export>
    <architecture_independent/>
