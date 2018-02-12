@@ -50,7 +50,8 @@
   <!--   <doc_depend>doxygen</doc_depend> -->
   <buildtool_depend>catkin</buildtool_depend>
   <depend>motoman_csda10f_support</depend>
-  <depend>robotiq_c2_model_visualization</depend>
+  <depend>robotiq_arg2f_model_visualization</depend>
+  <depend>robotiq_2f_model</depend>
   <!-- The export tag contains other, unsspecified, tags -->
   <export>
    <architecture_independent/>
