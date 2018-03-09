@@ -1,0 +1,6 @@
+<launch>
+
+  <node name="invite_move_group_interface_tutorial" pkg="invite_begginer_tutorials" type="invite_move_group_interface_tutorial" respawn="false" output="screen">
+  </node>
+
+</launch>
