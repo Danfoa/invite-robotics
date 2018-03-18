@@ -419,10 +419,8 @@ int main(int argc, char **argv)
   two_arms_move_group.setPoseTarget(target_pose1, "arm_right_link_tool0");
 
   geometry_msgs::Pose target_pose4;
-  target_pose4.orientation.w = 1.0;
-  target_pose4.position.x = 0.5;
-  target_pose4.position.y = 0.5;
-  target_pose4.position.z = 1.2;
+  target_pose4 = target_pose1;
+  target_pose4.position.y *= -1;
 
   two_arms_move_group.setPoseTarget(target_pose4, "arm_left_link_tool0");
 
@@ -440,7 +438,6 @@ int main(int argc, char **argv)
   joint_model_group = move_group.getCurrentState()->getJointModelGroup(PLANNING_GROUP2);
   visual_tools.publishTrajectoryLine(two_arms_plan.trajectory_, joint_model_group);
   visual_tools.trigger();
-
   // END_TUTORIAL
 
   ros::shutdown();
