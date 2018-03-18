@@ -74,6 +74,10 @@
     <!--END EFFECTOR: Purpose: Represent information about an end effector.-->
     <end_effector name="right_arm_gripper" parent_link="arm_right_link_tool0" group="right_gripper" parent_group="arm_right" />
     <end_effector name="left_arm_gripper" parent_link="arm_left_link_tool0" group="left_gripper" parent_group="arm_left" />
+    <!--VIRTUAL JOINT: Purpose: this element defines a virtual joint between a robot link and an external frame of reference (considered fixed with respect to the robot)-->
+    <virtual_joint name="world_joint" type="fixed" parent_frame="world" child_link="base_link" />
+    <!--PASSIVE JOINT: Purpose: this element is used to mark joints that are not actuated-->
+    <passive_joint name="torso_joint_b2" />
     <!--DISABLE COLLISIONS: By default it is assumed that any link of the robot could potentially come into collision with any other link in the robot. This tag disables collision checking between a specified pair of links. -->
     <disable_collisions link1="arm_left_base" link2="arm_left_left_coupler" reason="Never" />
     <disable_collisions link1="arm_left_base" link2="arm_left_left_driver" reason="Adjacent" />
