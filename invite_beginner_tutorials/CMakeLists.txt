@@ -167,6 +167,11 @@ add_executable(invite_move_group_interface_tutorial src/invite_move_group_interf
 target_link_libraries(invite_move_group_interface_tutorial ${catkin_LIBRARIES} ${Boost_LIBRARIES})
 install(TARGETS invite_move_group_interface_tutorial DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION})
 
+install(PROGRAMS
+  scripts/move_group_python_interface_tutorial.py
+  DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
+)
+
 ## Add cmake target dependencies of the executable
 ## same as for the library above
 # add_dependencies(${PROJECT_NAME}_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})

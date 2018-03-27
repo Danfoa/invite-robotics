@@ -18,6 +18,7 @@
         <joint name="arm_left_joint_6_b" />
         <joint name="arm_left_joint_7_t" />
         <joint name="arm_left_joint_tool0" />
+        <joint name="arm_left_joint_tcp" />
     </group>
     <group name="arm_right">
         <joint name="arm_right_joint_1_s" />
@@ -28,6 +29,7 @@
         <joint name="arm_right_joint_6_b" />
         <joint name="arm_right_joint_7_t" />
         <joint name="arm_right_joint_tool0" />
+        <joint name="arm_right_joint_tcp" />
     </group>
     <group name="torso">
         <joint name="torso_joint_b2" />
@@ -71,9 +73,64 @@
         <joint name="right_gripper_right_outer_finger_joint" />
         <joint name="right_gripper_right_inner_finger_joint" />
     </group>
+    <!--GROUP STATES: Purpose: Define a named state for a particular group, in terms of joint values. This is useful to define states like 'folded arms'-->
+    <group_state name="home_arms_open" group="csda10f">
+        <joint name="arm_left_joint_1_s" value="0" />
+        <joint name="arm_left_joint_2_l" value="0" />
+        <joint name="arm_left_joint_3_e" value="0" />
+        <joint name="arm_left_joint_4_u" value="0" />
+        <joint name="arm_left_joint_5_r" value="0" />
+        <joint name="arm_left_joint_6_b" value="0" />
+        <joint name="arm_left_joint_7_t" value="0" />
+        <joint name="arm_right_joint_1_s" value="0" />
+        <joint name="arm_right_joint_2_l" value="0" />
+        <joint name="arm_right_joint_3_e" value="0" />
+        <joint name="arm_right_joint_4_u" value="0" />
+        <joint name="arm_right_joint_5_r" value="0" />
+        <joint name="arm_right_joint_6_b" value="0" />
+        <joint name="arm_right_joint_7_t" value="0" />
+        <joint name="torso_joint_b1" value="0" />
+        <joint name="torso_joint_b2" value="0" />
+    </group_state>
+    <group_state name="arms_folded_horizontally" group="csda10f">
+        <joint name="arm_left_joint_1_s" value="0" />
+        <joint name="arm_left_joint_2_l" value="0.2914" />
+        <joint name="arm_left_joint_3_e" value="0" />
+        <joint name="arm_left_joint_4_u" value="-1.4044" />
+        <joint name="arm_left_joint_5_r" value="0" />
+        <joint name="arm_left_joint_6_b" value="-1.3871" />
+        <joint name="arm_left_joint_7_t" value="0" />
+        <joint name="arm_right_joint_1_s" value="0" />
+        <joint name="arm_right_joint_2_l" value="0.2914" />
+        <joint name="arm_right_joint_3_e" value="0" />
+        <joint name="arm_right_joint_4_u" value="-1.4044" />
+        <joint name="arm_right_joint_5_r" value="0" />
+        <joint name="arm_right_joint_6_b" value="-1.3871" />
+        <joint name="arm_right_joint_7_t" value="0" />
+        <joint name="torso_joint_b1" value="0" />
+        <joint name="torso_joint_b2" value="0" />
+    </group_state>
+    <group_state name="arms_folded_closely" group="csda10f">
+        <joint name="arm_left_joint_1_s" value="2.3619" />
+        <joint name="arm_left_joint_2_l" value="1.3871" />
+        <joint name="arm_left_joint_3_e" value="-1.5021" />
+        <joint name="arm_left_joint_4_u" value="-2.36" />
+        <joint name="arm_left_joint_5_r" value="0.1728" />
+        <joint name="arm_left_joint_6_b" value="-1.1074" />
+        <joint name="arm_left_joint_7_t" value="-0.3264" />
+        <joint name="arm_right_joint_1_s" value="2.3619" />
+        <joint name="arm_right_joint_2_l" value="1.3871" />
+        <joint name="arm_right_joint_3_e" value="-1.5021" />
+        <joint name="arm_right_joint_4_u" value="-2.36" />
+        <joint name="arm_right_joint_5_r" value="0.1728" />
+        <joint name="arm_right_joint_6_b" value="-1.1074" />
+        <joint name="arm_right_joint_7_t" value="1.6322" />
+        <joint name="torso_joint_b1" value="0" />
+        <joint name="torso_joint_b2" value="0" />
+    </group_state>
     <!--END EFFECTOR: Purpose: Represent information about an end effector.-->
-    <end_effector name="right_arm_gripper" parent_link="arm_right_link_tool0" group="right_gripper" parent_group="arm_right" />
-    <end_effector name="left_arm_gripper" parent_link="arm_left_link_tool0" group="left_gripper" parent_group="arm_left" />
+    <end_effector name="right_arm_gripper" parent_link="arm_right_link_tcp" group="right_gripper" parent_group="arm_right" />
+    <end_effector name="left_arm_gripper" parent_link="arm_left_link_tcp" group="left_gripper" parent_group="arm_left" />
     <!--VIRTUAL JOINT: Purpose: this element defines a virtual joint between a robot link and an external frame of reference (considered fixed with respect to the robot)-->
     <virtual_joint name="world_joint" type="fixed" parent_frame="world" child_link="base_link" />
     <!--PASSIVE JOINT: Purpose: this element is used to mark joints that are not actuated-->

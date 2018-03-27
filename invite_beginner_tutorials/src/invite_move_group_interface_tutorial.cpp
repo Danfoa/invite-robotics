@@ -169,7 +169,7 @@ int main(int argc, char **argv)
   target_pose1.orientation.y = orientation.y();
   target_pose1.orientation.z = orientation.z();
   target_pose1.orientation.w = orientation.w();
-  target_pose1.position.x = 0.5;      //[meters]
+  target_pose1.position.x = 0.7;      //[meters]
   target_pose1.position.y = -0.5;     //[meters]
   target_pose1.position.z = 1.3;      //[meters]
   move_group.setPoseTarget(target_pose1);
@@ -302,7 +302,7 @@ int main(int argc, char **argv)
 //   // Let's specify a path constraint and a pose goal for our group.
 //   // First define the path constraint.
 //   moveit_msgs::OrientationConstraint ocm;
-//   ocm.link_name = "arm_right_link_tool0";   // Gripper base rigidly align to the TCP 
+//   ocm.link_name = "arm_right_link_tcp";   // Gripper base rigidly align to the TCP 
 //   ocm.header.frame_id = "base_link";
 //   ocm.orientation.w = 1.0;
 //   ocm.absolute_x_axis_tolerance = 0.2;
@@ -416,13 +416,13 @@ int main(int argc, char **argv)
 
   // Define two separate pose goals, one for each end-effector. Note that
   // we are reusing the goal for the right arm above
-  two_arms_move_group.setPoseTarget(target_pose1, "arm_right_link_tool0");
+  two_arms_move_group.setPoseTarget(target_pose1, "arm_right_link_tcp");
 
   geometry_msgs::Pose target_pose4;
   target_pose4 = target_pose1;
   target_pose4.position.y *= -1;
 
-  two_arms_move_group.setPoseTarget(target_pose4, "arm_left_link_tool0");
+  two_arms_move_group.setPoseTarget(target_pose4, "arm_left_link_tcp");
 
   // Now, we can plan and visualize
   moveit::planning_interface::MoveGroupInterface::Plan two_arms_plan;
@@ -438,7 +438,12 @@ int main(int argc, char **argv)
   joint_model_group = move_group.getCurrentState()->getJointModelGroup(PLANNING_GROUP2);
   visual_tools.publishTrajectoryLine(two_arms_plan.trajectory_, joint_model_group);
   visual_tools.trigger();
+
   // END_TUTORIAL
+  visual_tools.prompt("Press the 'next' button on the 'RvizVisualToolsGui' pannel");
+  visual_tools.deleteAllMarkers();
+  visual_tools.publishText(text_pose, "End of tutorial...have a happy day :)", rvt::WHITE, rvt::XLARGE);
+  visual_tools.trigger();
 
   ros::shutdown();
   return 0;
