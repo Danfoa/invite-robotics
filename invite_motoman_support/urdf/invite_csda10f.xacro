@@ -7,6 +7,7 @@
 
 <robot name="motoman_csda10f" xmlns:xacro="http://ros.org/wiki/xacro">
 <!-- Import macros required-->
+	<!--Import macro for the CSDA10F robot-->
 	<xacro:include filename="$(find motoman_csda10f_support)/urdf/csda10f_macro.xacro" />
 	<!--Import macro for left arm gripper-->
   	<xacro:include filename="$(find invite_motoman_support)/urdf/left_gripper_macro.xacro" />
@@ -36,9 +37,11 @@
 		<axis xyz="0 0 1"/>
   	</joint>
 
+<!--Define the TCP of the grippers -->
     <link name="arm_right_link_tcp" />
 	<link name="arm_left_link_tcp" />
 
+<!--Define the position of the TCP with respect to the arm flange-->
     <joint name="arm_right_joint_tcp" type="fixed" >
       <origin xyz="0 0 0.1994" rpy="0 0 0"/>
       <parent link="arm_right_link_tool0" />
