@@ -19,8 +19,8 @@ For further information please see the repository [Wiki](https://github.com/Danf
 Please note for dependency changes with every stable (betha) release. 
 ### v0.1.3
 * New inverse kinematics solver ([Track_IK](https://bitbucket.org/traclabs/trac_ik)) implemented for `arm_left` and `arm_right` move groups; this solver impoves heavily the planning behaviour near singulatiry points and joint limits, plus a general increase in robustness and speed - new dependency added: `trac_ik_kinematics_plugin` (to package `invite_motoman_moveit_config`)
-* New tutorial added: [Simulation Scene Objects](https://github.com/Danfoa/invite-robotics/wiki/Tutorial---Simulation-Scene-Objects)
-* New tutorial added: [Modify Robot Grippers](https://github.com/Danfoa/invite-robotics/wiki/Tutorial---Modify-Robot-Grippers)
+* New tutorial added: [Simulation Scene Objects](https://github.com/Danfoa/invite-robotics/wiki/Tutorial---Simulation-Scene-Objects); Default scene objects were pre configured for easy loading and using, see tutorial for instructions of use. 
+* New tutorial added: [Modify Robot Grippers](https://github.com/Danfoa/invite-robotics/wiki/Tutorial---Modify-Robot-Grippers); With this tutorial the grippers configuration was changed (i.g. the TCP was moved)
 ***
 ***
 ## About The Project
