@@ -15,9 +15,8 @@ For further information please see the repository [Wiki](https://github.com/Danf
    * [Modify Robot Grippers](https://github.com/Danfoa/invite-robotics/wiki/Tutorial---Modify-Robot-Grippers)
     * [Simulation Scene Objects](https://github.com/Danfoa/invite-robotics/wiki/Tutorial---Simulation-Scene-Objects)
 
-## Version Changes
-Please note for dependency changes with every stable (betha) release. 
-### v0.1.3
+## Release notes
+### v0.1.3  - _Alpha release_
 * New inverse kinematics solver ([Track_IK](https://bitbucket.org/traclabs/trac_ik)) implemented for `arm_left` and `arm_right` move groups; this solver impoves heavily the planning behaviour near singulatiry points and joint limits, plus a general increase in robustness and speed - new dependency added: `trac_ik_kinematics_plugin` (to package `invite_motoman_moveit_config`)
 * New tutorial added: [Simulation Scene Objects](https://github.com/Danfoa/invite-robotics/wiki/Tutorial---Simulation-Scene-Objects); Default scene objects were pre configured for easy loading and using, see tutorial for instructions of use. 
 * New tutorial added: [Modify Robot Grippers](https://github.com/Danfoa/invite-robotics/wiki/Tutorial---Modify-Robot-Grippers); With this tutorial the grippers configuration was changed (i.g. the TCP was moved)
@@ -26,4 +25,4 @@ Please note for dependency changes with every stable (betha) release.
 ## About The Project
 This is a non-profit/collaborative project between the National University of Colombia and Invite GmbH research center, that intends to allow Invite to develope more complex/cooler task without them facing alone the already challenging ROS learning curve. In order to achieve this we are trying to set-up most required robot configurations and write/migrate examples and tutorials of common task with the CSDA10F robot. 
 
-![unal invite](https://user-images.githubusercontent.com/8356912/38167608-0c92588e-3538-11e8-8ea0-4f41dd4b69e1.png)
+![unal invite](https://user-images.githubusercontent.com/8356912/38168887-4cf70aec-355a-11e8-81ce-6c981da40067.png)
