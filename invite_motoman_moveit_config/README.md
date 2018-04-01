@@ -38,4 +38,5 @@ Both robotiq grippers are already configured as end effectors with TCP in the `a
  [Track_IK](https://bitbucket.org/traclabs/trac_ik) is selected since it has proven its superiority over KDL over a different set of robots (none of them Motoman), specifically on 7 DoF arms used in two arm robots (i.g. Valkyre, Pr2, Baxter, Robonaut). Currently it doesnt support mimic joints which makes it impossible to integrate over any moove group that uses the torsoo joint. 
 
  <img src="https://user-images.githubusercontent.com/8356912/38168982-5c523022-355d-11e8-96eb-1c79a1f6dd19.png" width="800">
+ 
 _Comparison between KDL and Track IK kineamics solvers_
