@@ -3,7 +3,7 @@ This repository contains the integration of the CSDA10F dual-arm Motoman Robot w
 
 For further information please see the repository [Wiki](https://github.com/Danfoa/invite-robotics/wiki).
 
-<img src="https://user-images.githubusercontent.com/8356912/37572017-fa8b24be-2b04-11e8-8f25-c2ea9d584550.png" width="600">
+![all](https://user-images.githubusercontent.com/8356912/38436175-7e44e2ac-3999-11e8-8157-80c98658412e.jpg)
 
  _Dual arm motion planning with the configured CSDA10F robot URDF and Moveit configuration package_
 
@@ -16,6 +16,11 @@ For further information please see the repository [Wiki](https://github.com/Danf
     * [Simulation Scene Objects](https://github.com/Danfoa/invite-robotics/wiki/Tutorial---Simulation-Scene-Objects)
 
 ## Release notes
+### v0.1.5  - _Alpha release_
+* Update to [MoveGroup Interface tutorial](https://github.com/Danfoa/invite-robotics/wiki/Tutorial---Move-Group-Interface-Cpp); New motion types included.
+* Dependency updates to allow for easy rosdep commands, and easy installation
+### v0.1.4  - _Alpha release_
+* Dependency updates to allow for easy rosdep commands, and easy installation
 ### v0.1.3  - _Alpha release_
 * New inverse kinematics solver ([Track_IK](https://bitbucket.org/traclabs/trac_ik)) implemented for `arm_left` and `arm_right` move groups; this solver impoves heavily the planning behaviour near singulatiry points and joint limits, plus a general increase in robustness and speed - new dependency added: `trac_ik_kinematics_plugin` (to package `invite_motoman_moveit_config`)
 * New tutorial added: [Simulation Scene Objects](https://github.com/Danfoa/invite-robotics/wiki/Tutorial---Simulation-Scene-Objects); Default scene objects were pre configured for easy loading and using, see tutorial for instructions of use. 

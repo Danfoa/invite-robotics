@@ -6,7 +6,7 @@
 	<node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" />
 
 	<!-- Launch Rviz with a custom configuration file for the CSDA10F robot and tool TCP's-->
-	<node name="rviz" pkg="rviz" type="rviz" args="-d $(find invite_motoman_support)/launch/default_config.rviz" required="true" 
+	<node name="rviz" pkg="rviz" type="rviz" args="-d $(find invite_motoman_support)/config/default_config.rviz" required="true" 
 		output="screen"/>
 </launch>
  
