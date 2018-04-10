@@ -295,117 +295,118 @@ int main(int argc, char **argv)
   ros::Duration(1.0).sleep();
 
 
-//   // Planning with Path Constraints
-//  // ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-//   //
-//   // Path constraints can easily be specified for a link on the robot.
-//   // Let's specify a path constraint and a pose goal for our group.
-//   // First define the path constraint.
-//   moveit_msgs::OrientationConstraint ocm;
-//   ocm.link_name = "arm_right_link_tcp";   // Gripper base rigidly align to the TCP 
-//   ocm.header.frame_id = "base_link";
-//   ocm.orientation.w = 1.0;
-//   ocm.absolute_x_axis_tolerance = 0.2;
-//   ocm.absolute_y_axis_tolerance = 0.2;
-//   ocm.absolute_z_axis_tolerance = 0.2;
-//   ocm.weight = 1.0;
+  // Planning with Path Constraints
+  // ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  //
+  // Path constraints can easily be specified for a link on the robot.
+  // Let's specify a path constraint and a pose goal for our group.
+  // First define the path constraint.
+  moveit_msgs::OrientationConstraint ocm;
+  ocm.link_name = "arm_right_link_tcp";   // Gripper base rigidly align to the TCP 
+  ocm.header.frame_id = "base_link";
+  ocm.orientation.x = orientation.x();
+  ocm.orientation.y = orientation.y();
+  ocm.orientation.w = orientation.w();                // Mantain orientation minuz Yaw.
+  ocm.absolute_x_axis_tolerance = 0.2;
+  ocm.absolute_y_axis_tolerance = 0.2;
+  ocm.absolute_z_axis_tolerance = 0.2;
+  ocm.weight = 1.0;
 
-//   // Now, set it as the path constraint for the group.
-//   moveit_msgs::Constraints test_constraints;
-//   test_constraints.orientation_constraints.push_back(ocm);
-//   move_group.setPathConstraints(test_constraints);
+  // Now, set it as the path constraint for the group.
+  moveit_msgs::Constraints test_constraints;
+  test_constraints.orientation_constraints.push_back(ocm);
+  move_group.setPathConstraints(test_constraints);
 
-//   // We will reuse the old goal that we had and plan to it.
-//   // Note that this will only work if the current state already
-//   // satisfies the path constraints. So, we need to set the start
-//   // state to a new pose.
-//   robot_state::RobotState start_state(*move_group.getCurrentState());
-//   geometry_msgs::Pose start_pose2;
-//   //Use the same orientation as the previous step
-//   start_pose2.orientation.x = orientation.x();
-//   start_pose2.orientation.y = orientation.y();
-//   start_pose2.orientation.z = orientation.z();
-//   start_pose2.orientation.w = orientation.w();
-//   start_pose2.position.x = 0.5;      //[meters]
-//   start_pose2.position.y = -0.7;     //[meters]
-//   start_pose2.position.z = 1.3;      //[meters]
-//   start_state.setFromIK(joint_model_group, start_pose2);
-//   move_group.setStartState(start_state);
+  // We will reuse the old goal that we had and plan to it.
+  // Note that this will only work if the current state already
+  // satisfies the path constraints. So, we need to set the start
+  // state to a new pose.
+  robot_state::RobotState start_state(*move_group.getCurrentState());
+  geometry_msgs::Pose start_pose2;
+  //Use the same orientation as the previous step
+  
+  start_pose2.orientation.x = orientation.x();
+  start_pose2.orientation.y = orientation.y();
+  start_pose2.orientation.z = orientation.z();
+  start_pose2.orientation.w = orientation.w();
+  start_pose2.position.x = 0.5;      //[meters]
+  start_pose2.position.y = -0.65;     //[meters]
+  start_pose2.position.z = 1.2;      //[meters]
+  start_state.setFromIK(joint_model_group, start_pose2);
+  move_group.setStartState(start_state);
 
-//   // Now we will plan to the earlier pose target from the new
-//   // start state that we have just created.
-//   target_pose1.position.x = 0.5;      //[meters]
-//   target_pose1.position.y = -0.7;     //[meters]
-//   target_pose1.position.z = 1.5;      //[meters]
-//   move_group.setPoseTarget(target_pose1);
+  // Now we will plan to the earlier pose target from the new
+  // start state that we have just created.
+  target_pose1.position.x = 0.75;      //[meters]
+  target_pose1.position.y = -0.8;      //[meters]
+  target_pose1.position.z = 1.4;       //[meters]
+  move_group.setPoseTarget(target_pose1);
 
-//   // Planning with constraints can be slow because every sample must call an inverse 
-//   // kinematics solver.
-//   // Lets increase the planning time from the default 5 seconds to be sure the planner has 
-//   // enough time to succeed.
-//   move_group.setPlanningTime(10.0);
+  // Planning with constraints can be slow because every sample must call an inverse 
+  // kinematics solver.
+  // Lets increase the planning time from the default 5 seconds to be sure the planner has 
+  // enough time to succeed.
+  move_group.setPlanningTime(10.0);
 
-//   success = (move_group.plan(my_plan) == moveit::planning_interface::MoveItErrorCode::SUCCESS);
-//   ROS_INFO_NAMED("tutorial", "Visualizing plan 3 (constraints) %s", success ? "" : "FAILED");
+  success = (move_group.plan(my_plan) == moveit::planning_interface::MoveItErrorCode::SUCCESS);
+  ROS_INFO_NAMED("tutorial", "Visualizing plan 3 (constraints) %s", success ? "" : "FAILED");
 
-//   // Visualize the plan in Rviz
-//   visual_tools.deleteAllMarkers();
-//   visual_tools.publishAxisLabeled(start_pose2, "start");
-//   visual_tools.publishAxisLabeled(target_pose1, "goal");
-//   visual_tools.publishText(text_pose, "Constrained Goal", rvt::WHITE, rvt::XLARGE);
-//   visual_tools.publishTrajectoryLine(my_plan.trajectory_, joint_model_group);
-//   visual_tools.trigger();
-//   visual_tools.prompt("Press the 'next' button on the 'RvizVisualToolsGui' pannel");
+  // Visualize the plan in Rviz
+  visual_tools.deleteAllMarkers();
+  visual_tools.publishAxisLabeled(start_pose2, "start");
+  visual_tools.publishAxisLabeled(target_pose1, "goal");
+  visual_tools.publishText(text_pose, "Motion planning with kinematics constraints\n(Move mantaining orientation except Yaw angle)\n(Usefull when handling containers with liquids)", rvt::WHITE, rvt::XLARGE);
+  visual_tools.publishTrajectoryLine(my_plan.trajectory_, joint_model_group);
+  visual_tools.trigger();
+  visual_tools.prompt("Press the 'next' button on the 'RvizVisualToolsGui' pannel");
 
-//   // When done with the path constraint be sure to clear it.
-//   move_group.clearPathConstraints();
+  // When done with the path constraint be sure to clear it.
+  move_group.clearPathConstraints();
 
-//   // Cartesian Paths
-//   // ^^^^^^^^^^^^^^^
-//   // You can plan a cartesian path directly by specifying a list of waypoints
-//   // for the end-effector to go through. Note that we are starting
-//   // from the new start state above.  The initial pose (start state) does not
-//   // need to be added to the waypoint list but adding it can help with visualizations
-//   std::vector<geometry_msgs::Pose> waypoints;
-//   waypoints.push_back(start_pose2);
+  // Cartesian Paths
+  // ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  // You can plan a cartesian path directly by specifying a list of waypoints
+  // for the end-effector to go through. Note that we are starting
+  // from the new start state above.  The initial pose (start state) does not
+  // need to be added to the waypoint list but adding it can help with visualizations
+  std::vector<geometry_msgs::Pose> waypoints;
+  waypoints.push_back(start_pose2);
 
-//   geometry_msgs::Pose target_pose3 = start_pose2;
+  geometry_msgs::Pose target_pose3 = start_pose2;
 
-//   target_pose3.position.z += 0.2;
-//   waypoints.push_back(target_pose3);  // up 
+  target_pose3.position.z += 0.2;
+  waypoints.push_back(target_pose3);  // up 
 
-//   target_pose3.position.y += 0.2;
-//   waypoints.push_back(target_pose3);  // left
+  target_pose3.position.y -= 0.2;
+  waypoints.push_back(target_pose3);  // right
 
-//   target_pose3.position.z -= 0.2;
-//   target_pose3.position.y -= 0.2;
-//   target_pose3.position.x -= 0.2;
-//   waypoints.push_back(target_pose3);  // down and right 
+  target_pose3.position.z -= 0.2;
+  waypoints.push_back(target_pose3);  // down
 
-//   // Cartesian motions are frequently needed to be slower for actions such as approach and retreat
-//   // grasp motions. Here we demonstrate how to reduce the speed of the robot arm via a scaling factor
-//   // of the maxiumum speed of each joint. Note this is not the speed of the end effector point.
-//   move_group.setMaxVelocityScalingFactor(0.1);
+  // Cartesian motions are frequently needed to be slower for actions such as approach and retreat
+  // grasp motions. Here we demonstrate how to reduce the speed of the robot arm via a scaling factor
+  // of the maxiumum speed of each joint. Note this is not the speed of the end effector point.
+  move_group.setMaxVelocityScalingFactor(0.1);
 
-//   // We want the cartesian path to be interpolated at a resolution of 1 cm
-//   // which is why we will specify 0.01 as the max step in cartesian
-//   // translation.  We will specify the jump threshold as 0.0, effectively disabling it.
-//   // Warning - disabling the jump threshold while operating real hardware can cause
-//   // large unpredictable motions of redundant joints and could be a safety issue
-//   moveit_msgs::RobotTrajectory trajectory;
-//   const double jump_threshold = 0.0;
-//   const double eef_step = 0.01;
-//   double fraction = move_group.computeCartesianPath(waypoints, eef_step, jump_threshold, trajectory);
-//   ROS_INFO_NAMED("tutorial", "Visualizing plan 4 (cartesian path) (%.2f%% acheived)", fraction * 100.0);
+  // We want the cartesian path to be interpolated at a resolution of 1 cm
+  // which is why we will specify 0.01 as the max step in cartesian
+  // translation.  We will specify the jump threshold as 0.0, effectively disabling it.
+  // Warning - disabling the jump threshold while operating real hardware can cause
+  // large unpredictable motions of redundant joints and could be a safety issue
+  moveit_msgs::RobotTrajectory trajectory;
+  const double jump_threshold = 0.0;
+  const double eef_step = 0.01;
+  double fraction = move_group.computeCartesianPath(waypoints, eef_step, jump_threshold, trajectory);
+  ROS_INFO_NAMED("tutorial", "Visualizing plan 4 (cartesian path) (%.2f%% acheived)", fraction * 100.0);
 
-//   // Visualize the plan in Rviz
-//   visual_tools.deleteAllMarkers();
-//   visual_tools.publishText(text_pose, "Joint Space Goal", rvt::WHITE, rvt::XLARGE);
-//   visual_tools.publishPath(waypoints, rvt::LIME_GREEN, rvt::SMALL);
-//   for (std::size_t i = 0; i < waypoints.size(); ++i)
-//     visual_tools.publishAxisLabeled(waypoints[i], "pt" + std::to_string(i), rvt::SMALL);
-//   visual_tools.trigger();
-//   visual_tools.prompt("Press the 'next' button on the 'RvizVisualToolsGui' pannel");
+  // Visualize the plan in Rviz
+  visual_tools.deleteAllMarkers();
+  visual_tools.publishText(text_pose, "Cartesian Space Motion \n(Linear motion at 10% speed)", rvt::WHITE, rvt::XLARGE);
+  visual_tools.publishPath(waypoints, rvt::LIME_GREEN, rvt::SMALL);
+  for (std::size_t i = 0; i < waypoints.size(); ++i)
+    visual_tools.publishAxisLabeled(waypoints[i], "point" + std::to_string(i), rvt::MEDIUM);
+  visual_tools.trigger();
+  visual_tools.prompt("Press the 'next' button on the 'RvizVisualToolsGui' pannel");
 
   
   // Dual-arm pose goals

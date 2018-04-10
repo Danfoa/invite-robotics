@@ -10,25 +10,42 @@
 
   <license>BSD</license>
 
-  <url type="website">http://moveit.ros.org/</url>
-  <url type="bugtracker">https://github.com/ros-planning/moveit/issues</url>
-  <url type="repository">https://github.com/ros-planning/moveit</url>
+  <url type="website">https://github.com/Danfoa/invite-robotics/wiki</url>
+  <url type="bugtracker">https://github.com/Danfoa/invite-robotics/issues</url>
+  <url type="repository">https://github.com/Danfoa/invite-robotics</url>
 
   <buildtool_depend>catkin</buildtool_depend>
 
+  <run_depend>moveit_core</run_depend>
   <run_depend>moveit_ros_move_group</run_depend>
   <run_depend>moveit_fake_controller_manager</run_depend>
   <run_depend>moveit_kinematics</run_depend>
   <run_depend>moveit_planners_ompl</run_depend>
   <run_depend>moveit_ros_visualization</run_depend>
+  <run_depend>pluginlib</run_depend>
+  <run_depend>moveit_ros_planning_interface</run_depend>
+  <run_depend>moveit_ros_perception</run_depend>
+  <run_depend>interactive_markers</run_depend>
+  <run_depend>moveit_visual_tools</run_depend>
   <run_depend>joint_state_publisher</run_depend>
   <run_depend>robot_state_publisher</run_depend>
   <run_depend>xacro</run_depend>
-  <!-- This package is referenced in the warehouse launch files, but does not build out of the box at the moment. Commented the dependency until this works. -->
-  <!-- <run_depend>warehouse_ros_mongo</run_depend> -->
-  <build_depend>invite_motoman_support</build_depend>
+
   <run_depend>invite_motoman_support</run_depend>
   <!-- Kinematic solver dependency for both arms move groups -->
   <run_depend>trac_ik_kinematics_plugin</run_depend>
+  
+
+  <build_depend>pluginlib</build_depend>
+  <build_depend>eigen</build_depend>
+  <build_depend>moveit_core</build_depend>
+  <build_depend>moveit_ros_planning_interface</build_depend>
+  <build_depend>moveit_ros_perception</build_depend>
+  <build_depend>interactive_markers</build_depend>
+  <build_depend>geometric_shapes</build_depend>
+  <build_depend>moveit_visual_tools</build_depend>
+  <build_depend>invite_motoman_support</build_depend>
+  <!-- Kinematic solver dependency for both arms move groups -->
+  <build_depend>trac_ik_kinematics_plugin</build_depend>
 
 </package>
