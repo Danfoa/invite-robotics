@@ -2,8 +2,8 @@
 <!--
   Manipulator specific version of 'robot_interface_streaming.launch'.
 
-  Defaults provided for sda10f:
-   - 7 joints
+  Defaults provided for csda10f:
+   - 15 joints
 
   Usage:
     robot_interface_streaming_cda10f.launch robot_ip:=<value> controller:=<fs100|dx100>
@@ -12,10 +12,17 @@
   <arg name="robot_ip" doc="IP of controller" />
 	
   <!-- controller: Controller name (fs100 or dx100) -->
-  <arg name="controller" default="fs100" doc="Series of the controller (default is fs100)" />
+  <arg name="controller" default="fs100" doc="Series of the controller (DX100/FS100, default is fs100)" />
 
+  <!-- Load the topic_list parapemeter containing the definition of the motion groups and joints mapping to the 
+      real controller ros application-->
   <rosparam command="load" file="$(find invite_motoman_support)/config/csda10f_motion_interface.yaml" />
-
+  
+  <!-- Load the custom naming of robot joints (param name = controller_joint_names)-->
+  <rosparam command="load" file="$(find invite_motoman_support)/config/joint_names_csda10f.yaml" />
+  
+  <!-- Start the comunication with the robot controller, in this case multigroup since the csda10f is a dual-arm
+       robot-->
   <include file="$(find motoman_driver)/launch/robot_multigroup_interface_streaming_$(arg controller).launch">
     <arg name="robot_ip"   value="$(arg robot_ip)" />
 	</include>

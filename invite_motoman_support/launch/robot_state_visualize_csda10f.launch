@@ -3,7 +3,7 @@
   Manipulator specific version of the state visualizer.
 
   Defaults provided for csda10f:
-   - 7 joints
+   - 15 joints
 
   Usage:
     robot_state_visualize_csda10f.launch robot_ip:=<value> controller:=<fs100|dx100>
@@ -15,14 +15,23 @@
   <!-- Parameters for robot description (URDF)-->
   <param name="robot_description" command="$(find xacro)/xacro.py '$(find invite_motoman_support)/urdf/invite_csda10f.xacro'" />
 
+  <!-- Load the custom naming of robot joints (param name = controller_joint_names)-->
   <rosparam command="load" file="$(find invite_motoman_support)/config/joint_names_csda10f.yaml" />
+  
+  <!-- Load the topic_list parapemeter containing the definition of the motion groups and joints mapping to the 
+       real controller ros application-->
   <rosparam command="load" file="$(find invite_motoman_support)/config/csda10f_motion_interface.yaml" />
 
+  <!-- Run the controler robot state launch file of the motoman_driver package to initiate communication-->
 	<include file="$(find motoman_driver)/launch/robot_state_$(arg controller).launch">
 		<arg name="robot_ip" value="$(arg robot_ip)" />
 	</include>
 
 	<node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" />
-	<node name="rviz" pkg="rviz" type="rviz" args="-d $(find invite_motoman_support)/config/default_config.rviz" required="true" 
-		output="screen"/>
+
+  <!-- Launch Moveit with Rviz for real-time robot state visualization and planning generation-->
+  <include file="$(find invite_motoman_moveit_config)/launch/moveit_rviz.launch">
+    <arg name="config" value="true"/>
+  </include>
+  <include file="$(find invite_motoman_moveit_config)/launch/default_warehouse_db.launch" />
 </launch>
