@@ -12,8 +12,10 @@ Robotiq in Gazebo.
 
 1. Bring the robot model into gazebo and load the ros_control controllers:
    ```roslaunch `rospack find invite_motoman_gazebo`/launch/invite_motoman_gazebo.launch``` 
+   
    ```roslaunch invite_motoman_gazebo.launch```
 
 2. Launch moveit! and ensure that it is configured to run alongside Gazebo:
     ```roslaunch `rospack find invite_motoman_moveit_config`/launch/moveit_planning_execution_invite_gazebo.launch``` 
+    
     ```roslaunch moveit_planning_execution_invite_gazebo.launch``` 
