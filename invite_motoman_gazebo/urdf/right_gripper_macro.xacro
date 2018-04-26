@@ -1,0 +1,100 @@
+<?xml version="1.0" ?>
+<!--Develped by Daniel Ordonez 11.01.2018 - dfordoneza@unal.edu.co
+INFORMATION: 
+	This file defines the macro instruction for creating instances of the right arm gripper of Invite's 
+	CSDA10F Motoman robot.
+
+NOTE: 
+	This file should only be changed if the gripper configuration  has changed (change in any of the parts,
+	for example the adapter plate or the gripper itself).
+
+INTRUCTIONS: 
+	The "gripper base link"" to reference during connection to the robot is:
+		'${prefix}link_gripper_adapter_plate'
+	In order to use this macro instruction on the robot definition you should use the followng code:
+	'
+	<robot name="[your_robot_name]" xmlns:xacro="http://ros.org/wiki/xacro">
+		<xacro:include filename="$(find motoman_csda10f_support)/urdf/right_gripper_macro.xacro" />
+		<xacro:invite_csda10f_right_gripper prefix="[your_gripper_prefix]"/>
+
+		<joint name="robot_gripper_joint" type="fixed">
+      		<origin rpy="${pi/2} 0 0" xyz="0 0 0"/>
+      		<parent link="robot_flange_link" />
+      		<child link="[your_gripper_prefix]link_gripper_adapter_plate" />
+		</joint>
+	'
+TO-DO: Add finger tips to 140mm xacro
+-->
+<robot xmlns:xacro="http://ros.org/wiki/xacro">
+	<xacro:macro name="invite_csda10f_right_gripper" params="prefix">
+		<!--Import macro from 2-finger adaptative robotiq gripper-->
+		<!-- <xacro:include filename="$(find robotiq_arg2f_model_visualization)/urdf/robotiq_arg2f_140_model_macro.xacro" /> -->
+		<xacro:include filename="$(find invite_motoman_gazebo)/urdf/urdf_src/robotiq_arg2f_model_visualization/robotiq_arg2f_140_model_macro.xacro" />	
+		<!--Aluminium Adapter plate for Robotiq coupling and CSDA10F arm flange-->	
+		<link name="${prefix}link_gripper_adapter_plate">
+			<visual>
+				<origin rpy="0 0 0" xyz="0 0 0"/>
+				<geometry>
+					<mesh filename="package://invite_motoman_support/meshes/robotiq-yaskawa_adapter_plate.stl" scale="0.001 0.001 0.001"/>
+				</geometry>
+				<material name="Aluminium">
+  			        <color rgba="0.816 0.816 0.816 1.0"/>
+  				</material>
+			</visual>
+			<collision>
+				<origin rpy="${pi/2} 0 0" xyz="0 0.0045 0"/>
+				<geometry>
+					<cylinder length="0.009" radius="0.038"/>
+				</geometry>
+				<material name="yellow"/>
+			</collision>
+			<inertial>
+       		  	<mass value="0.01"/>
+        		<origin xyz="0.0 0.0 0.0" rpy="0 0 0"/>
+        		<inertia ixx="0.00001" ixy="0.0" ixz="0.0" iyy="0.00001" iyz="0.0" izz="0.00001"/>
+     		</inertial>
+		</link>
+
+		<!--Robotiq coupling, that connects the gripper with the Adapter plate; this part host the cable connections of the gripper-->
+		<link name="${prefix}link_robotiq_coupling">
+			<visual>
+				<origin rpy="0 0 0" xyz="0 0 0"/>
+				<geometry>
+					<mesh filename="package://invite_motoman_support/meshes/robotiq_gripper_coupling.stl" scale="0.001 0.001 0.001"/>
+				</geometry>
+				<material name="light_balck">
+  			        <color rgba="0.17 0.17 0.17 1.0"/>
+  				</material>
+			</visual>
+			<collision>
+				<origin rpy="0 0 0" xyz="0 0 0"/>
+				<geometry>
+					<cylinder length="0.0135" radius="0.038"/>
+				</geometry>
+				<material name="yellow"/>
+			</collision>
+			<inertial>
+       		  	<mass value="0.01"/>
+        		<origin xyz="0.0 0.0 0.0" rpy="0 0 0"/>
+        		<inertia ixx="0.00001" ixy="0.0" ixz="0.0" iyy="0.00001" iyz="0.0" izz="0.00001"/>
+     		</inertial>
+		</link>-->
+
+		<xacro:robotiq_arg2f_140 prefix="right_gripper_"/>
+
+		
+		<!--Joint from the adapter plate to the robotiq gripper coupling-->
+		<joint name="right_gripper_gripper_coupling_joint" type="fixed">
+			<origin  xyz="0 0.0160 0" rpy="${-pi/2} 0 0"/>
+			<parent link="${prefix}link_gripper_adapter_plate" />
+			<child link="${prefix}link_robotiq_coupling" />
+		</joint>
+		<!--Joint from the robotiq coupling to the gripper itself-->
+		<joint name="right_gripper_joint" type="fixed">
+			<origin xyz="0 0.0 0.0039" rpy="0 0 ${pi}" />
+			<parent link="${prefix}link_robotiq_coupling" />
+			<child link="right_gripper_robotiq_arg2f_base_link" />
+		</joint>
+
+	</xacro:macro>
+</robot>

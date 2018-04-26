@@ -1,0 +1,297 @@
+<?xml version="1.0" ?>
+<!-- Edited by Fernando Barbosa 05.04.2018 - fbarbosac@unal.edu.co
+	INFORMATION:
+	The base file was obtain from package motoman_csda10f_support 	
+	UPGRADE:
+	Its added all inertial tags for all links and its added all transmission tags for all joints
+	of arm
+-->
+<robot xmlns:xacro="http://ros.org/wiki/xacro">
+	<xacro:macro name="motoman_arm" params="name prefix parent *origin reflect">
+		<link name="${prefix}link_1_s">
+			<visual>
+				<origin rpy="0 0 0" xyz="0 0 0"/>
+				<geometry>
+					<mesh filename="package://motoman_csda10f_support/meshes/csda10f/visual/csda_axis_s.STL" scale="0.001 0.001 0.001"/>
+				</geometry>
+				<material name="silver">
+					<color rgba="0.8 0.8 0.8 1"/>
+				</material>
+			</visual>
+			<collision>
+				<origin rpy="0 0 0" xyz="0 0 0"/>
+				<geometry>
+					<mesh filename="package://motoman_csda10f_support/meshes/csda10f/collision/csda_axis_s.stl" scale="0.001 0.001 0.001"/>
+				</geometry>
+				<material name="yellow"/>
+			</collision>
+			<inertial>
+       		  	<mass value="10.0"/>
+        		<origin xyz="-0.000265 -0.022912 -0.263484" rpy="0 0 0"/>
+        		<inertia ixx="0.112042" ixy="-9.49E-06" ixz="5.84E-06" iyy="0.026163" iyz="-0.022776" izz="0.110175"/>	 														  			 		   
+			  </inertial>
+		</link>
+		<link name="${prefix}link_2_l">
+			<visual>
+				<origin rpy="0 0 0" xyz="0 0 0"/>
+				<geometry>
+					<mesh filename="package://motoman_csda10f_support/meshes/csda10f/visual/csda_axis_l.STL" scale="0.001 0.001 0.001"/>
+				</geometry>
+				<material name="silver"/>
+			</visual>
+			<collision>
+				<origin rpy="0 0 0" xyz="0 0 0"/>
+				<geometry>
+					<mesh filename="package://motoman_csda10f_support/meshes/csda10f/collision/csda_axis_l.stl" scale="0.001 0.001 0.001"/>
+				</geometry>
+				<material name="yellow"/>
+			</collision>
+			<inertial>
+       			<mass value="8.0"/>
+        		<origin xyz="0.0 0.079945 -0.009835" rpy="0 0 0"/>
+        		<inertia ixx="0.112042" ixy="-9.49E-06" ixz="5.84E-06" iyy="0.026163" iyz="-0.022776" izz="0.110175"/>	
+     		</inertial>
+		</link>
+		<link name="${prefix}link_3_e">
+			<visual>
+				<origin rpy="0 0 0" xyz="0 0 0"/>
+				<geometry>
+					<mesh filename="package://motoman_csda10f_support/meshes/csda10f/visual/csda_axis_e.STL" scale="0.001 0.001 0.001"/>
+				</geometry>
+				<material name="silver"/>
+			</visual>
+			<collision>
+				<origin rpy="0 0 0" xyz="0 0 0"/>
+				<geometry>
+					<mesh filename="package://motoman_csda10f_support/meshes/csda10f/collision/csda_axis_e.stl" scale="0.001 0.001 0.001"/>
+				</geometry>
+				<material name="yellow"/>
+			</collision>
+			<inertial>
+        		<mass value="7.5"/>
+        		<origin xyz="0.0 0.018717 -0.119158" rpy="0 0 0"/>
+        		<inertia ixx="0.156550" ixy="-8.43E-06" ixz="4.35E-05" iyy="0.152788" iyz="-0.021001" izz="0.017946"/>
+      		</inertial>
+		</link>
+		<link name="${prefix}link_4_u">
+			<visual>
+				<origin rpy="0 0 0" xyz="0 0 0"/>
+				<geometry>
+					<mesh filename="package://motoman_csda10f_support/meshes/csda10f/visual/csda_axis_u.STL" scale="0.001 0.001 0.001"/>
+				</geometry>
+				<material name="silver"/>
+			</visual>
+			<collision>
+				<origin rpy="0 0 0" xyz="0 0 0"/>
+				<geometry>
+					<mesh filename="package://motoman_csda10f_support/meshes/csda10f/collision/csda_axis_u.stl" scale="0.001 0.001 0.001"/>
+				</geometry>
+				<material name="yellow"/>
+			</collision>
+			<inertial>
+        		<mass value="6.0"/>
+        		<origin xyz="0.0 0.093003 -0.006433" rpy="0 0 0"/>
+        		<inertia ixx="0.092098" ixy="-4.04E-05" ixz="-3.81E-06" iyy="0.010300" iyz="0.004406" izz="0.091086"/>
+      		</inertial>
+		</link>
+		<link name="${prefix}link_5_r">
+			<visual>
+				<origin rpy="0 0 0" xyz="0 0 0"/>
+				<geometry>
+					<mesh filename="package://motoman_csda10f_support/meshes/csda10f/visual/csda_axis_r.STL" scale="0.001 0.001 0.001"/>
+				</geometry>
+				<material name="silver"/>
+			</visual>
+			<collision>
+				<origin rpy="0 0 0" xyz="0 0 0"/>
+				<geometry>
+					<mesh filename="package://motoman_csda10f_support/meshes/csda10f/collision/csda_axis_r.stl" scale="0.001 0.001 0.001"/>
+				</geometry>
+				<material name="yellow"/>
+			</collision>
+			<inertial>
+        		<mass value="5.5"/>
+        		<origin xyz="0.0 -0.0134 -0.133989" rpy="0 0 0"/>
+        		<inertia ixx="0.134067" ixy="5.74E-06" ixz="3.19E-05" iyy="0.132025" iyz="0.013502" izz="0.008969"/>
+    		</inertial>
+		</link>
+		<link name="${prefix}link_6_b">
+			<visual>
+				<origin rpy="0 0 0" xyz="0 0 0"/>
+				<geometry>
+					<mesh filename="package://motoman_csda10f_support/meshes/csda10f/visual/csda_axis_b.STL" scale="0.001 0.001 0.001"/>
+				</geometry>
+				<material name="silver"/>
+			</visual>
+			<collision>
+				<origin rpy="0 0 0" xyz="0 0 0"/>
+				<geometry>
+					<mesh filename="package://motoman_csda10f_support/meshes/csda10f/collision/csda_axis_b.stl" scale="0.001 0.001 0.001"/>
+				</geometry>
+				<material name="yellow"/>
+			</collision>
+			<inertial>
+        		<mass value="3.5"/>
+        		<origin xyz="0.0 0.05919 0.001493" rpy="0 0 0"/>
+        		<inertia ixx="0.024033" ixy="-1.78E-05" ixz="3.03E-06" iyy="0.005402" iyz="-0.002585" izz="0.023675"/>
+			</inertial>
+		</link>
+		<link name="${prefix}link_7_t">
+			<visual>
+				<geometry>
+					<mesh filename="package://motoman_csda10f_support/meshes/csda10f/visual/csda_axis_t.STL" scale="0.001 0.001 0.001"/>
+				</geometry>
+				<material name="silver"/>
+			</visual>
+			<collision>
+                <origin rpy="0 0 0" xyz="0 0 0"/>
+				<geometry>
+					<mesh filename="package://motoman_csda10f_support/meshes/csda10f/collision/csda_axis_t.stl" scale="0.001 0.001 0.001"/>
+				</geometry>
+				<material name="yellow"/>
+			</collision>
+			<inertial>
+        		<mass value="1.5"/>
+        		<origin xyz="0.0 0.00015 -0.02467" rpy="0 0 0"/>
+        		<inertia ixx="0.002083" ixy="0.0" ixz="0.0" iyy="0.002100" iyz="9.8E-07" izz="0.001926"/>
+			</inertial>
+		</link>
+	    <link name="${prefix}link_tool0" />
+		
+		<joint name="${prefix}joint_1_s" type="revolute">
+			<parent link="torso_link_b1"/>
+			<child link="${prefix}link_1_s"/>
+			<origin xyz="0.1 ${reflect*0.023} 0.3381" rpy="1.57 0 ${(reflect-1)*1.57}"/>
+			<axis xyz="0 0 ${-reflect}" />
+			<limit lower="-3.13" upper="3.13" effort="5.0" velocity="2.95" />
+			<dynamics damping="0.7" friction="0.7"/>  	     
+		</joint>
+		<joint name="${prefix}joint_2_l" type="revolute">
+			<parent link="${prefix}link_1_s"/>
+			<child link="${prefix}link_2_l"/>
+			<origin xyz="0 0.0454 -0.242" rpy="-1.57 0 0"/>
+			<axis xyz="0 0 ${-reflect}" />
+			<limit lower="-1.90" upper="1.90" effort="5.0" velocity="2.95" />
+			<dynamics damping="0.7" friction="0.7"/>
+		</joint>
+		<joint name="${prefix}joint_3_e" type="revolute">
+			<parent link="${prefix}link_2_l"/>
+			<child link="${prefix}link_3_e"/>
+			<origin xyz="0 0.175 -0.04540" rpy="1.57 0 0"/>
+			<axis xyz="0 0 ${-reflect}" />
+			<limit lower="-2.95" upper="2.95" effort="5.0" velocity="2.95" />
+			<dynamics damping="0.7" friction="0.7"/>
+		</joint>
+		<joint name="${prefix}joint_4_u" type="revolute">
+			<parent link="${prefix}link_3_e"/>
+			<child link="${prefix}link_4_u"/>
+			<origin xyz="0.00001 -0.0155 -0.185" rpy="-1.57 0 0"/>
+			<axis xyz="0 0 ${reflect}" />
+			<limit lower="-2.36" upper="2.36" effort="5.0" velocity="2.95" />
+			<dynamics damping="0.7" friction="0.7"/>
+		</joint>
+		<joint name="${prefix}joint_5_r" type="revolute">
+			<parent link="${prefix}link_4_u"/>
+			<child link="${prefix}link_5_r"/>
+			<origin xyz="0.00002 0.1487 0.0155" rpy="1.57 0 0"/>
+			<axis xyz="0 0 ${reflect}" />
+			<limit lower="-3.13" upper="3.13" effort="5.0" velocity="3.48" />
+			<dynamics damping="0.7" friction="0.7"/>
+		</joint>
+		<joint name="${prefix}joint_6_b" type="revolute">
+			<parent link="${prefix}link_5_r"/>
+			<child link="${prefix}link_6_b"/>
+			<origin xyz="0.00001 0.015 -0.2113" rpy="-1.57 0 0"/>
+			<axis xyz="0 0 ${reflect}" />
+			<limit lower="-1.90" upper="1.90" effort="5.0" velocity="3.48" />
+			<dynamics damping="0.7" friction="0.7"/>
+		</joint>
+		<joint name="${prefix}joint_7_t" type="revolute">
+			<parent link="${prefix}link_6_b"/>
+			<child link="${prefix}link_7_t"/>
+			<origin xyz="0 0.118 -0.015" rpy="1.57 0 0"/>
+			<axis xyz="0 0 ${-reflect}" />
+			<limit lower="-3.13" upper="3.13" effort="5.0" velocity="6.97" />
+			<dynamics damping="0.7" friction="0.7"/>
+		</joint>
+		<joint name="${prefix}joint_tool0" type="fixed" >
+			<origin xyz="0 0 -0.057" rpy="3.13 0 0"/>
+			<parent link="${prefix}link_7_t" />
+			<child link="${prefix}link_tool0" />
+		</joint>
+		<!-- end of joint list -->
+		<!-- transmission list -->
+		<transmission name="${prefix}tran_1_s">
+			<type>transmission_interface/SimpleTransmission</type>
+			<joint name="${prefix}joint_1_s">
+				<hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+			</joint>
+			<actuator name="${prefix}motor_1_s">
+				<mechanicalReduction>1</mechanicalReduction>
+			</actuator>
+		</transmission>
+
+		<transmission name="${prefix}tran_2_l">
+			<type>transmission_interface/SimpleTransmission</type>
+			<joint name="${prefix}joint_2_l">
+				<hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+			</joint>
+			<actuator name="${prefix}motor_2_l">
+				<mechanicalReduction>1</mechanicalReduction>
+			</actuator>
+		</transmission>
+		
+		<transmission name="${prefix}tran_3_e">
+			<type>transmission_interface/SimpleTransmission</type>
+			<joint name="${prefix}joint_3_e">
+				<hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+			</joint>
+			<actuator name="${prefix}motor_3_e">
+				<mechanicalReduction>1</mechanicalReduction>
+			</actuator>
+		</transmission>  
+		
+		<transmission name="${prefix}tran_4_u">
+			<type>transmission_interface/SimpleTransmission</type>
+			<joint name="${prefix}joint_4_u">
+				<hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+			</joint>
+			<actuator name="${prefix}motor_4_u">
+				<mechanicalReduction>1</mechanicalReduction>
+			</actuator>
+		</transmission>
+		
+		<transmission name="${prefix}tran_5_r">
+			<type>transmission_interface/SimpleTransmission</type>
+			<joint name="${prefix}joint_5_r">
+				<hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+			</joint>
+			<actuator name="${prefix}motor_5_r">
+				<mechanicalReduction>1</mechanicalReduction>
+			</actuator>
+		</transmission>
+		
+		<transmission name="${prefix}tran_6_b">
+			<type>transmission_interface/SimpleTransmission</type>
+			<joint name="${prefix}joint_6_b">
+				<hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+			</joint>
+			<actuator name="${prefix}motor_6_b">
+				<mechanicalReduction>1</mechanicalReduction>
+			</actuator>
+		</transmission>
+		
+		<transmission name="${prefix}tran_7_t">
+			<type>transmission_interface/SimpleTransmission</type>
+			<joint name="${prefix}joint_7_t">
+				<hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+			</joint>
+			<actuator name="${prefix}motor_7_t">
+				<mechanicalReduction>1</mechanicalReduction>
+			</actuator>
+		</transmission>  	
+		<!-- end of transmission list -->		
+
+
+	</xacro:macro>
+</robot>
