@@ -27,6 +27,10 @@
   <depend>robot_state_publisher</depend>
   
   <depend>xacro</depend>
+
+  <!-- Dependencies for hardware connection> -->
+  <depend>motoman_driver</depend>
+  <depend>roslaunch</depend>
   
   <!-- The export tag contains other, unsspecified, tags -->
   <export>
