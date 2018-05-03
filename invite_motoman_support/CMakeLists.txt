@@ -8,6 +8,7 @@ project(invite_motoman_support)
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
 ## is used, also find other catkin packages
 find_package(catkin REQUIRED
+    motoman_driver
     motoman_csda10f_support
     robotiq_arg2f_model_visualization
     robotiq_2f_model

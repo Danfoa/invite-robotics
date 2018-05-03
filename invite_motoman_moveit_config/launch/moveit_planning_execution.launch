@@ -41,7 +41,7 @@
     <arg name="config" value="true"/>
   </include>
   
-  <include file="$(find invite_motoman_moveit_config)/launch/default_warehouse_db.launch" />
+  <!--<include file="$(find invite_motoman_moveit_config)/launch/default_warehouse_db.launch" />-->
 
 </launch>
 
