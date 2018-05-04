@@ -19,6 +19,7 @@
   <rosparam command="load" file="$(find invite_motoman_support)/config/csda10f_motion_interface.yaml" />
   
   <!-- Load the custom naming of robot joints (param name = controller_joint_names)-->
+  <!--TO-DO: Not sure if this parameter should be loaded here-->
   <rosparam command="load" file="$(find invite_motoman_support)/config/joint_names_csda10f.yaml" />
   
   <!-- Start the comunication with the robot controller, in this case multigroup since the csda10f is a dual-arm
