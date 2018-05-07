@@ -167,6 +167,11 @@ add_executable(invite_move_group_interface_tutorial src/invite_move_group_interf
 target_link_libraries(invite_move_group_interface_tutorial ${catkin_LIBRARIES} ${Boost_LIBRARIES})
 install(TARGETS invite_move_group_interface_tutorial DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION})
 
+add_executable(objects src/objects.cpp)
+target_link_libraries(objects ${catkin_LIBRARIES} ${Boost_LIBRARIES})
+install(TARGETS objects DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION})
+
+
 install(PROGRAMS
   scripts/move_group_python_interface_tutorial.py
   DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
