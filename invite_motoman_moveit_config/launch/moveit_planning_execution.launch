@@ -34,7 +34,8 @@
   <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" />
 
   <include file="$(find invite_motoman_moveit_config)/launch/move_group.launch">
-    <arg name="publish_monitored_planning_scene" value="true" />
+    <arg name="publish_monitored_planning_scene" value="true"/>
+    <arg name="fake_execution" if="$(arg sim)" value="true"/>
   </include>
 
   <include file="$(find invite_motoman_moveit_config)/launch/moveit_rviz.launch">

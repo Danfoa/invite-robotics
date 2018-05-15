@@ -7,7 +7,7 @@
 
   <!-- By default, we are not in debug mode -->
   <arg name="debug" default="false" />
-
+  
   <!--
   By default, hide joint_state_publisher's GUI
 
@@ -54,4 +54,9 @@
     <arg name="moveit_warehouse_database_path" value="$(arg db_path)"/>
   </include>
 
+  <group if="$(arg load_scene)">
+    <!-- Load `scene_file` scene objects for collision checking -->
+    <node name="moveit_publish_scene_from_text" pkg="moveit_ros_planning" type="moveit_publish_scene_from_text" args= "$(arg scene_file)"
+          output="screen"/>
+  </group>
 </launch>

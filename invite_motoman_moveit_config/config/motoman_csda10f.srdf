@@ -92,7 +92,7 @@
         <joint name="torso_joint_b1" value="0" />
         <joint name="torso_joint_b2" value="0" />
     </group_state>
-    <group_state name="arms_folded_horizontally" group="csda10f">
+    <group_state name="home_arms_folded" group="csda10f">
         <joint name="arm_left_joint_1_s" value="0" />
         <joint name="arm_left_joint_2_l" value="0.2914" />
         <joint name="arm_left_joint_3_e" value="0" />
@@ -110,32 +110,23 @@
         <joint name="torso_joint_b1" value="0" />
         <joint name="torso_joint_b2" value="0" />
     </group_state>
-    <group_state name="arms_folded_closely" group="csda10f">
-        <joint name="arm_left_joint_1_s" value="2.3619" />
-        <joint name="arm_left_joint_2_l" value="1.3871" />
-        <joint name="arm_left_joint_3_e" value="-1.5021" />
-        <joint name="arm_left_joint_4_u" value="-2.36" />
-        <joint name="arm_left_joint_5_r" value="0.1728" />
-        <joint name="arm_left_joint_6_b" value="-1.1074" />
-        <joint name="arm_left_joint_7_t" value="-0.3264" />
-        <joint name="arm_right_joint_1_s" value="2.3619" />
-        <joint name="arm_right_joint_2_l" value="1.3871" />
-        <joint name="arm_right_joint_3_e" value="-1.5021" />
-        <joint name="arm_right_joint_4_u" value="-2.36" />
-        <joint name="arm_right_joint_5_r" value="0.1728" />
-        <joint name="arm_right_joint_6_b" value="-1.1074" />
-        <joint name="arm_right_joint_7_t" value="1.6322" />
-        <joint name="torso_joint_b1" value="0" />
-        <joint name="torso_joint_b2" value="0" />
-    </group_state>
-    <group_state name="pick_right" group="arm_right">
+    <group_state name="home_right_arms_folded" group="csda10f">
+        <joint name="arm_left_joint_1_s" value="0" />
+        <joint name="arm_left_joint_2_l" value="0.2914" />
+        <joint name="arm_left_joint_3_e" value="0" />
+        <joint name="arm_left_joint_4_u" value="-1.4044" />
+        <joint name="arm_left_joint_5_r" value="0" />
+        <joint name="arm_left_joint_6_b" value="-1.3871" />
+        <joint name="arm_left_joint_7_t" value="0" />
         <joint name="arm_right_joint_1_s" value="0" />
-        <joint name="arm_right_joint_2_l" value="0" />
+        <joint name="arm_right_joint_2_l" value="0.2914" />
         <joint name="arm_right_joint_3_e" value="0" />
-        <joint name="arm_right_joint_4_u" value="0" />
-        <joint name="arm_right_joint_5_r" value="1.5822" />
-        <joint name="arm_right_joint_6_b" value="1.4824" />
+        <joint name="arm_right_joint_4_u" value="-1.4044" />
+        <joint name="arm_right_joint_5_r" value="-0.054" />
+        <joint name="arm_right_joint_6_b" value="-1.3871" />
         <joint name="arm_right_joint_7_t" value="0" />
+        <joint name="torso_joint_b1" value="-1.57" />
+        <joint name="torso_joint_b2" value="-1.57" />
     </group_state>
     <!--END EFFECTOR: Purpose: Represent information about an end effector.-->
     <end_effector name="right_arm_gripper" parent_link="arm_right_link_tcp" group="right_gripper" parent_group="arm_right" />
