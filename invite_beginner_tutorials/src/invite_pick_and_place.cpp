@@ -95,7 +95,7 @@ int main(int argc, char **argv){
   mesh_pose.orientation.x= 0.0; 
   mesh_pose.orientation.y= 0.0;
     
-  //the object is added like un colission object
+  //The object is added like un colission object
   glass_cup.meshes.push_back(mesh);
   glass_cup.mesh_poses.push_back(mesh_pose);
   glass_cup.operation = glass_cup.ADD;      // operations are be glass_cup.REMOVE, glass_cup.APPEND, glass_cup.MOVE 
@@ -134,6 +134,7 @@ int main(int argc, char **argv){
   bool success = (csda10f_move_group.plan(my_plan) == moveit::planning_interface::MoveItErrorCode::SUCCESS);
   ROS_INFO("Visualizing plan 1 (pose goal) %s", success ? "SUCCESS" : "FAILED");
   
+  visual_tools.deleteAllMarkers();
   visual_tools.publishAxisLabeled(mesh_pose, "mesh_pose");
   visual_tools.publishText(text_pose, "Planning to custom pre-teach home position \n Press next to perform the planned motion", rvt::WHITE, rvt::XXLARGE);
   visual_tools.publishTrajectoryLine(my_plan.trajectory_, csda10f_joint_model_group);
@@ -143,16 +144,16 @@ int main(int argc, char **argv){
   // ***********************************************************************************************
   // STEP 2: APPROACH CUP
 
-  // If not simulating, move the robot after user has a visualized the robot motion.
-  if( !SIMULATION )
-    csda10f_move_group.move();
-
   // Get joint group state
   const robot_state::JointModelGroup *arm_right_joint_model_group = arm_right_move_group.getCurrentState()->getJointModelGroup("arm_right");
 
-  // We can plan a motion for this group to a desired pose for the
-  // end-effector.
-  geometry_msgs::Pose approach_pose = mesh_pose;    // Use target object pose coordinates as reference
+  // If not simulating, move the robot after user has visualized the robot motion.
+  if( !SIMULATION ){
+    csda10f_move_group.move();
+  }
+  
+  // Set up target pose for right arm.
+  geometry_msgs::Pose approach_pose = mesh_pose;    // Use target object pose (x,y,z) coordinates as reference.
   tf::Quaternion orientation;
   // Set targer orientation as euler angles for ease of use
   //                ROLL-PITCH-YAW    [Radians]
@@ -162,7 +163,7 @@ int main(int argc, char **argv){
   approach_pose.orientation.y = orientation.y();
   approach_pose.orientation.z = orientation.z();
   approach_pose.orientation.w = orientation.w();
-  approach_pose.position.z += 0.15;    // Move 15 cm above the object.
+  approach_pose.position.z += 0.25;                 // Move 15 cm above the target object object.
   
   arm_right_move_group.setPoseTarget(approach_pose);
 
@@ -173,11 +174,69 @@ int main(int argc, char **argv){
   // ^^^^^^^^^^^^^^^^^
   // We can also visualize the plan as a line with markers in Rviz.
   ROS_INFO_NAMED("Pick Tutorial", "Visualizing plan 2 as trajectory line");
+  visual_tools.deleteAllMarkers();
   visual_tools.publishAxisLabeled(approach_pose, "pose1");
   visual_tools.publishText(text_pose, "Base (Cartesian) pose coordinate goal", rvt::WHITE, rvt::XLARGE);
   visual_tools.publishTrajectoryLine(my_plan.trajectory_, arm_right_joint_model_group);
   visual_tools.trigger();
   visual_tools.prompt("Press the 'next' button on the 'RvizVisualToolsGui' pannel");
+
+
+
+  // ***********************************************************************************************
+  // STEP 3: Grab cup
+  //          This step will perform the final approach with a save linear (cartesian) motion
+  //          And perform grabbing of the cup. 
+
+  // If not simulating, move the robot after user has visualized the robot motion.
+  if( !SIMULATION ){
+    ROS_INFO("Performing motion on real robot...");
+    arm_right_move_group.move();
+  }else{
+    robot_state::RobotState start_state(*arm_right_move_group.getCurrentState());
+    start_state.setFromIK(arm_right_joint_model_group, approach_pose);
+    arm_right_move_group.setStartState(start_state);
+  }
+  // Vector of poses for linear interpolation 
+  std::vector<geometry_msgs::Pose> waypoints;
+  // Initial pose is current pose.
+  waypoints.push_back(approach_pose);
+  // Final pose is graabing pose.
+  geometry_msgs::Pose grabbing_pose = approach_pose;
+  grabbing_pose.position.z -= 0.05;   
+  waypoints.push_back(grabbing_pose);
+  // Set motion speed at 10%.
+  arm_right_move_group.setMaxVelocityScalingFactor(0.1);
+
+  // Perform cartesian trajectory planning 
+  moveit_msgs::RobotTrajectory trajectory;
+  const double jump_threshold = 0.0;
+  const double eef_step = 0.015;
+  double fraction = arm_right_move_group.computeCartesianPath(waypoints, eef_step, jump_threshold, trajectory);
+  ROS_INFO_NAMED("Pick Tutorial", "Visualizing plan 4 (approach to grabbing) (%.2f%% acheived)", fraction * 100.0);
+
+  // Visualize the plan in Rviz
+  visual_tools.deleteAllMarkers();
+  visual_tools.publishText(text_pose, "Planning for grabbing/n Press next to perform", rvt::WHITE, rvt::XLARGE);
+  visual_tools.publishPath(waypoints, rvt::LIME_GREEN, rvt::SMALL);
+  for (std::size_t i = 0; i < waypoints.size(); ++i)
+    visual_tools.publishAxisLabeled(waypoints[i], "point" + std::to_string(i), rvt::MEDIUM);
+  visual_tools.trigger();
+  visual_tools.prompt("Press the 'next' button on the 'RvizVisualToolsGui' pannel");
+
+  // ***********************************************************************************************
+  // STEP 4: Close Gripper.  
+  moveit::planning_interface::MoveGroupInterface l_gripper_move_group(PLANNING_GROUP);
+
+  moveit::core::RobotStatePtr current_state = l_gripper_move_group.getCurrentState();
+  // Next get the current set of joint values for the group.
+  std::vector<double> joint_group_positions;
+  current_state->copyJointGroupPositions(joint_model_group, joint_group_positions);
+
+  // Now, let's modify one of the joints, plan to the new joint space goal and visualize the plan.
+  // Hint: Joint numbering starts from 0
+  joint_group_positions[6] = M_PI/2;  // radians
+  move_group.setJointValueTarget(joint_group_positions);
 
 /*
 //************************************************************************************************
