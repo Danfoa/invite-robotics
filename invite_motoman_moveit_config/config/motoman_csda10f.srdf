@@ -135,6 +135,15 @@
     <virtual_joint name="world_joint" type="fixed" parent_frame="world" child_link="base_link" />
     <!--PASSIVE JOINT: Purpose: this element is used to mark joints that are not actuated-->
     <passive_joint name="torso_joint_b2" />
+    <passive_joint name="arm_left_left_follower_joint" />
+    <passive_joint name="arm_left_left_spring_link_joint" />
+    <passive_joint name="arm_left_right_follower_joint" />
+    <passive_joint name="arm_left_right_spring_link_joint" />
+    <passive_joint name="right_gripper_left_inner_finger_joint" />
+    <passive_joint name="right_gripper_left_inner_knuckle_joint" />
+    <passive_joint name="right_gripper_right_inner_knuckle_joint" />
+    <passive_joint name="right_gripper_right_outer_knuckle_joint" />
+    <passive_joint name="right_gripper_right_inner_finger_joint" />
     <!--DISABLE COLLISIONS: By default it is assumed that any link of the robot could potentially come into collision with any other link in the robot. This tag disables collision checking between a specified pair of links. -->
     <disable_collisions link1="arm_left_base" link2="arm_left_left_coupler" reason="Never" />
     <disable_collisions link1="arm_left_base" link2="arm_left_left_driver" reason="Adjacent" />

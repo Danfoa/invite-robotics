@@ -226,17 +226,25 @@ int main(int argc, char **argv){
 
   // ***********************************************************************************************
   // STEP 4: Close Gripper.  
-  moveit::planning_interface::MoveGroupInterface l_gripper_move_group(PLANNING_GROUP);
+  moveit::planning_interface::MoveGroupInterface r_gripper_move_group("right_gripper");
+  // Get joint group state
+  const robot_state::JointModelGroup *r_gripper_joint_model_group = r_gripper_move_group.getCurrentState()->getJointModelGroup("right_gripper");
 
-  moveit::core::RobotStatePtr current_state = l_gripper_move_group.getCurrentState();
+  current_state = r_gripper_move_group.getCurrentState();
   // Next get the current set of joint values for the group.
-  std::vector<double> joint_group_positions;
-  current_state->copyJointGroupPositions(joint_model_group, joint_group_positions);
-
-  // Now, let's modify one of the joints, plan to the new joint space goal and visualize the plan.
-  // Hint: Joint numbering starts from 0
-  joint_group_positions[6] = M_PI/2;  // radians
-  move_group.setJointValueTarget(joint_group_positions);
+  const std::vector<const moveit::core::JointModel*> gripper_joint = r_gripper_joint_model_group->getActiveJointModels();
+  
+  // gripper_position[1] = 50 * (0.78/85);      // 50 [mm] * (max_joint_value/gripper_stroke[mm])
+  // std::vector<std::string> joints = current_state->getVariableNames();
+  const double pos = 0.5;
+  current_state->setJointPositions(gripper_joint[0], &pos );
+  
+  r_gripper_move_group.setJointValueTarget( current_state);
+  
+  success = ( r_gripper_move_group.plan(my_plan) == moveit::planning_interface::MoveItErrorCode::SUCCESS);
+  ROS_INFO("Pick Tutorial: Visualizing grasping %s", success ? "" : "FAILED");
+  
+  // ROS_INFO("Pick Tutorial: The gripper move group has %d joints", (int) gripper_position.size());
 
 /*
 //************************************************************************************************
