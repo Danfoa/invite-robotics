@@ -1,71 +1,76 @@
-arm_controller:
-  type: position_controllers/JointTrajectoryController
-  joints:
-      #- torso_joint_b1
-      #- torso_joint_b2  
-      - arm_left_joint_1_s   
-      - arm_left_joint_2_l
-      - arm_left_joint_3_e
-      - arm_left_joint_4_u
-      - arm_left_joint_5_r
-      - arm_left_joint_6_b
-      - arm_left_joint_7_t
-      #- arm_right_joint_1_s
-      #- arm_right_joint_2_l
-      #- arm_right_joint_3_e
-      #- arm_right_joint_4_u
-      #- arm_right_joint_5_r
-      #- arm_right_joint_6_b
-      #- arm_right_joint_7_t
-      #- right_gripper_finger_joint
-      #- right_gripper_left_inner_knuckle_joint 
-      #- right_gripper_left_inner_finger_joint      
-      #- right_gripper_right_outer_knuckle_joint 
-      #- right_gripper_right_inner_knuckle_joint 
-      #- right_gripper_right_inner_finger_joint 
-      #- arm_left_right_driver_joint
-      #- arm_left_right_follower_joint 
-      #- arm_left_right_spring_link_joint    
-      #- arm_left_left_driver_joint 
-      #- arm_left_left_follower_joint 
-      #- arm_left_left_spring_link_joint 
+csda10f:
+  csda10f_r1_controller:
+    type: position_controllers/JointTrajectoryController
+    joints:        
+        - arm_left_joint_1_s   
+        - arm_left_joint_2_l
+        - arm_left_joint_3_e
+        - arm_left_joint_4_u
+        - arm_left_joint_5_r
+        - arm_left_joint_6_b
+        - arm_left_joint_7_t            
+    constraints:
+        goal_time: 0.6
+        stopped_velocity_tolerance: 0.05
+        arm_left_joint_1_s: {trajectory: 0.1, goal: 0.1}   
+        arm_left_joint_2_l: {trajectory: 0.1, goal: 0.1}
+        arm_left_joint_3_e: {trajectory: 0.1, goal: 0.1}
+        arm_left_joint_4_u: {trajectory: 0.1, goal: 0.1}
+        arm_left_joint_5_r: {trajectory: 0.1, goal: 0.1}
+        arm_left_joint_6_b: {trajectory: 0.1, goal: 0.1}
+        arm_left_joint_7_t: {trajectory: 0.1, goal: 0.1}
+    stop_trajectory_duration: 0.5
+    state_publish_rate:  25
+    action_monitor_rate: 10
 
-        
-  constraints:
-      goal_time: 0.6
-      stopped_velocity_tolerance: 0.05
-      #torso_joint_b1: {trajectory: 0.1, goal: 0.1}
-      #torso_joint_b2: {trajectory: 0.1, goal: 0.1}
-      arm_left_joint_1_s: {trajectory: 0.1, goal: 0.1}   
-      arm_left_joint_2_l: {trajectory: 0.1, goal: 0.1}
-      arm_left_joint_3_e: {trajectory: 0.1, goal: 0.1}
-      arm_left_joint_4_u: {trajectory: 0.1, goal: 0.1}
-      arm_left_joint_5_r: {trajectory: 0.1, goal: 0.1}
-      arm_left_joint_6_b: {trajectory: 0.1, goal: 0.1}
-      arm_left_joint_7_t: {trajectory: 0.1, goal: 0.1}
-      #arm_right_joint_1_s: {trajectory: 0.1, goal: 0.1}
-      #arm_right_joint_2_l: {trajectory: 0.1, goal: 0.1}
-      #arm_right_joint_3_e: {trajectory: 0.1, goal: 0.1}
-      #arm_right_joint_4_u: {trajectory: 0.1, goal: 0.1}
-      #arm_right_joint_5_r: {trajectory: 0.1, goal: 0.1}
-      #arm_right_joint_6_b: {trajectory: 0.1, goal: 0.1}
-      #arm_right_joint_7_t: {trajectory: 0.1, goal: 0.1}
-      #right_gripper_finger_joint: {trajectory: 0.1, goal: 0.1}
-      #right_gripper_left_inner_knuckle_joint: {trajectory: 0.1, goal: 0.1}  
-      #right_gripper_left_inner_finger_joint: {trajectory: 0.1, goal: 0.1} 
-      #right_gripper_right_outer_knuckle_joint: {trajectory: 0.1, goal: 0.1} 
-      #right_gripper_right_inner_knuckle_joint: {trajectory: 0.1, goal: 0.1} 
-      #right_gripper_right_inner_finger_joint: {trajectory: 0.1, goal: 0.1} 
-      #arm_left_right_driver_joint: {trajectory: 0.1, goal: 0.1} 
-      #arm_left_right_follower_joint: {trajectory: 0.1, goal: 0.1} 
-      #arm_left_right_spring_link_joint: {trajectory: 0.1, goal: 0.1} 
-      #arm_left_left_driver_joint: {trajectory: 0.1, goal: 0.1} 
-      #arm_left_left_follower_joint: {trajectory: 0.1, goal: 0.1} 
-      #arm_left_left_spring_link_joint: {trajectory: 0.1, goal: 0.1} 
+  csda10f_r2_controller:
+    type: position_controllers/JointTrajectoryController
+    joints:        
+        - arm_right_joint_1_s
+        - arm_right_joint_2_l
+        - arm_right_joint_3_e
+        - arm_right_joint_4_u
+        - arm_right_joint_5_r
+        - arm_right_joint_6_b
+        - arm_right_joint_7_t            
+    constraints:
+        goal_time: 0.6
+        stopped_velocity_tolerance: 0.05
+        arm_right_joint_1_s: {trajectory: 0.1, goal: 0.1}
+        arm_right_joint_2_l: {trajectory: 0.1, goal: 0.1}
+        arm_right_joint_3_e: {trajectory: 0.1, goal: 0.1}
+        arm_right_joint_4_u: {trajectory: 0.1, goal: 0.1}
+        arm_right_joint_5_r: {trajectory: 0.1, goal: 0.1}
+        arm_right_joint_6_b: {trajectory: 0.1, goal: 0.1}
+        arm_right_joint_7_t: {trajectory: 0.1, goal: 0.1}
+    stop_trajectory_duration: 0.5
+    state_publish_rate:  25
+    action_monitor_rate: 10
 
-  stop_trajectory_duration: 0.5
-  state_publish_rate:  25
-  action_monitor_rate: 10
+  csda10f_b1_controller:
+    type: position_controllers/JointTrajectoryController
+    joints:        
+        - torso_joint_b1   
+    constraints:
+        goal_time: 0.6
+        stopped_velocity_tolerance: 0.05
+        torso_joint_b1: {trajectory: 0.1, goal: 0.1}
+    stop_trajectory_duration: 0.5
+    state_publish_rate:  25
+    action_monitor_rate: 10
+
+  csda10f_b2_controller:
+    type: position_controllers/JointTrajectoryController
+    joints:        
+        - torso_joint_b2   
+    constraints:
+        goal_time: 0.6
+        stopped_velocity_tolerance: 0.05
+        torso_joint_b2: {trajectory: 0.1, goal: 0.1}
+    stop_trajectory_duration: 0.5
+    state_publish_rate:  25
+    action_monitor_rate: 10
+
 
 
 
