@@ -411,7 +411,7 @@ int main(int argc, char **argv){
   // Dual-arm pose goals
   // ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
   // First define a new group for addressing the two arms.
-  static const std::string PLANNING_GROUP2 = "arms";
+  static const std::string PLANNING_GROUP2 = "csda10f";
   moveit::planning_interface::MoveGroupInterface two_arms_move_group(PLANNING_GROUP2);
 
   // Define two separate pose goals, one for each end-effector. Note that

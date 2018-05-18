@@ -40,17 +40,27 @@ int main(int argc, char **argv){
   }
 
   // Read Ros parameter indicating whther we are operating a simulation or the real robot
-  bool SIMULATION;
-  ros::param::param<bool>("/invite_pick_and_place/sim", SIMULATION, true);
-  ROS_INFO_COND( SIMULATION, "Tutorial Pick and Place: Operating %s robot", SIMULATION ? "Simulated":"Real");
+  // Variable used for detecting whether a motion plan was succesful.
+  bool success;
 
+  // Set up move group objects 
   moveit::planning_interface::MoveGroupInterface arm_right_move_group("arm_right");
+  arm_right_move_group.allowReplanning(true);     // Allow move group to re plan motions when scene changes are detected
   moveit::planning_interface::MoveGroupInterface csda10f_move_group("csda10f");
+  csda10f_move_group.allowReplanning(true);       // Allow move group to re plan motions when scene changes are detected
+  // Raw pointers are frequently used to refer to the planning group for improved performance.
+  const robot_state::JointModelGroup *csda10f_joint_model_group = csda10f_move_group.getCurrentState()->getJointModelGroup("csda10f");
+  const robot_state::JointModelGroup *arm_right_joint_model_group = arm_right_move_group.getCurrentState()->getJointModelGroup("arm_right");
+
+  // Holder for motion plans.
+  moveit::planning_interface::MoveGroupInterface::Plan my_plan;
+  // RobotState instance that will hold movoe group robot states instances.
+  robot_state::RobotState start_state(*arm_right_move_group.getCurrentState());
 
   // We will use the :planning_scene_interface:`PlanningSceneInterface`
   // class to add and remove collision objects in our "virtual world" scene
   moveit::planning_interface::PlanningSceneInterface planning_scene_interface;
-
+  // Define visualization parameters
   namespace rvt = rviz_visual_tools;
   moveit_visual_tools::MoveItVisualTools visual_tools("base_link");
   visual_tools.deleteAllMarkers();
@@ -67,6 +77,8 @@ int main(int argc, char **argv){
 
 // *****************************************************************************************
 // STEP 1:ADD WORKING OBJECT (CUP)
+  visual_tools.publishText(text_pose, "Loading mesh model...", rvt::WHITE, rvt::XXLARGE);
+
   //Vector to scale
   Vector3d vectorScale(0.001, 0.001, 0.001);
   // Define a collision object ROS message.
@@ -88,7 +100,7 @@ int main(int argc, char **argv){
 
   //Define a pose for the object (specified relative to frame_id)
   geometry_msgs::Pose mesh_pose;
-  mesh_pose.position.x = -0.10;
+  mesh_pose.position.x = -0.20;
   mesh_pose.position.y = -0.80;
   mesh_pose.position.z = 0.77;
   mesh_pose.orientation.w= 1.0; 
@@ -106,275 +118,134 @@ int main(int argc, char **argv){
     
   // Add the collision objects into the world
   planning_scene_interface.addCollisionObjects(objects);
-  
+  ros::Duration(1.5).sleep();
   visual_tools.deleteAllMarkers();
   visual_tools.publishText(text_pose, "Glass cup added into the world\nThis will be the object to manipulate", rvt::WHITE, rvt::XXLARGE);
   visual_tools.trigger();    
   visual_tools.prompt("Press the 'next' button on the 'RvizVisualToolsGui' pannel");
  
 
-// ***********************************************************************************************
-// STEP 2: PLAN TO PRE TEACH HOME POSITION
-
-  // Raw pointers are frequently used to refer to the planning group for improved performance.
-  const robot_state::JointModelGroup *csda10f_joint_model_group = csda10f_move_group.getCurrentState()->getJointModelGroup("csda10f");
-
-  // To start, we'll create a pointer that references the current robot's state.
-  // RobotState is the object that contains all the current position/velocity/acceleration data.
-  moveit::core::RobotStatePtr current_state = csda10f_move_group.getCurrentState();
-
-  // Now, we call the planner to compute the plan and visualize it.
-  // Note that we are just planning, not asking arm_right_move_group
-  // to actually move the robot.
-  moveit::planning_interface::MoveGroupInterface::Plan my_plan;
-
-  // Use the previously defined home position for ease of motion, this position was defined on the moveit_config package
-  csda10f_move_group.setNamedTarget("home_right_arms_folded");
-
-  bool success = (csda10f_move_group.plan(my_plan) == moveit::planning_interface::MoveItErrorCode::SUCCESS);
-  ROS_INFO("Visualizing plan 1 (pose goal) %s", success ? "SUCCESS" : "FAILED");
-  
-  visual_tools.deleteAllMarkers();
-  visual_tools.publishAxisLabeled(mesh_pose, "mesh_pose");
-  visual_tools.publishText(text_pose, "Planning to custom pre-teach home position \n Press next to perform the planned motion", rvt::WHITE, rvt::XXLARGE);
-  visual_tools.publishTrajectoryLine(my_plan.trajectory_, csda10f_joint_model_group);
-  visual_tools.trigger();
-  visual_tools.prompt("Press the 'next' button on the 'RvizVisualToolsGui' pannel");
-
   // ***********************************************************************************************
   // STEP 2: APPROACH CUP
-
-  // Get joint group state
-  const robot_state::JointModelGroup *arm_right_joint_model_group = arm_right_move_group.getCurrentState()->getJointModelGroup("arm_right");
-
-  // If not simulating, move the robot after user has visualized the robot motion.
-  if( !SIMULATION ){
-    csda10f_move_group.move();
-  }
   
   // Set up target pose for right arm.
   geometry_msgs::Pose approach_pose = mesh_pose;    // Use target object pose (x,y,z) coordinates as reference.
   tf::Quaternion orientation;
-  // Set targer orientation as euler angles for ease of use
-  //                ROLL-PITCH-YAW    [Radians]
   orientation.setRPY(M_PI , 0.0 , 0.0);
-  
   approach_pose.orientation.x = orientation.x();
   approach_pose.orientation.y = orientation.y();
   approach_pose.orientation.z = orientation.z();
   approach_pose.orientation.w = orientation.w();
-  approach_pose.position.z += 0.25;                 // Move 15 cm above the target object object.
+  approach_pose.position.z += 0.13;                 // Move 15 cm above the target object object.
   
   arm_right_move_group.setPoseTarget(approach_pose);
-
+  // Compute motion plan 
   success = (arm_right_move_group.plan(my_plan) == moveit::planning_interface::MoveItErrorCode::SUCCESS);
-  ROS_INFO("Pick Tutorial: Visualizing plan 2 (approach position) %s", success ? "SUCCESS" : "FAILED");
-
-  // Visualizing plans
+  ROS_INFO("Pick Tutorial: picking movements %s", success ? "SUCCESS" : "FAILED");
+  
+  // Visualizing plan
   // ^^^^^^^^^^^^^^^^^
-  // We can also visualize the plan as a line with markers in Rviz.
-  ROS_INFO_NAMED("Pick Tutorial", "Visualizing plan 2 as trajectory line");
   visual_tools.deleteAllMarkers();
-  visual_tools.publishAxisLabeled(approach_pose, "pose1");
-  visual_tools.publishText(text_pose, "Base (Cartesian) pose coordinate goal", rvt::WHITE, rvt::XLARGE);
+  visual_tools.publishAxisLabeled(approach_pose, "mesh origin");
+  visual_tools.publishText(text_pose, "Planning for object grasping/nPress next to perform motion on the real robot", rvt::WHITE, rvt::XLARGE);
   visual_tools.publishTrajectoryLine(my_plan.trajectory_, arm_right_joint_model_group);
   visual_tools.trigger();
   visual_tools.prompt("Press the 'next' button on the 'RvizVisualToolsGui' pannel");
-
-
-
-  // ***********************************************************************************************
-  // STEP 3: Grab cup
-  //          This step will perform the final approach with a save linear (cartesian) motion
-  //          And perform grabbing of the cup. 
-
-  // If not simulating, move the robot after user has visualized the robot motion.
-  if( !SIMULATION ){
-    ROS_INFO("Performing motion on real robot...");
-    arm_right_move_group.move();
-  }else{
-    robot_state::RobotState start_state(*arm_right_move_group.getCurrentState());
-    start_state.setFromIK(arm_right_joint_model_group, approach_pose);
-    arm_right_move_group.setStartState(start_state);
-  }
-  // Vector of poses for linear interpolation 
-  std::vector<geometry_msgs::Pose> waypoints;
-  // Initial pose is current pose.
-  waypoints.push_back(approach_pose);
-  // Final pose is graabing pose.
-  geometry_msgs::Pose grabbing_pose = approach_pose;
-  grabbing_pose.position.z -= 0.05;   
-  waypoints.push_back(grabbing_pose);
-  // Set motion speed at 10%.
-  arm_right_move_group.setMaxVelocityScalingFactor(0.1);
-
-  // Perform cartesian trajectory planning 
-  moveit_msgs::RobotTrajectory trajectory;
-  const double jump_threshold = 0.0;
-  const double eef_step = 0.015;
-  double fraction = arm_right_move_group.computeCartesianPath(waypoints, eef_step, jump_threshold, trajectory);
-  ROS_INFO_NAMED("Pick Tutorial", "Visualizing plan 4 (approach to grabbing) (%.2f%% acheived)", fraction * 100.0);
-
-  // Visualize the plan in Rviz
-  visual_tools.deleteAllMarkers();
-  visual_tools.publishText(text_pose, "Planning for grabbing/n Press next to perform", rvt::WHITE, rvt::XLARGE);
-  visual_tools.publishPath(waypoints, rvt::LIME_GREEN, rvt::SMALL);
-  for (std::size_t i = 0; i < waypoints.size(); ++i)
-    visual_tools.publishAxisLabeled(waypoints[i], "point" + std::to_string(i), rvt::MEDIUM);
-  visual_tools.trigger();
-  visual_tools.prompt("Press the 'next' button on the 'RvizVisualToolsGui' pannel");
-
-  // ***********************************************************************************************
-  // STEP 4: Close Gripper.  
-  moveit::planning_interface::MoveGroupInterface r_gripper_move_group("right_gripper");
-  // Get joint group state
-  const robot_state::JointModelGroup *r_gripper_joint_model_group = r_gripper_move_group.getCurrentState()->getJointModelGroup("right_gripper");
-
-  current_state = r_gripper_move_group.getCurrentState();
-  // Next get the current set of joint values for the group.
-  const std::vector<const moveit::core::JointModel*> gripper_joint = r_gripper_joint_model_group->getActiveJointModels();
   
-  // gripper_position[1] = 50 * (0.78/85);      // 50 [mm] * (max_joint_value/gripper_stroke[mm])
-  // std::vector<std::string> joints = current_state->getVariableNames();
-  const double pos = 0.5;
-  current_state->setJointPositions(gripper_joint[0], &pos );
-  
-  r_gripper_move_group.setJointValueTarget( current_state);
-  
-  success = ( r_gripper_move_group.plan(my_plan) == moveit::planning_interface::MoveItErrorCode::SUCCESS);
-  ROS_INFO("Pick Tutorial: Visualizing grasping %s", success ? "" : "FAILED");
-  
-  // ROS_INFO("Pick Tutorial: The gripper move group has %d joints", (int) gripper_position.size());
-
-/*
-//************************************************************************************************
-// POSE TARGET
-
-
- // We can plan a motion for this group to a desired pose for the
-  // end-effector.
-  geometry_msgs::Pose target_pose1;
-  target_pose1.orientation.x = orientation.x();
-  target_pose1.orientation.y = orientation.y();
-  target_pose1.orientation.z = orientation.z();
-  target_pose1.orientation.w = orientation.w();
-  target_pose1.position.x = 0.41;  //[meters]
-  target_pose1.position.y = -0.91; //[meters]
-  target_pose1.position.z = 0.78;  //[meters]
-  arm_right_move_group.setPlanningTime(10.0);
-
-
-  // Raw pointers are frequently used to refer to the planning group for improved performance.
-  const robot_state::JointModelGroup *joint_model_group = arm_right_move_group.getCurrentState()->getJointModelGroup("arm_right");
-
-  visual_tools.publishAxisLabeled(target_pose1, "pose1");
-  start_state.setFromIK(joint_model_group, target_pose1);
-  arm_right_move_group.setStartState(start_state);
-  
-
-  arm_right_move_group.setPoseTarget(target_pose1);
-  arm_right_move_group.setPlanningTime(10.0); 
-  ros::Duration(5.0).sleep();
-  arm_right_move_group.move();
-
-
-  // We can also visualize the plan as a line with markers in Rviz.
-  visual_tools.publishText(text_pose, "Go for the glass", rvt::WHITE, rvt::XXLARGE);
-  visual_tools.publishTrajectoryLine(my_plan.trajectory_, joint_model_group);
-  visual_tools.trigger();
-  visual_tools.prompt("Press the 'next' button on the 'RvizVisualToolsGui' pannel");
+  // Once user allow it, exceute the planned trajectory
+  ROS_INFO("Performing motion on real robot...");
+  arm_right_move_group.execute(my_plan);
 
 //************************************************************************************************
 // ATTACH THE OBJECT TO THE GRIPPER
 
-   static const std::string PLANNING_GROUP2 = "right_gripper";
-   moveit::planning_interface::MoveGroupInterface move_group2(PLANNING_GROUP2);
-   move_group2.attachObject(glass_cup.id);
+  moveit::planning_interface::MoveGroupInterface right_gripper_mg("right_gripper");
+  right_gripper_mg.attachObject(glass_cup.id);
 
   // Show text in Rviz of status
-
   visual_tools.publishText(text_pose, "Object attached to robot", rvt::WHITE, rvt::XXLARGE);
   visual_tools.trigger();
   visual_tools.prompt("Press the 'next' button on the 'RvizVisualToolsGui' pannel");
 
   // Sleep to allow MoveGroup to recieve and process the attached collision object message 
-  ros::Duration(2.0).sleep();
-
-//************************************************************************************************
-// MOVE THE OBJECT
-
-
- geometry_msgs::Pose target_pose2;
- target_pose2.orientation.x = orientation.x();
- target_pose2.orientation.y = orientation.y();
- target_pose2.orientation.z = orientation.z();
- target_pose2.orientation.w = orientation.w();
- target_pose2.position.x = -0.18;      //[meters]
- target_pose2.position.y = -0.84;     //[meters]
- target_pose2.position.z = 0.8;      //[meters]
- start_state.setFromIK(joint_model_group, target_pose2);
- arm_right_move_group.setStartState(start_state);
- arm_right_move_group.setPoseTarget(target_pose2);
-  
-  arm_right_move_group.setNumPlanningAttempts(3);
-  arm_right_move_group.setPlanningTime(10.0);  
-  arm_right_move_group.move();
-
-
-  // Visualize the plan in Rviz
-  visual_tools.deleteAllMarkers();
-  visual_tools.publishAxisLabeled(target_pose2, "goal");
-  visual_tools.publishAxisLabeled(target_pose1, "start");
-  visual_tools.publishText(text_pose, "Moving..", rvt::WHITE, rvt::XXLARGE);
-  visual_tools.trigger();
-  visual_tools.prompt("Press the 'next' button on the 'RvizVisualToolsGui' pannel");
-
-
-
-  // When done with the path constraint be sure to clear it.
-  arm_right_move_group.clearPathConstraints();
+  // ros::Duration(1.0).sleep();
 
 //************************************************************************************************
 // PLACE THE OBJECT
 
+  visual_tools.publishText(text_pose, "Planning with kinematic constraints...please wait", rvt::WHITE, rvt::XLARGE);
+  ROS_DEBUG("Planning with kinematic constraints...please wait");
 
-  // Now, let's detach the collision object from the robot.
-  ROS_INFO("Detach the object from the robot");
-  move_group2.detachObject(glass_cup.id);
+  // Path constraints can easily be specified for a link on the robot.
+  // Let's specify a path constraint and a pose goal for our group.
+  // First define the path constraint.
+  moveit_msgs::OrientationConstraint ocm;
+  ocm.link_name = "arm_right_link_tcp";               // Gripper base rigidly align to the TCP 
+  ocm.header.frame_id = "base_link";
+  ocm.orientation = approach_pose.orientation;            
+  ocm.absolute_x_axis_tolerance = 25*(M_PI/180);
+  ocm.absolute_y_axis_tolerance = 25*(M_PI/180);
+  ocm.absolute_z_axis_tolerance = 360*(M_PI/180);
+  // A weighting factor for this constraint (denotes relative importance to other constraints. Closer to zero means less important)
+  ocm.weight = 0.7;
 
-  // Show text in Rviz of status
+  // Now, set it as the path constraint for the group.
+  moveit_msgs::Constraints test_constraints;
+  test_constraints.orientation_constraints.push_back(ocm);
+  csda10f_move_group.setPathConstraints(test_constraints);
 
-  visual_tools.publishText(text_pose, "Object dettached from robot", rvt::WHITE, rvt::XXLARGE);
-  visual_tools.trigger();
-  visual_tools.prompt("Press the 'next' button on the 'RvizVisualToolsGui' pannel");
+  // start_state.setFromIK(csda10f_joint_model_group, approach_pose);
+  // csda10f_move_group.setStartState(start_state);
 
-  // Sleep to allow MoveGroup to recieve and process the detach collision object message //
-  ros::Duration(2.0).sleep();
-//************************************************************************************************
-// REMOVE THE OBJECT
+  geometry_msgs::Pose drop_pose = approach_pose;
 
+  drop_pose.position.x += 0.7;//= 0.55;     //[meters]
+  drop_pose.position.y += 0;//= 0.3;      //[meters]
+  drop_pose.position.z += 0;                //[meters]
+  csda10f_move_group.setPoseTarget(drop_pose, "arm_right_link_tcp");
 
-  // Now, let's remove the collision object from the world.
-  ROS_INFO("Remove the object from the world");
-  std::vector<std::string> object_ids;
-  object_ids.push_back(glass_cup.id);
-  planning_scene_interface.removeCollisionObjects(object_ids);
+  // Planning with constraints can be slow because every sample must call an inverse 
+  // kinematics solver.
+  // Lets increase the planning time from the default 10 seconds to be sure the planner has 
+  // enough time to succeed.
+  csda10f_move_group.setPlanningTime(20.0);
+  csda10f_move_group.setMaxAccelerationScalingFactor(0.5); 
+  csda10f_move_group.setMaxVelocityScalingFactor(0.2);
+  csda10f_move_group.setNumPlanningAttempts(3);
 
-  // Show text in Rviz of status
-  visual_tools.publishText(text_pose, "Object removed", rvt::WHITE, rvt::XXLARGE);
-  visual_tools.trigger();
-  visual_tools.prompt("Press the 'next' button on the 'RvizVisualToolsGui' pannel");
+  success = (csda10f_move_group.plan(my_plan) == moveit::planning_interface::MoveItErrorCode::SUCCESS);
+  ROS_INFO_NAMED("Pick&Place Tutorial", "Visualizing plan 3 (constraints) %s", success ? "" : "FAILED");
 
-  //Sleep to give Rviz time to show the object is no longer there.
-  ros::Duration(1.0).sleep();
+  // Visualize the plan in Rviz
   visual_tools.deleteAllMarkers();
+  visual_tools.publishAxisLabeled(approach_pose, "start");
+  visual_tools.publishAxisLabeled(drop_pose, "goal");
+  visual_tools.publishText(text_pose, "Perform motion of the cup mantaining orientation to avoid liquid spilling/nPress next to perform motion on real robot", rvt::WHITE, rvt::XLARGE);
+  visual_tools.publishTrajectoryLine(my_plan.trajectory_, csda10f_joint_model_group);
+  visual_tools.trigger();
+  visual_tools.prompt("Press the 'next' button on the 'RvizVisualToolsGui' pannel");
 
+  // Once user allow it, exceute the planned trajectory
+  ROS_INFO("Performing motion on real robot...");
+  csda10f_move_group.execute(my_plan);
 
+  // When done with the path constraint be sure to clear it.
+  csda10f_move_group.clearPathConstraints();
 
-//***************************************************
+  //************************************************************************************************
+  // STEP 2: PLAN TO PRE TEACH HOME POSITION
 
-*/
+  // Use the previously defined home position for ease of motion, this position was defined on the moveit_config package
+  csda10f_move_group.setNamedTarget("home_arms_folded");
+  success = (csda10f_move_group.plan(my_plan) == moveit::planning_interface::MoveItErrorCode::SUCCESS);
+  visual_tools.deleteAllMarkers();
+  visual_tools.publishText(text_pose, "Go back to home position/n Press next to perform motion", rvt::WHITE, rvt::XXLARGE);
+  visual_tools.publishTrajectoryLine(my_plan.trajectory_, csda10f_joint_model_group);
+  visual_tools.trigger();
+  visual_tools.prompt("Press the 'next' button on the 'RvizVisualToolsGui' pannel");
 
+  // Perform motion on real robot
+  csda10f_move_group.execute(my_plan);
   ros::shutdown();
   return 0;
 }
