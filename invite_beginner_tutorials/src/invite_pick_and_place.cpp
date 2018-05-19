@@ -74,9 +74,23 @@ int main(int argc, char **argv){
   visual_tools.trigger();
   visual_tools.prompt("Press the 'next' button on the 'RvizVisualToolsGui' pannel");
 
+// *****************************************************************************************
+// STEP 1: Go to home position.
+
+  // Use the previously defined home position for ease of motion, this position was defined on the moveit_config package
+  csda10f_move_group.setNamedTarget("home_arms_folded");
+  success = (csda10f_move_group.plan(my_plan) == moveit::planning_interface::MoveItErrorCode::SUCCESS);
+  visual_tools.deleteAllMarkers();
+  visual_tools.publishText(text_pose, "Go back to home position/n Press next to perform motion", rvt::WHITE, rvt::XXLARGE);
+  visual_tools.publishTrajectoryLine(my_plan.trajectory_, csda10f_joint_model_group);
+  visual_tools.trigger();
+  visual_tools.prompt("Press the 'next' button on the 'RvizVisualToolsGui' pannel");
+
+  // Perform motion on real robot
+  csda10f_move_group.execute(my_plan);
 
 // *****************************************************************************************
-// STEP 1:ADD WORKING OBJECT (CUP)
+// STEP 2: Add manipulation object.
   visual_tools.publishText(text_pose, "Loading mesh model...", rvt::WHITE, rvt::XXLARGE);
 
   //Vector to scale
@@ -126,7 +140,7 @@ int main(int argc, char **argv){
  
 
   // ***********************************************************************************************
-  // STEP 2: APPROACH CUP
+  // STEP 3: APPROACH CUP
   
   // Set up target pose for right arm.
   geometry_msgs::Pose approach_pose = mesh_pose;    // Use target object pose (x,y,z) coordinates as reference.
@@ -157,7 +171,7 @@ int main(int argc, char **argv){
   arm_right_move_group.execute(my_plan);
 
 //************************************************************************************************
-// ATTACH THE OBJECT TO THE GRIPPER
+// STEP 4: ATTACH THE OBJECT TO THE GRIPPER
 
   moveit::planning_interface::MoveGroupInterface right_gripper_mg("right_gripper");
   right_gripper_mg.attachObject(glass_cup.id);
@@ -171,14 +185,12 @@ int main(int argc, char **argv){
   // ros::Duration(1.0).sleep();
 
 //************************************************************************************************
-// PLACE THE OBJECT
+// STEP 5: PLACE THE OBJECT
 
   visual_tools.publishText(text_pose, "Planning with kinematic constraints...please wait", rvt::WHITE, rvt::XLARGE);
   ROS_DEBUG("Planning with kinematic constraints...please wait");
 
-  // Path constraints can easily be specified for a link on the robot.
-  // Let's specify a path constraint and a pose goal for our group.
-  // First define the path constraint.
+  // Create a path constraint to keep the cup facing up, to avoid spilling liquids.
   moveit_msgs::OrientationConstraint ocm;
   ocm.link_name = "arm_right_link_tcp";               // Gripper base rigidly align to the TCP 
   ocm.header.frame_id = "base_link";
@@ -194,13 +206,10 @@ int main(int argc, char **argv){
   test_constraints.orientation_constraints.push_back(ocm);
   csda10f_move_group.setPathConstraints(test_constraints);
 
-  // start_state.setFromIK(csda10f_joint_model_group, approach_pose);
-  // csda10f_move_group.setStartState(start_state);
-
+  // Set drop position *******************************
   geometry_msgs::Pose drop_pose = approach_pose;
-
-  drop_pose.position.x += 0.7;//= 0.55;     //[meters]
-  drop_pose.position.y += 0;//= 0.3;      //[meters]
+  drop_pose.position.x += 0.7;              //[meters]
+  drop_pose.position.y += 0;                //[meters]
   drop_pose.position.z += 0;                //[meters]
   csda10f_move_group.setPoseTarget(drop_pose, "arm_right_link_tcp");
 
@@ -211,8 +220,9 @@ int main(int argc, char **argv){
   csda10f_move_group.setPlanningTime(20.0);
   csda10f_move_group.setMaxAccelerationScalingFactor(0.5); 
   csda10f_move_group.setMaxVelocityScalingFactor(0.2);
-  csda10f_move_group.setNumPlanningAttempts(3);
+  csda10f_move_group.setNumPlanningAttempts(3);       //Even do it will take time replanning improves results... we are not in a hurry.
 
+  // Plan the motion wiht constraints.
   success = (csda10f_move_group.plan(my_plan) == moveit::planning_interface::MoveItErrorCode::SUCCESS);
   ROS_INFO_NAMED("Pick&Place Tutorial", "Visualizing plan 3 (constraints) %s", success ? "" : "FAILED");
 
@@ -228,12 +238,16 @@ int main(int argc, char **argv){
   // Once user allow it, exceute the planned trajectory
   ROS_INFO("Performing motion on real robot...");
   csda10f_move_group.execute(my_plan);
+ 
+  // Now, let's detach the collision object from the robot.
+  ROS_INFO("Detach the object from the robot");
+  move_group2.detachObject(glass_cup.id);
 
   // When done with the path constraint be sure to clear it.
   csda10f_move_group.clearPathConstraints();
 
   //************************************************************************************************
-  // STEP 2: PLAN TO PRE TEACH HOME POSITION
+  // STEP 6: PLAN TO PRE TEACH HOME POSITION
 
   // Use the previously defined home position for ease of motion, this position was defined on the moveit_config package
   csda10f_move_group.setNamedTarget("home_arms_folded");

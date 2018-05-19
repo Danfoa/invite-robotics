@@ -11,10 +11,12 @@ For further information please see the repository [Wiki](https://github.com/Danf
 * [Installation Instructions](https://github.com/Danfoa/invite-robotics/wiki/Intallation)
 * [CSDA10F Robot Moveit configuration](https://github.com/Danfoa/invite-robotics/wiki/CSDA10F-Moveit-Configuration)
 * Tutorials
-   * [Move Group Interface Tutorial Cpp](https://github.com/Danfoa/invite-robotics/wiki/Tutorial---Move-Group-Interface-Cpp)
-   * [Connect to Robot Controller](https://github.com/Danfoa/invite-robotics/wiki/Tutorial---Connect-to-Robot-Controller)
-   * [Modify Robot Grippers](https://github.com/Danfoa/invite-robotics/wiki/Tutorial---Modify-Robot-Grippers)
-    * [Simulation Scene Objects](https://github.com/Danfoa/invite-robotics/wiki/Tutorial---Simulation-Scene-Objects)
+    * [Move Group Interface Tutorial Cpp](https://github.com/Danfoa/invite-robotics/wiki/Tutorial---Move-Group-Interface-Cpp) 
+    * [Connect to Robot Controller](https://github.com/Danfoa/invite-robotics/wiki/Tutorial---Connect-to-Robot-Controller)
+    * [Pick and Place Test](https://github.com/Danfoa/invite-robotics/wiki/Tutorial---Robot-Test-Pick-and-Place)  
+    * [Connect to Robotiq gripper through Modbus RTU](https://github.com/Danfoa/invite-robotics/wiki/Tutorial---Connect-to-Robotiq-grippers-through-ModbusRTU) 
+    * [Modify Robot Grippers](https://github.com/Danfoa/invite-robotics/wiki/Tutorial---Modify-Robot-Grippers)
+    * [Simulation Scene Objects](https://github.com/Danfoa/invite-robotics/wiki/Tutorial---Simulation-Scene-Objects)   
 * [Release notes](https://github.com/Danfoa/invite-robotics/wiki/release-notes)
 
 ## About The Project
