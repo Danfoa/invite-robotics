@@ -1,16 +1,15 @@
 <launch>
 	<arg name="paused" default="false"/>
 
-  <!-- remap topics to conform to ROS-I specifications -->
+  <!-- remap topics to joint_trajectory_action controller -->
    <remap from="/csda10f/csda10f_r1_controller/follow_joint_trajectory" to="/csda10f/csda10f_r1_controller/joint_trajectory_action" /> 
    <remap from="/csda10f/csda10f_r2_controller/follow_joint_trajectory" to="/csda10f/csda10f_r2_controller/joint_trajectory_action" /> 
    <remap from="/csda10f/csda10f_b1_controller/follow_joint_trajectory" to="/csda10f/csda10f_b1_controller/joint_trajectory_action" />
    <remap from="/csda10f/csda10f_b2_controller/follow_joint_trajectory" to="/csda10f/csda10f_b2_controller/joint_trajectory_action" />
-   <!-- <remap from="/csda10f/joint_states" to="/joint_states" /> -->
-  <!-- <remap from="/arm_controller/follow_joint_trajectory" to="/joint_trajectory_action" /> -->
-  <!-- <remap from="/arm_controller/state" to="/feedback_states" /> -->
-  <!-- <remap from="/arm_controller/command" to="/joint_path_command"/> -->
+   <!-- remap topic joint_state from gazebo to Rviz -->
+   <remap from="/csda10f/joint_states" to="/joint_states" />
 
+ 
   <!-- startup simulated world -->
   <include file="$(find gazebo_ros)/launch/empty_world.launch">
     <arg name="world_name" value="worlds/empty.world"/>
@@ -21,13 +20,14 @@
   <!-- urdf xml robot description loaded on the Parameter Server, converting the xacro into a proper urdf file-->
   <include file="$(find invite_motoman_gazebo)/launch/load_invite_motoman.launch" />
 
+
   <!-- push robot_description to factory and spawn robot in gazebo -->
   <node name="invite_motoman_spawn" pkg="gazebo_ros" type="spawn_model" output="screen" args="-urdf -param robot_description -model invite_motoman_csdaf10" />
 
-    <!-- convert joint states to TF transforms for rviz, etc  ES LO QUE SE CAMBIO DEL ORIG IRB-->
-  <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" respawn="false" output="screen">
-     <!--   <remap from="/joint_states" to="/csda10f/joint_states" /> -->
-  </node>
+
+  <!-- convert joint states to TF transforms for rviz, etc -->
+  <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" respawn="false" output="screen" />
+  
 
   <!-- init and start Gazebo ros_control interface -->
   <include file="$(find invite_motoman_gazebo)/launch/invite_motoman_control.launch"/>

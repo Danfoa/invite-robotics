@@ -1,8 +1,23 @@
 <launch>
+  <!-- The planning and execution components of MoveIt! configured to run against a Gazebo based, 
+       ros_control compatible simulation of the Invite_motoman dual arm.
 
-  # The planning and execution components of MoveIt! configured to 
- # publish the current configuration of the robot (simulated or real)
- # and the current state of the world as seen by the planner
+       This depends on the corresponding 'invite_motoman_gazebo' pkg to be installed first.
+       This dependency is not expressed in the MoveIt config pkg manifest, as adding a run_depend 
+       there would cause Gazebo to be unconditionally installed, even if the user never intends 
+       to use the MoveIt config with it.
+       Instead, installation is left to the user, as a kind of poor-mans optional dependency.
+       This launch file assumes that gazebo is already running and that the invite_motoman dual arm 
+       and ros_controllers are loaded.
+
+       This can be achieved by executing the the following command:
+               
+                roslaunch invite_motoman_gazebo.launch
+       
+       With the simulator running, the next step is launch the planning_execution_gazebo
+               
+                roslaunch moveit_planning_execution_gazebo.launch
+  -->
 
   <rosparam command="load" file="$(find invite_motoman_support)/config/joint_names_csda10f.yaml" />
 
@@ -16,25 +31,16 @@
   <include file="$(find invite_motoman_moveit_config)/launch/planning_context.launch">
     <arg name="load_robot_description" value="false" />
   </include>
- 
-
-<!-- REVISAR NODO PUBLICADOR PARA QUE FUNCIONE -->
-     <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher" />  
-
 
  <include file="$(find invite_motoman_moveit_config)/launch/move_group.launch">
   <arg name="publish_monitored_planning_scene" value="true" />
  </include>
 
-
-
- # The visualization component of MoveIt!
+ <!-- The visualization component of MoveIt! -->
  
  <include file="$(find invite_motoman_moveit_config)/launch/moveit_rviz.launch">
     <arg name="config" value="true"/>
  </include>
-
-
   
   <!-- If database loading was enabled, start mongodb as well -->
   <!-- <include file="$(find invite_motoman_moveit_config)/launch/default_warehouse_db.launch" if="$(arg db)"> -->
