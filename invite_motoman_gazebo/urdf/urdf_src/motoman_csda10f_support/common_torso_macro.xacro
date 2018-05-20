@@ -120,7 +120,13 @@
 		</transmission>
 	
 		<!-- end of transmission list -->	
-
+		
+        <!-- Gazebo-specific link properties -->
+		<gazebo reference="${prefix}link_b2"> 
+			<visual>
+				<transparency>1</transparency>
+			</visual>    
+		</gazebo>
 
 	</xacro:macro>
 </robot>
