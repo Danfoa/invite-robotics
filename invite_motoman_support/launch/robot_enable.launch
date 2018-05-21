@@ -1,0 +1,4 @@
+<!--This node allows the real robot to take motion commands, without it it will not move -->
+<launch>
+<node pkg="rosservice" type="rosservice" name="robot_enable" args="call --wait /robot_enable"/>
+</launch>

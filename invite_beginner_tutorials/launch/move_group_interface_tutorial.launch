@@ -1,6 +1,10 @@
 <launch>
+  <!-- Load Rviz and Moveit Interface with simulated robot-->
+  <include file="$(find invite_motoman_moveit_config)/launch/demo.launch">
+    <arg name="load_scene" value="true"/>
+  </include>
 
-  <node name="invite_move_group_interface_tutorial" pkg="invite_begginer_tutorials" type="invite_move_group_interface_tutorial" respawn="false" output="screen">
-  </node>
+  <!-- Launch move_group_interface node tutorial-->
+  <node name="invite_move_group_interface" pkg="invite_beginner_tutorials" type="invite_move_group_interface" output="screen"/>
 
 </launch>

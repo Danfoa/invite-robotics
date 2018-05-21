@@ -1,0 +1,132 @@
+<?xml version="1.0" ?>
+<!-- Edited by Fernando Barbosa 05.04.2018 - fbarbosac@unal.edu.co
+	INFORMATION:
+	The base file was obtain from package motoman_csda10f_support 	
+	UPGRADE:
+	Its added all inertial tags for all links and its added all transmission tags for all joints
+	of torso
+-->
+<robot xmlns:xacro="http://ros.org/wiki/xacro">
+	<xacro:macro name="torso" params="name prefix">
+		<!-- link list -->
+		<link name="base_link">
+			<visual>
+				<geometry>
+					<mesh filename="package://motoman_csda10f_support/meshes/csda10f/visual/csda_base.STL" scale="0.001 0.001 0.001"/>
+				</geometry>
+				<material name="blue">
+					<color rgba="0.8 0.8 0.8 1"/>
+				</material>
+			</visual>
+			<collision>
+				<geometry>
+					<mesh filename="package://motoman_csda10f_support/meshes/csda10f/collision/csda_base.stl" scale="0.001 0.001 0.001"/>
+				</geometry>
+				<material name="yellow">
+					<color rgba="0 1 1 1"/>
+				</material>
+			</collision>
+			<inertial>
+       		  	<mass value="68.0"/>
+        		<origin xyz="0.0508 -0.00001 0.33388" rpy="0 0 0"/>
+        		<inertia ixx="12.645776" ixy="-6.14E-05" ixz="1.691224" iyy="12.88864" iyz="6.68E-05" izz="1.280156"/>
+	  		</inertial>
+		</link>
+		<link name="${prefix}link_b1">
+			<visual>
+				<origin rpy="0 0 0" xyz="0 0 0"/>
+				<geometry>
+					<mesh filename="package://motoman_csda10f_support/meshes/csda10f/visual/csda_axis_b1.STL" scale="0.001 0.001 0.001"/>
+				</geometry>
+				<material name="silver">
+					<color rgba="0.8 0.8 0.8 1"/>
+				</material>
+			</visual>
+			<collision>
+				<origin rpy="0 0 0" xyz="0 0 0"/>
+				<geometry>
+					<mesh filename="package://motoman_csda10f_support/meshes/csda10f/collision/csda_axis_b1.stl" scale="0.001 0.001 0.001"/>
+				</geometry>
+				<material name="yellow"/>
+			</collision>
+			<inertial>
+       		  	<mass value="52.0"/>
+        		<origin xyz="0.05378 0.0000034 0.24362" rpy="0 0 0"/>
+        		<inertia ixx="4.132762" ixy="0.000011" ixz="0.943678" iyy="4.366928" iyz="0.000039" izz="0.697600"/>
+     		</inertial>
+		</link>
+		<link name="${prefix}link_b2">
+			<visual>
+				<origin rpy="0 0 0" xyz="0 0 0"/>
+				<geometry>
+					<mesh filename="package://motoman_csda10f_support/meshes/csda10f/visual/csda_axis_b1.STL" scale="0.001 0.001 0.001"/>
+				</geometry>
+				<material name="silver">
+					<color rgba="0.8 0.8 0.8 1"/>
+				</material>
+			</visual>
+			<collision>
+				<origin rpy="0 0 0" xyz="0 0 0"/>
+				<geometry>
+					<mesh filename="package://motoman_csda10f_support/meshes/csda10f/collision/csda_axis_b1.stl" scale="0.001 0.001 0.001"/>
+				</geometry>
+				<material name="yellow"/>
+			</collision>
+			<inertial>
+       		  	<mass value="52.0"/>
+        		<origin xyz="0.05378 0.0000034 0.24362" rpy="0 0 0"/>
+        		<inertia ixx="4.132762" ixy="0.000011" ixz="0.943678" iyy="4.366928" iyz="0.000039" izz="0.697600"/>
+     		</inertial>
+		</link>
+		<!-- joint list -->
+		<joint name="${prefix}joint_b1" type="revolute">
+			<parent link="base_link"/>
+			<child link="${prefix}link_b1"/>
+			<origin xyz="0.0925 0 0.8619" rpy="0 0 0"/>
+			<axis xyz="0 0 1" />
+			<limit lower="-2.9570" upper="2.9570" effort="100" velocity="2.26" />
+			<dynamics damping="0.7" friction="0.7"/>
+		</joint>
+		 <joint name="${prefix}joint_b2" type="revolute">
+			<parent link="base_link"/>
+			<child link="${prefix}link_b2"/>
+			<origin xyz="0.0925 0 0.8619" rpy="0 0 0"/>
+			<axis xyz="0 0 1" />
+			<limit lower="-2.9570" upper="2.9570" effort="100" velocity="2.26" />
+			<mimic joint="${prefix}joint_b1" multiplier="1" offset="0"/>
+			<dynamics damping="0.7" friction="0.7"/>
+		</joint> 
+		<!-- end of joint list -->
+
+		<!-- transmission list -->
+		<transmission name="${prefix}tran_torso">
+			<type>transmission_interface/SimpleTransmission</type>
+			<joint name="${prefix}joint_b1">
+				<hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+			</joint>
+			<actuator name="${prefix}motor_torso">
+				<mechanicalReduction>1</mechanicalReduction>
+			</actuator>
+		</transmission>
+
+		<transmission name="${prefix}tran_torso2">
+			<type>transmission_interface/SimpleTransmission</type>
+			<joint name="${prefix}joint_b2">
+				<hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+			</joint>
+			<actuator name="${prefix}motor_torso2">
+				<mechanicalReduction>1</mechanicalReduction>
+			</actuator>
+		</transmission>
+	
+		<!-- end of transmission list -->	
+		
+        <!-- Gazebo-specific link properties -->
+		<gazebo reference="${prefix}link_b2"> 
+			<visual>
+				<transparency>1</transparency>
+			</visual>    
+		</gazebo>
+
+	</xacro:macro>
+</robot>

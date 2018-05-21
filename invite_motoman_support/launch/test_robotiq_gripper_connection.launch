@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<!-- to control/activate the gripper on the local machine -->
+<!-- first do a 'reset' then 'activate' to activate the gripper-->
+<launch>
+
+  <arg name="com_port" default="/dev/ttyUSB0" doc="Serial Port name/number to which the gripper is connected to" />
+
+  <node name="CModelRtuNode" pkg="robotiq_c_model_control" type="CModelRtuNode.py"  args="$(arg com_port)" output="screen">
+  </node>
+
+  <node name="CModelSimpleController" pkg="robotiq_c_model_control" type="CModelSimpleController.py" output="screen">
+  </node>
+
+</launch>
