@@ -1,8 +1,8 @@
 <launch>
   <!--Load default scene-->
-  <arg name="load_scene" default="true"/>
+  <arg name="load_scene" default="false"/>
   <!-- Scene objects to load as default -->
-  <arg name="scene_file" if="$(arg load_scene)" default="$(find invite_motoman_moveit_config)/scenes/scene_test.scene"/> 
+  <arg name="scene_file" if="$(arg load_scene)" default="$(find invite_motoman_moveit_config)/scenes/default_scene_objects.scene"/> 
   <!-- By default, we do not start a database (it can be large) -->
   <arg name="db" default="false" />
   <!-- Allow user to specify database location -->
