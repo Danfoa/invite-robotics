@@ -25,20 +25,15 @@ For further information please see the repository [Wiki](https://github.com/Danf
 This is a non-profit/collaborative project between the National University of Colombia and Invite GmbH research center, that intends to allow Invite to develope more complex/cooler task without them facing alone the already challenging ROS learning curve. In order to achieve this we are trying to set-up most required robot configurations and write/migrate examples and tutorials of common task with the CSDA10F robot. 
 
 ## Project Facts/Datasheet
+## Project Facts/Datasheet
 | Function                            |    Status       | 
 | :---                                |     :---:       |       
-| MoveIt! Configuration               |  :ok_hand:      |
-| CSDA10F support package             |  :ok_hand:      | 
-| Configuration files for real robot operation                |  :ok_hand:      | 
-| MoveGroupInterface tutorial with CSDA10F               |  :ok_hand:      |
-| TRAC-IK Integration for most move groups               |  :ok_hand:      | 
-| Motion planning with 15 DoF            |  :ok_hand:   |  
-| Gazebo robot simulation             |  :ok_hand:      | 
-| Gazebo grippers simulation          |  :cry:          | 
-| Grippers control through ROS control|  :neutral_face: | 
-
-:ok_hand:: working/supported
-
-:neutral_face:: almost there
-
-:cry:: haven't addressed this issue
+| MoveIt! Configuration               |  Supported      |
+| CSDA10F support package             |  Supported     | 
+| Configuration files for real robot operation                |  Supported      | 
+| MoveGroupInterface tutorial with CSDA10F               |  Supported     |
+| TRAC-IK Integration for most move groups               |  Supported      | 
+| Motion planning with 15 DoF            |  Supported   |  
+| Gazebo robot simulation             |  Supported      | 
+| Gazebo grippers simulation          |  In progress          | 
+| Grippers control through ROS control|  In progress | 
