@@ -3,8 +3,8 @@
 # Invite-Robotics
 This repository contains the integration of the [CSDA10F dual-arm Motoman Robot](https://www.yaskawa.eu.com/uk/products/robotic/motoman-robots/productdetail/product/csda10f/) with two [2-figer adaptive Robotiq grippers](https://robotiq.com/support/2-finger-adaptive-robot-gripper) and custom sensors with ROS framework. Aiming to develop robotics applications at Invite GmbH Research Center.
 
+![cover2](https://user-images.githubusercontent.com/8356912/40397357-ef27e30c-5df7-11e8-92bd-06e8669fd6d0.jpg)
 
-![all](https://user-images.githubusercontent.com/8356912/38436175-7e44e2ac-3999-11e8-8157-80c98658412e.jpg)
 
 For further information please see the repository [Wiki](https://github.com/Danfoa/invite-robotics/wiki).
 
