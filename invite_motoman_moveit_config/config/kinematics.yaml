@@ -1,35 +1,38 @@
 arm_left:
   kinematics_solver: trac_ik_kinematics_plugin/TRAC_IKKinematicsPlugin
   kinematics_solver_search_resolution: 0.005
-  kinematics_solver_timeout: 0.005
-  kinematics_solver_attempts: 3
+  kinematics_solver_timeout: 0.01
+  kinematics_solver_attempts: 8
+  solve_type: Distance
 arm_right:
   kinematics_solver: trac_ik_kinematics_plugin/TRAC_IKKinematicsPlugin
   kinematics_solver_search_resolution: 0.005
-  kinematics_solver_timeout: 0.005
-  kinematics_solver_attempts: 3
+  kinematics_solver_timeout: 0.01
+  kinematics_solver_attempts: 8
+  solve_type: Distance
 torso:
   kinematics_solver: kdl_kinematics_plugin/KDLKinematicsPlugin
   kinematics_solver_search_resolution: 0.005
   kinematics_solver_timeout: 0.005
   kinematics_solver_attempts: 3
 arms:
-  kinematics_solver: kdl_kinematics_plugin/KDLKinematicsPlugin
+  kinematics_solver: trac_ik_kinematics_plugin/TRAC_IKKinematicsPlugin
   kinematics_solver_search_resolution: 0.005
-  kinematics_solver_timeout: 0.005
-  kinematics_solver_attempts: 3
+  kinematics_solver_timeout: 0.03
+  kinematics_solver_attempts: 10
+  solve_type: Distance
 csda10f:
   kinematics_solver: kdl_kinematics_plugin/KDLKinematicsPlugin
   kinematics_solver_search_resolution: 0.005
-  kinematics_solver_timeout: 0.01
-  kinematics_solver_attempts: 6
+  kinematics_solver_timeout: 0.05
+  kinematics_solver_attempts: 20
 left_gripper:
   kinematics_solver: kdl_kinematics_plugin/KDLKinematicsPlugin
   kinematics_solver_search_resolution: 0.005
   kinematics_solver_timeout: 0.005
-  kinematics_solver_attempts: 3
+  kinematics_solver_attempts: 1
 right_gripper:
   kinematics_solver: kdl_kinematics_plugin/KDLKinematicsPlugin
   kinematics_solver_search_resolution: 0.005
   kinematics_solver_timeout: 0.005
-  kinematics_solver_attempts: 3
+  kinematics_solver_attempts: 1

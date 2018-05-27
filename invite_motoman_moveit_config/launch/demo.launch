@@ -1,6 +1,9 @@
 <launch>
+  <!--Change logging structure-->
+  <env name="ROSCONSOLE_FORMAT" value="[${severity}] [${node}]: ${message}"/>
+  
   <!--Load default scene-->
-  <arg name="load_scene" default="false"/>
+  <arg name="load_scene" default="true"/>
   <!-- Scene objects to load as default -->
   <arg name="scene_file" if="$(arg load_scene)" default="$(find invite_motoman_moveit_config)/scenes/default_scene_objects.scene"/> 
   <!-- By default, we do not start a database (it can be large) -->

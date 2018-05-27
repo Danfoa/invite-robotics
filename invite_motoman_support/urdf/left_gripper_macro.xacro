@@ -120,7 +120,7 @@ INTRUCTIONS:
 		</joint>
 
 		<!--ROBOTIQ 85mm Gripper instance creation-->
-		<xacro:robotiq_2f_85 name="arm_left" parent="${prefix}link_robotiq_coupling" precise_collision="true" adaptive_transmission="false">
+		<xacro:robotiq_2f_85 name="arm_left" parent="${prefix}link_robotiq_coupling" precise_collision="false" adaptive_transmission="false">
 			<origin xyz="0 0 0.0039" rpy="0 0 ${pi}"/>
 		</xacro:robotiq_2f_85>
 

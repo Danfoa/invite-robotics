@@ -103,11 +103,12 @@ int main(int argc, char **argv){
 
   // Rviz provides many types of markers, in this demo we will use text, cylinders, and spheres
   Eigen::Affine3d text_pose = Eigen::Affine3d::Identity();
-  text_pose.translation().z() = 1.55; // above head of CSDA10F
-  visual_tools.publishText(text_pose, "Move Group Interface Demo", rvt::WHITE, rvt::XLARGE);
-
+  text_pose.translation().z() = 2.0; // above head of CSDA10F
+  ros::Duration(1.0).sleep();
+  visual_tools.publishText(text_pose, "Move Group Interface Demo\nPress next to start", rvt::WHITE, rvt::XXLARGE);
   // Batch publishing is used to reduce the number of messages being sent to Rviz for large visualizations
   visual_tools.trigger();
+  visual_tools.prompt("Press the 'next' button on the 'RvizVisualToolsGui' pannel");
 
   // Getting Basic Information
   // ^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -148,7 +149,7 @@ int main(int argc, char **argv){
 
   // Visualize the plan in Rviz
   visual_tools.deleteAllMarkers();
-  visual_tools.publishText(text_pose, "Joint Space Planning", rvt::WHITE, rvt::XLARGE);
+  visual_tools.publishText(text_pose, "Joint Space Planning", rvt::WHITE, rvt::XXLARGE);
   visual_tools.publishTrajectoryLine(my_plan.trajectory_, joint_model_group);
   visual_tools.trigger();
   visual_tools.prompt("Press the 'next' button on the 'RvizVisualToolsGui' pannel");
@@ -182,7 +183,7 @@ int main(int argc, char **argv){
   // We can also visualize the plan as a line with markers in Rviz.
   ROS_INFO_NAMED("tutorial", "Visualizing plan 2 as trajectory line");
   visual_tools.publishAxisLabeled(target_pose1, "pose1");
-  visual_tools.publishText(text_pose, "Base (Cartesian) pose coordinate goal", rvt::WHITE, rvt::XLARGE);
+  visual_tools.publishText(text_pose, "Base (Cartesian) pose coordinate goal", rvt::WHITE, rvt::XXLARGE);
   visual_tools.publishTrajectoryLine(my_plan.trajectory_, joint_model_group);
   visual_tools.trigger();
   visual_tools.prompt("Press the 'next' button on the 'RvizVisualToolsGui' pannel");
@@ -238,7 +239,7 @@ int main(int argc, char **argv){
   planning_scene_interface.addCollisionObjects(collision_objects);
 
   // Show text in Rviz of status
-  visual_tools.publishText(text_pose, "Add object", rvt::WHITE, rvt::XLARGE);
+  visual_tools.publishText(text_pose, "Add object", rvt::WHITE, rvt::XXLARGE);
   visual_tools.trigger();
 
   // Sleep to allow MoveGroup to recieve and process the collision object message
@@ -253,7 +254,7 @@ int main(int argc, char **argv){
 
   // Visualize the plan in Rviz
   visual_tools.deleteAllMarkers();
-  visual_tools.publishText(text_pose, "Motion planning with collision avoidance", rvt::WHITE, rvt::XLARGE);
+  visual_tools.publishText(text_pose, "Motion planning with collision avoidance", rvt::WHITE, rvt::XXLARGE);
   visual_tools.publishTrajectoryLine(my_plan.trajectory_, joint_model_group);
   visual_tools.trigger();
   visual_tools.prompt("Press the 'next' button on the 'RvizVisualToolsGui' pannel");
@@ -263,7 +264,7 @@ int main(int argc, char **argv){
   move_group.attachObject(collision_object.id);
 
   // Show text in Rviz of status
-  visual_tools.publishText(text_pose, "Object attached to robot", rvt::WHITE, rvt::XLARGE);
+  visual_tools.publishText(text_pose, "Object attached to robot", rvt::WHITE, rvt::XXLARGE);
   visual_tools.trigger();
 
   /* Sleep to allow MoveGroup to recieve and process the attached collision object message */
@@ -274,7 +275,7 @@ int main(int argc, char **argv){
   move_group.detachObject(collision_object.id);
 
   // Show text in Rviz of status
-  visual_tools.publishText(text_pose, "Object dettached from robot", rvt::WHITE, rvt::XLARGE);
+  visual_tools.publishText(text_pose, "Object dettached from robot", rvt::WHITE, rvt::XXLARGE);
   visual_tools.trigger();
 
   /* Sleep to allow MoveGroup to recieve and process the detach collision object message */
@@ -287,7 +288,7 @@ int main(int argc, char **argv){
   planning_scene_interface.removeCollisionObjects(object_ids);
 
   // Show text in Rviz of status
-  visual_tools.publishText(text_pose, "Object removed", rvt::WHITE, rvt::XLARGE);
+  visual_tools.publishText(text_pose, "Object removed", rvt::WHITE, rvt::XXLARGE);
   visual_tools.trigger();
 
   /* Sleep to give Rviz time to show the object is no longer there.*/
@@ -354,7 +355,7 @@ int main(int argc, char **argv){
   visual_tools.deleteAllMarkers();
   visual_tools.publishAxisLabeled(start_pose2, "start");
   visual_tools.publishAxisLabeled(target_pose1, "goal");
-  visual_tools.publishText(text_pose, "Motion planning with kinematics constraints\n(Move mantaining orientation except Yaw angle)\n(Usefull when handling containers with liquids)", rvt::WHITE, rvt::XLARGE);
+  visual_tools.publishText(text_pose, "Motion planning with kinematics constraints\n(Move mantaining orientation except Yaw angle)\n(Usefull when handling containers with liquids)", rvt::WHITE, rvt::XXLARGE);
   visual_tools.publishTrajectoryLine(my_plan.trajectory_, joint_model_group);
   visual_tools.trigger();
   visual_tools.prompt("Press the 'next' button on the 'RvizVisualToolsGui' pannel");
@@ -400,7 +401,7 @@ int main(int argc, char **argv){
 
   // Visualize the plan in Rviz
   visual_tools.deleteAllMarkers();
-  visual_tools.publishText(text_pose, "Cartesian Space Motion \n(Linear motion at 10% speed)", rvt::WHITE, rvt::XLARGE);
+  visual_tools.publishText(text_pose, "Cartesian Space Motion \n(Linear motion at 10% speed)", rvt::WHITE, rvt::XXLARGE);
   visual_tools.publishPath(waypoints, rvt::LIME_GREEN, rvt::SMALL);
   for (std::size_t i = 0; i < waypoints.size(); ++i)
     visual_tools.publishAxisLabeled(waypoints[i], "point" + std::to_string(i), rvt::MEDIUM);
@@ -411,7 +412,7 @@ int main(int argc, char **argv){
   // Dual-arm pose goals
   // ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
   // First define a new group for addressing the two arms.
-  static const std::string PLANNING_GROUP2 = "arms";
+  static const std::string PLANNING_GROUP2 = "csda10f";
   moveit::planning_interface::MoveGroupInterface two_arms_move_group(PLANNING_GROUP2);
 
   // Define two separate pose goals, one for each end-effector. Note that
@@ -434,7 +435,7 @@ int main(int argc, char **argv){
   visual_tools.deleteAllMarkers();
   visual_tools.publishAxisLabeled(target_pose1, "Pose-Right-Arm");
   visual_tools.publishAxisLabeled(target_pose4, "Pose-Left-Arm");
-  visual_tools.publishText(text_pose, "Dual Arm Goal", rvt::WHITE, rvt::XLARGE);
+  visual_tools.publishText(text_pose, "Dual Arm Goal", rvt::WHITE, rvt::XXLARGE);
   joint_model_group = move_group.getCurrentState()->getJointModelGroup(PLANNING_GROUP2);
   visual_tools.publishTrajectoryLine(two_arms_plan.trajectory_, joint_model_group);
   visual_tools.trigger();
@@ -442,7 +443,7 @@ int main(int argc, char **argv){
   // END_TUTORIAL
   visual_tools.prompt("Press the 'next' button on the 'RvizVisualToolsGui' pannel");
   visual_tools.deleteAllMarkers();
-  visual_tools.publishText(text_pose, "End of tutorial...have a happy day :)", rvt::WHITE, rvt::XLARGE);
+  visual_tools.publishText(text_pose, "End of tutorial...have a happy day :)", rvt::WHITE, rvt::XXLARGE);
   visual_tools.trigger();
 
   ros::shutdown();

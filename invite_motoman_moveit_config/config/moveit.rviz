@@ -1,0 +1,911 @@
+Panels:
+  - Class: rviz/Displays
+    Help Height: 84
+    Name: Displays
+    Property Tree Widget:
+      Expanded:
+        - /MotionPlanning1
+        - /MotionPlanning1/Planning Request1
+        - /MotionPlanning1/Planning Metrics1
+        - /MarkerArray1
+        - /Axes1
+      Splitter Ratio: 0.643145144
+    Tree Height: 773
+  - Class: rviz/Help
+    Name: Help
+  - Class: rviz/Views
+    Expanded:
+      - /Current View1
+    Name: Views
+    Splitter Ratio: 0.5
+  - Class: rviz_visual_tools/RvizVisualToolsGui
+    Name: RvizVisualToolsGui
+Visualization Manager:
+  Class: ""
+  Displays:
+    - Alpha: 0.5
+      Cell Size: 1
+      Class: rviz/Grid
+      Color: 160; 160; 164
+      Enabled: true
+      Line Style:
+        Line Width: 0.0299999993
+        Value: Lines
+      Name: Grid
+      Normal Cell Count: 0
+      Offset:
+        X: 0
+        Y: 0
+        Z: 0
+      Plane: XY
+      Plane Cell Count: 10
+      Reference Frame: <Fixed Frame>
+      Value: true
+    - Class: moveit_rviz_plugin/MotionPlanning
+      Enabled: true
+      Move Group Namespace: ""
+      MoveIt_Goal_Tolerance: 0
+      MoveIt_Planning_Attempts: 10
+      MoveIt_Planning_Time: 5
+      MoveIt_Use_Constraint_Aware_IK: true
+      MoveIt_Warehouse_Host: 127.0.0.1
+      MoveIt_Warehouse_Port: 33829
+      MoveIt_Workspace:
+        Center:
+          X: 0
+          Y: 0
+          Z: 0
+        Size:
+          X: 2
+          Y: 2
+          Z: 2
+      Name: MotionPlanning
+      Planned Path:
+        Color Enabled: false
+        Interrupt Display: false
+        Links:
+          All Links Enabled: true
+          Expand Joint Details: false
+          Expand Link Details: false
+          Expand Tree: false
+          Link Tree Style: Links in Alphabetic Order
+          arm_left_base:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          arm_left_left_coupler:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          arm_left_left_driver:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          arm_left_left_follower:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          arm_left_left_pad:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          arm_left_left_spring_link:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          arm_left_link_1_s:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          arm_left_link_2_l:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          arm_left_link_3_e:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          arm_left_link_4_u:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          arm_left_link_5_r:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          arm_left_link_6_b:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          arm_left_link_7_t:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          arm_left_link_force_sensor:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          arm_left_link_force_sensor_adapter_plate:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          arm_left_link_gripper_adapter_plate:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          arm_left_link_robotiq_coupling:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          arm_left_link_tcp:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          arm_left_link_tool0:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          arm_left_right_coupler:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          arm_left_right_driver:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          arm_left_right_follower:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          arm_left_right_pad:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          arm_left_right_spring_link:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          arm_right_link_1_s:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          arm_right_link_2_l:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          arm_right_link_3_e:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          arm_right_link_4_u:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          arm_right_link_5_r:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          arm_right_link_6_b:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          arm_right_link_7_t:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          arm_right_link_gripper_adapter_plate:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          arm_right_link_robotiq_coupling:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          arm_right_link_tcp:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          arm_right_link_tool0:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          base_link:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          right_gripper_left_inner_finger:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          right_gripper_left_inner_knuckle:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          right_gripper_left_outer_finger:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          right_gripper_left_outer_knuckle:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          right_gripper_right_inner_finger:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          right_gripper_right_inner_knuckle:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          right_gripper_right_outer_finger:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          right_gripper_right_outer_knuckle:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          right_gripper_robotiq_arg2f_base_link:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          torso_link_b1:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          torso_link_b2:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+        Loop Animation: true
+        Robot Alpha: 0.5
+        Robot Color: 150; 50; 150
+        Show Robot Collision: false
+        Show Robot Visual: true
+        Show Trail: false
+        State Display Time: 0.05 s
+        Trail Step Size: 1
+        Trajectory Topic: move_group/display_planned_path
+      Planning Metrics:
+        Payload: 1
+        Show Joint Torques: false
+        Show Manipulability: false
+        Show Manipulability Index: false
+        Show Weight Limit: false
+        TextHeight: 0.0799999982
+      Planning Request:
+        Colliding Link Color: 255; 0; 0
+        Goal State Alpha: 1
+        Goal State Color: 250; 128; 0
+        Interactive Marker Size: 0
+        Joint Violation Color: 255; 0; 255
+        Planning Group: arm_left
+        Query Goal State: true
+        Query Start State: false
+        Show Workspace: false
+        Start State Alpha: 1
+        Start State Color: 0; 255; 0
+      Planning Scene Topic: move_group/monitored_planning_scene
+      Robot Description: robot_description
+      Scene Geometry:
+        Scene Alpha: 1
+        Scene Color: 50; 230; 50
+        Scene Display Time: 0.200000003
+        Show Scene Geometry: true
+        Voxel Coloring: Z-Axis
+        Voxel Rendering: Occupied Voxels
+      Scene Robot:
+        Attached Body Color: 150; 50; 150
+        Links:
+          All Links Enabled: true
+          Expand Joint Details: false
+          Expand Link Details: false
+          Expand Tree: false
+          Link Tree Style: Links in Alphabetic Order
+          arm_left_base:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          arm_left_left_coupler:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          arm_left_left_driver:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          arm_left_left_follower:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          arm_left_left_pad:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          arm_left_left_spring_link:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          arm_left_link_1_s:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          arm_left_link_2_l:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          arm_left_link_3_e:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          arm_left_link_4_u:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          arm_left_link_5_r:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          arm_left_link_6_b:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          arm_left_link_7_t:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          arm_left_link_force_sensor:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          arm_left_link_force_sensor_adapter_plate:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          arm_left_link_gripper_adapter_plate:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          arm_left_link_robotiq_coupling:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          arm_left_link_tcp:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          arm_left_link_tool0:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          arm_left_right_coupler:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          arm_left_right_driver:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          arm_left_right_follower:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          arm_left_right_pad:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          arm_left_right_spring_link:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          arm_right_link_1_s:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          arm_right_link_2_l:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          arm_right_link_3_e:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          arm_right_link_4_u:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          arm_right_link_5_r:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          arm_right_link_6_b:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          arm_right_link_7_t:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          arm_right_link_gripper_adapter_plate:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          arm_right_link_robotiq_coupling:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          arm_right_link_tcp:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          arm_right_link_tool0:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          base_link:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          right_gripper_left_inner_finger:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          right_gripper_left_inner_knuckle:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          right_gripper_left_outer_finger:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          right_gripper_left_outer_knuckle:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          right_gripper_right_inner_finger:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          right_gripper_right_inner_knuckle:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          right_gripper_right_outer_finger:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          right_gripper_right_outer_knuckle:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          right_gripper_robotiq_arg2f_base_link:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          torso_link_b1:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          torso_link_b2:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+        Robot Alpha: 0.5
+        Show Robot Collision: false
+        Show Robot Visual: true
+      Value: true
+    - Class: rviz/MarkerArray
+      Enabled: true
+      Marker Topic: /rviz_visual_tools
+      Name: MarkerArray
+      Namespaces:
+        Cylinder: true
+        Sphere: true
+        Text: true
+      Queue Size: 100
+      Value: true
+    - Class: moveit_rviz_plugin/Trajectory
+      Color Enabled: false
+      Enabled: true
+      Interrupt Display: false
+      Links:
+        All Links Enabled: true
+        Expand Joint Details: false
+        Expand Link Details: false
+        Expand Tree: false
+        Link Tree Style: Links in Alphabetic Order
+        arm_left_base:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        arm_left_left_coupler:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        arm_left_left_driver:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        arm_left_left_follower:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        arm_left_left_pad:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        arm_left_left_spring_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        arm_left_link_1_s:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        arm_left_link_2_l:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        arm_left_link_3_e:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        arm_left_link_4_u:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        arm_left_link_5_r:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        arm_left_link_6_b:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        arm_left_link_7_t:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        arm_left_link_force_sensor:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        arm_left_link_force_sensor_adapter_plate:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        arm_left_link_gripper_adapter_plate:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        arm_left_link_robotiq_coupling:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        arm_left_link_tcp:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        arm_left_link_tool0:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        arm_left_right_coupler:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        arm_left_right_driver:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        arm_left_right_follower:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        arm_left_right_pad:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        arm_left_right_spring_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        arm_right_link_1_s:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        arm_right_link_2_l:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        arm_right_link_3_e:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        arm_right_link_4_u:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        arm_right_link_5_r:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        arm_right_link_6_b:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        arm_right_link_7_t:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        arm_right_link_gripper_adapter_plate:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        arm_right_link_robotiq_coupling:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        arm_right_link_tcp:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        arm_right_link_tool0:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        base_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        right_gripper_left_inner_finger:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        right_gripper_left_inner_knuckle:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        right_gripper_left_outer_finger:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        right_gripper_left_outer_knuckle:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        right_gripper_right_inner_finger:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        right_gripper_right_inner_knuckle:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        right_gripper_right_outer_finger:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        right_gripper_right_outer_knuckle:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        right_gripper_robotiq_arg2f_base_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        torso_link_b1:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        torso_link_b2:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+      Loop Animation: false
+      Name: Trajectory
+      Robot Alpha: 0.5
+      Robot Color: 150; 50; 150
+      Robot Description: robot_description
+      Show Robot Collision: false
+      Show Robot Visual: true
+      Show Trail: false
+      State Display Time: 0.05 s
+      Trail Step Size: 1
+      Trajectory Topic: /move_group/display_planned_path
+      Value: true
+    - Class: rviz/Axes
+      Enabled: true
+      Length: 1.20000005
+      Name: Axes
+      Radius: 0.0199999996
+      Reference Frame: <Fixed Frame>
+      Value: true
+  Enabled: true
+  Global Options:
+    Background Color: 48; 48; 48
+    Default Light: true
+    Fixed Frame: base_link
+    Frame Rate: 30
+  Name: root
+  Tools:
+    - Class: rviz/Interact
+      Hide Inactive Objects: true
+    - Class: rviz/MoveCamera
+    - Class: rviz/Select
+    - Class: rviz_visual_tools/KeyTool
+  Value: true
+  Views:
+    Current:
+      Class: rviz/XYOrbit
+      Distance: 4.5102849
+      Enable Stereo Rendering:
+        Stereo Eye Separation: 0.0599999987
+        Stereo Focal Distance: 1
+        Swap Stereo Eyes: false
+        Value: false
+      Focal Point:
+        X: -0.00711810589
+        Y: 0.200469732
+        Z: -5.53759492e-08
+      Focal Shape Fixed Size: false
+      Focal Shape Size: 0.0500000007
+      Invert Z Axis: false
+      Name: Current View
+      Near Clip Distance: 0.00999999978
+      Pitch: 0.290202349
+      Target Frame: base_link
+      Value: XYOrbit (rviz)
+      Yaw: 5.46359539
+    Saved: ~
+Window Geometry:
+  Displays:
+    collapsed: false
+  Height: 1788
+  Help:
+    collapsed: false
+  Hide Left Dock: false
+  Hide Right Dock: false
+  MotionPlanning:
+    collapsed: false
+  MotionPlanning - Slider:
+    collapsed: false
+  QMainWindow State: 000000ff00000000fd0000000100000000000003aa00000681fc020000000afb000000100044006900730070006c0061007900730100000055000003ac000000e900fffffffb0000000800480065006c00700000000342000000bb0000008200fffffffb0000000a0056006900650077007300000003b0000000b0000000ca00fffffffb0000000c00430061006d00650072006100000002ff000001610000000000000000fb0000001e004d006f00740069006f006e00200050006c0061006e006e0069006e00670100000374000001890000000000000000fb0000002e004d006f00740069006f006e0050006c0061006e006e0069006e00670020002d00200053006c00690064006500720000000000ffffffff0000005a00fffffffb0000001c004d006f00740069006f006e0050006c0061006e006e0069006e0067010000040a000002690000026900fffffffb00000024005200760069007a00560069007300750061006c0054006f006f006c0073004700750069010000067c0000005a0000005a00fffffffb000000120020002d00200053006c00690064006500720000000000ffffffff0000000000000000fb00000026005400720061006a006500630074006f007200790020002d00200053006c00690064006500720000000000ffffffff0000005a00ffffff000006b60000068100000001000000020000000100000002fc0000000100000002000000010000000a0054006f006f006c00730100000000ffffffff0000000000000000
+  RvizVisualToolsGui:
+    collapsed: false
+  Trajectory - Slider:
+    collapsed: false
+  Views:
+    collapsed: false
+  Width: 2665
+  X: 71
+  Y: 36

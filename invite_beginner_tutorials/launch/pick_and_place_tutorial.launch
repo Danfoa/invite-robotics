@@ -11,27 +11,27 @@
     <arg name="controller" unless="$(arg sim)" value="$(arg controller)" default="fs100"/>
 
     <!-- Connect to real robot -->
-    
+    <group unless="$(arg sim)">
     <!--Run the robot simulation or interface nodes for real robot operation -->
-    <include file="$(find invite_motoman_moveit_config)/launch/moveit_planning_execution.launch">
-        <arg name="sim" value="true"/>
-        <arg name="robot_ip" unless="$(arg sim)" value="$(arg robot_ip)"/>
-        <arg name="controller" unless="$(arg sim)" value="$(arg controller)"/>
-    </include>
-     
-    <!-- Load `scene_file` scene objects for collision checking -->
-    <node name= "moveit_publish_scene_from_text" pkg= "moveit_ros_planning" type="moveit_publish_scene_from_text" 
-            args= "$(arg scene_file)" output="screen"/>
-    
+        <include file="$(find invite_motoman_moveit_config)/launch/moveit_planning_execution.launch">
+            <arg name="sim" value="true"/>
+            <arg name="robot_ip" unless="$(arg sim)" value="$(arg robot_ip)"/>
+            <arg name="controller" unless="$(arg sim)" value="$(arg controller)"/>
+        </include>
+        
+        <!-- Load `scene_file` scene objects for collision checking -->
+        <node name= "moveit_publish_scene_from_text" pkg= "moveit_ros_planning" type="moveit_publish_scene_from_text" 
+                args= "$(arg scene_file)" output="screen"/>
+    </group>
 
-    <!-- Start simulated robot ->
+    <!--Start simulated robot -->
     <group if="$(arg sim)">
         <include file="$(find invite_motoman_moveit_config)/launch/demo.launch">
             <arg name="load_scene" value="true"/>
-            <arg name="sim" value="true">
         </include>
-    </group>-->
+    </group>
    
+    <!-- Launch tutorial executable Node-->
     <node name="invite_pick_and_place" type="invite_pick_and_place" pkg="invite_beginner_tutorials" output="screen">
        <param name="sim" type="bool" value="$(arg sim)"/>
     </node>
