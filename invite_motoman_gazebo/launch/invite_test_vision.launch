@@ -1,0 +1,37 @@
+<launch>
+    <arg name="paused" default="false"/>
+
+    <!-- remap topics to joint_trajectory_action controller -->
+    <remap from="/csda10f/csda10f_r1_controller/follow_joint_trajectory" to="/csda10f/csda10f_r1_controller/joint_trajectory_action" /> 
+    <remap from="/csda10f/csda10f_r2_controller/follow_joint_trajectory" to="/csda10f/csda10f_r2_controller/joint_trajectory_action" /> 
+    <remap from="/csda10f/csda10f_b1_controller/follow_joint_trajectory" to="/csda10f/csda10f_b1_controller/joint_trajectory_action" />
+    <remap from="/csda10f/csda10f_b2_controller/follow_joint_trajectory" to="/csda10f/csda10f_b2_controller/joint_trajectory_action" />
+    <!-- remap topic joint_state from gazebo to Rviz -->
+    <remap from="/csda10f/joint_states" to="/joint_states" />
+
+    <arg name="gazebo_gui" default="false" doc="Parameter to determine whether to show Gazebo GUI, disable for performance"/>
+
+    <!-- startup simulated world -->
+    <include file="$(find gazebo_ros)/launch/empty_world.launch">
+        <arg name="world_name" value="$(find robot_eyes)/config/gazebo_worlds/test.sdf"/>
+        <arg name="gui" value="$(arg gazebo_gui)"/>
+    </include>
+
+    <!-- urdf xml robot description loaded on the Parameter Server, converting the xacro into a proper urdf file-->
+    <param name="robot_description" command="$(find xacro)/xacro --inorder '$(find invite_motoman_gazebo)/urdf/csda10f_with_vision.xacro'" />
+
+    <!-- push robot_description to factory and spawn robot in gazebo -->
+    <node name="invite_motoman_spawn" pkg="gazebo_ros" type="spawn_model" output="screen" args="-urdf -param robot_description -model invite_motoman_csdaf10" />
+
+    <!-- convert joint states to TF transforms for rviz, etc -->
+    <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" respawn="false" output="screen" />
+
+    <!-- init and start Gazebo ros_control interface -->
+    <include file="$(find invite_motoman_gazebo)/launch/invite_motoman_control.launch"/>
+
+    <!-- CAMERA DEPENDENT SECTION ********************************************************************-->
+	<!-- Process camera inputs to generate cloud data with color information-->
+	<include file="$(find robot_eyes)/launch/depth_img_processing.launch"/>
+	<include file="$(find robot_eyes)/launch/test.launch"/>
+	<!-- *********************************************************************************************-->
+</launch>

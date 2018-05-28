@@ -1,3 +1,16 @@
 <launch>
 
+    <!-- Set the file describing which sensor(s) to use to build the octomap  -->
+    <arg name="moveit_octomap_sensor_params_file" default="$(find invite_motoman_moveit_config)/config/sensors_rs200.yaml" />
+
+    <arg name="head_pointing_frame" default="/color" />
+    <param name="head_pointing_frame" value="$(arg head_pointing_frame)" />
+
+    <!-- Params for the octomap monitor -->
+    <param name="octomap_frame" type="string" value="base_link" />
+    <param name="octomap_resolution" type="double" value="0.025" />
+    <param name="max_range" type="double" value="5.0" />
+    
+    <!-- sensors used to update the map -->
+    <rosparam command="load" file="$(arg moveit_octomap_sensor_params_file)" />
 </launch>
