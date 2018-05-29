@@ -1,8 +1,8 @@
 sensors:
-  - sensor_plugin: occupancy_map_monitor/PointCloudOctomapUpdater
-    point_cloud_topic: /realsense/camera/depth_registered/points
-    max_range: 2.5
-    point_subsample: 1
-    padding_offset: 0.1
-    padding_scale: 1.0
-    filtered_cloud_topic: /moveit/points/self_filtered
+  - sensor_plugin: occupancy_map_monitor/PointCloudOctomapUpdater   # Plugin to create octmap from PointCloud2 data (do not change)
+    point_cloud_topic: /realsense/camera/depth_registered/points    # Topic to which the PointCloud2 data is being publish.
+    max_range: 3.0                                                  # Max range for considering cloud point for voxelization (distance of point to camera origin)
+    point_subsample: 1                                              
+    padding_offset: 0.1                                             # Size of the padding in cm
+    padding_scale: 1.0                                              # Scale of padding 
+    filtered_cloud_topic: /moveit/points/self_filtered              # Topic to which the self filtered cloud will be publihed (Cloud data without points belogning to robot geometies)
