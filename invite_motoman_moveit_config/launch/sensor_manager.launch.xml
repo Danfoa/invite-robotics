@@ -5,7 +5,7 @@
   <!-- Set the file describing which sensor(s) to use to build the octomap  -->
   <arg name="moveit_octomap_sensor_params_file" default="$(find invite_motoman_moveit_config)/config/sensors_rs200.yaml" />
 
-  <rosparam command="load" file="$(find invite_motoman_moveit_config)/config/sensors_rs200.yaml" />
+  <!--<rosparam command="load" file="$(find invite_motoman_moveit_config)/config/sensors_rs200.yaml" />-->
   
   <!-- Load the robot specific sensor manager; this sets the moveit_sensor_manager ROS parameter -->
   <arg name="moveit_sensor_manager" default="motoman_csda10f" />

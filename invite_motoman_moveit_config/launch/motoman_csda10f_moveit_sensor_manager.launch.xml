@@ -12,5 +12,5 @@
     <param name="max_range" type="double" value="5.0" />
     
     <!-- sensors used to update the map -->
-    <rosparam command="load" file="$(arg moveit_octomap_sensor_params_file)" />
+    <!--<rosparam command="load" file="$(arg moveit_octomap_sensor_params_file)" />-->
 </launch>
