@@ -106,5 +106,142 @@
         <projection_type>perspective</projection_type>
       </camera>
     </gui>
+    <model name="drum">
+      <pose>0.59 0.34 0.13  0 0 0</pose>
+      
+      <static>true</static>
+      <link name="drum_link">
+        <visual name="drum_visual">
+          <geometry>
+            <mesh><uri>model://invite_motoman_gazebo/worlds/meshes/drum.stl</uri></mesh>
+          </geometry>
+        </visual>
+        <collision name="collision">
+         <geometry>
+           <mesh><uri>model://invite_motoman_gazebo/worlds/meshes/drum.stl</uri></mesh>
+         </geometry>
+      </collision>
+      </link>
+    </model>
+
+    <model name="table">
+      <link name="table_link">
+        <pose>0.48 -0.77 0.33  3.14 -3.14 0.14</pose>
+
+        <visual name="visual">
+          <geometry>
+            <mesh><uri>model://invite_motoman_gazebo/worlds/meshes/table.stl</uri></mesh>
+          </geometry>
+        </visual>
+        <collision name="table_collision">
+          <geometry>
+            <mesh><uri>model://invite_motoman_gazebo/worlds/meshes/table.stl</uri></mesh>
+          </geometry>
+        </collision>
+      </link>
+    </model>
+
+
+    <model name="item">
+      <pose>0.1 -0.52 0.71  3.14 -3.14 -1.57</pose>
+      <static>true</static>
+      <link name="item_link">
+        <visual name="item_visual">
+          <geometry>
+            <mesh><uri>model://invite_motoman_gazebo/worlds/meshes/item.stl</uri></mesh>
+          </geometry>
+        </visual>
+      </link>
+    </model>
+
+    <model name="perforated_plate">
+      <pose>0.1 -0.51 0.76  1.57 0 0</pose>
+      <static>true</static>
+      <link name="perforated_plate_link">
+        <visual name="p_plate_visual">
+          <geometry>
+            <mesh><uri>model://invite_motoman_gazebo/worlds/meshes/perforated_plate.stl</uri></mesh>
+          </geometry>
+        </visual>
+      </link>
+    </model>
+
+
+    <model name="structure">
+      <pose>0.13 0.03 -0.03  0 0 0</pose>
+      <static>true</static>
+      <link name="structure_link">
+        <visual name="structure_visual">
+          <geometry>
+            <mesh><uri>model://invite_motoman_gazebo/worlds/meshes/structure.stl</uri></mesh>
+          </geometry>
+        </visual>
+      </link>
+    </model>
+
+    <model name="100ml_bottle">
+      <pose>-0.09 -0.8 0.77  1.56 0 0.02</pose>
+      <static>true</static>
+      <link name="100ml_bottle_link">
+        <visual name="100ml_bottle_visual">
+          <geometry>
+            <mesh><uri>model://invite_motoman_gazebo/worlds/meshes/100ml_bottle.stl</uri></mesh>
+          </geometry>
+        </visual>
+      </link>
+    </model>
+
+
+
+    <model name="pipette_holder">
+      <pose>0.59 -1 0.77  1.6 0 0</pose>
+      <static>true</static>
+      <link name="pipette_holder_link">
+        <visual name="pipette_holder_visual">
+          <geometry>
+            <mesh><uri>model://invite_motoman_gazebo/worlds/meshes/pipette_holder.stl</uri></mesh>
+          </geometry>
+        </visual>
+      </link>
+    </model>
+
+    <model name="pipette_tip_holder">
+      <pose>0.61 -0.66 0.77  1.56 0 0</pose>
+      <static>true</static>
+      <link name="pipette_tip_holder_link">
+        <visual name="pipette_tip_holder_visual">
+          <geometry>
+            <mesh><uri>model://invite_motoman_gazebo/worlds/meshes/pipette_tip_holder.stl</uri></mesh>
+          </geometry>
+        </visual>
+      </link>
+    </model>
+
+    <model name="pump">
+      <pose>-0.34 -1 0.75  1.59 -0.02 0.3</pose>
+      <static>true</static>
+      <link name="pump_link">
+        <visual name="pump_visual">
+          <geometry>
+            <mesh><uri>model://invite_motoman_gazebo/worlds/meshes/pump.stl</uri></mesh>
+          </geometry>
+        </visual>
+      </link>
+    </model>
+
+    <model name="viker_small">
+      <pose>0.28 -1.02 0.77  1.56 -0.03 0</pose>
+      <static>true</static>
+      <link name="viker_small_link">
+        <visual name="viker_small_visual">
+          <geometry>
+            <mesh><uri>model://invite_motoman_gazebo/worlds/meshes/viker_small.stl</uri></mesh>
+          </geometry>
+        </visual>
+      </link>
+    </model>
+
+
+
   </world>
 </sdf>
