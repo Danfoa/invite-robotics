@@ -40,6 +40,23 @@
 		<axis xyz="0 0 1"/> 
 	</joint> 
 
+	<!--Define the TCP of the grippers -->
+  <link name="arm_right_link_tcp" />
+	<link name="arm_left_link_tcp" />
+
+	<!--Define the position of the TCP with respect to the arm flange-->
+  <joint name="arm_right_joint_tcp" type="fixed" >
+      <origin xyz="0 0 0.1994" rpy="0 0 0"/>
+      <parent link="arm_right_link_tool0" />
+      <child link="arm_right_link_tcp" />
+  </joint>
+
+	<joint name="arm_left_joint_tcp" type="fixed" >
+      <origin xyz="0 0 0.2094" rpy="0 0 ${111.42*pi/180}"/>
+      <parent link="arm_left_link_tool0" />
+      <child link="arm_left_link_tcp" />
+  </joint>
+
   <!-- ros_control plugin invite_csda10f gazebo-->
   <gazebo>
     <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
@@ -51,9 +68,9 @@
 
   <!-- Fix robot to Gazebo world -->
   <link name="world"/>
-  <joint name="world-base_link-fixed" type="fixed">
-    <parent link="world"/>
-    <child link="base_link"/>
+   <joint name="world-base_link-fixed" type="fixed">
+     <parent link="world"/>
+     <child link="base_link"/>
   </joint>
 
 </robot>
