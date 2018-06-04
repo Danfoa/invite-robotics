@@ -78,6 +78,7 @@ int main(int argc, char **argv){
 // STEP 1: Go to home position.
 
   // Use the previously defined home position for ease of motion, this position was defined on the moveit_config package
+  csda10f_move_group.setStartState(*csda10f_move_group.getCurrentState());
   csda10f_move_group.setNamedTarget("home_right_arms_folded");
   success = (csda10f_move_group.plan(my_plan) == moveit::planning_interface::MoveItErrorCode::SUCCESS);
   visual_tools.deleteAllMarkers();
@@ -88,6 +89,7 @@ int main(int argc, char **argv){
 
   // Perform motion on real robot
   csda10f_move_group.execute(my_plan);
+  ros::Duration(1.5).sleep();
 
 // *****************************************************************************************
 // STEP 2: Add manipulation object.
@@ -154,6 +156,7 @@ int main(int argc, char **argv){
   approach_pose.position.x += 0.03;                 
   approach_pose.position.y += 0.03;
 
+  arm_left_move_group.setStartState(*arm_left_move_group.getCurrentState());
   arm_left_move_group.setPoseTarget(approach_pose);
   // Compute motion plan 
   success = (arm_left_move_group.plan(my_plan) == moveit::planning_interface::MoveItErrorCode::SUCCESS);
@@ -171,6 +174,8 @@ int main(int argc, char **argv){
   // Once user allow it, exceute the planned trajectory
   ROS_INFO("Performing motion on real robot...");
   arm_left_move_group.execute(my_plan);
+  ros::Duration(1.5).sleep();
+
 
 //************************************************************************************************
 // STEP 4: ATTACH THE OBJECT TO THE GRIPPER
@@ -196,6 +201,7 @@ int main(int argc, char **argv){
   drop_pose.position.x = 0.60;                //[meters]
   drop_pose.position.y = 0.35;                //[meters]
   drop_pose.position.z = 0.83;                //[meters]
+  csda10f_move_group.setStartState(*csda10f_move_group.getCurrentState());
   csda10f_move_group.setPoseTarget(drop_pose, "arm_left_link_tcp");
 
   // This movement will involve the manipulation of the 15 joints at the same time, and will be a long sweep, that is why we give some seconds to the solver
@@ -211,6 +217,7 @@ int main(int argc, char **argv){
   if(!success){
     ROS_DEBUG("Planning from table to drum was not possible, going back to home position for replanning");
     // Use the previously defined home position for ease of motion, this position was defined on the moveit_config package
+    csda10f_move_group.setStartState(*csda10f_move_group.getCurrentState());
     csda10f_move_group.setNamedTarget("home_arms_folded");
     success = (csda10f_move_group.plan(my_plan) == moveit::planning_interface::MoveItErrorCode::SUCCESS);
     visual_tools.deleteAllMarkers();
@@ -220,8 +227,10 @@ int main(int argc, char **argv){
     visual_tools.prompt("Press the 'next' button on the 'RvizVisualToolsGui' pannel");
     // Perform motion on real robot
     csda10f_move_group.execute(my_plan);
+    ros::Duration(1.5).sleep();
     // Replan to target position 
     ROS_DEBUG("Replanning to target position...");
+    csda10f_move_group.setStartState(*csda10f_move_group.getCurrentState());
     csda10f_move_group.setPoseTarget(drop_pose, "arm_left_link_tcp");
     success = (csda10f_move_group.plan(my_plan) == moveit::planning_interface::MoveItErrorCode::SUCCESS);
   }
@@ -241,6 +250,8 @@ int main(int argc, char **argv){
   // Once user allow it, exceute the planned trajectory
   ROS_INFO("Performing motion on real robot...");
   csda10f_move_group.execute(my_plan);
+  ros::Duration(1.5).sleep();
+
  
   // Now, let's detach the collision object from the robot.
   ROS_INFO("Detach the object from the robot");
@@ -253,6 +264,7 @@ int main(int argc, char **argv){
   // STEP 6: PLAN TO PRE TEACH HOME POSITION
 
   // Use the previously defined home position for ease of motion, this position was defined on the moveit_config package
+  csda10f_move_group.setStartState(*csda10f_move_group.getCurrentState());
   csda10f_move_group.setNamedTarget("home_arms_folded");
   success = (csda10f_move_group.plan(my_plan) == moveit::planning_interface::MoveItErrorCode::SUCCESS);
   visual_tools.deleteAllMarkers();
@@ -263,6 +275,8 @@ int main(int argc, char **argv){
 
   // Perform motion on real robot
   csda10f_move_group.execute(my_plan);
+  ros::Duration(1.5).sleep();
+
   ros::shutdown();
   return 0;
 }

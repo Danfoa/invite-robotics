@@ -1,0 +1,143 @@
+digraph G {
+node [shape=box];
+"base_link" [label="base_link"];
+"torso_link_b1" [label="torso_link_b1"];
+"arm_left_link_1_s" [label="arm_left_link_1_s"];
+"arm_left_link_2_l" [label="arm_left_link_2_l"];
+"arm_left_link_3_e" [label="arm_left_link_3_e"];
+"arm_left_link_4_u" [label="arm_left_link_4_u"];
+"arm_left_link_5_r" [label="arm_left_link_5_r"];
+"arm_left_link_6_b" [label="arm_left_link_6_b"];
+"arm_left_link_7_t" [label="arm_left_link_7_t"];
+"arm_left_link_tool0" [label="arm_left_link_tool0"];
+"arm_left_link_tcp" [label="arm_left_link_tcp"];
+"arm_left_link_force_sensor_adapter_plate" [label="arm_left_link_force_sensor_adapter_plate"];
+"arm_left_link_force_sensor" [label="arm_left_link_force_sensor"];
+"arm_left_link_gripper_adapter_plate" [label="arm_left_link_gripper_adapter_plate"];
+"arm_left_link_robotiq_coupling" [label="arm_left_link_robotiq_coupling"];
+"arm_left_base" [label="arm_left_base"];
+"arm_left_left_driver" [label="arm_left_left_driver"];
+"arm_left_left_coupler" [label="arm_left_left_coupler"];
+"arm_left_left_follower" [label="arm_left_left_follower"];
+"arm_left_left_pad" [label="arm_left_left_pad"];
+"arm_left_left_spring_link" [label="arm_left_left_spring_link"];
+"arm_left_right_driver" [label="arm_left_right_driver"];
+"arm_left_right_coupler" [label="arm_left_right_coupler"];
+"arm_left_right_follower" [label="arm_left_right_follower"];
+"arm_left_right_pad" [label="arm_left_right_pad"];
+"arm_left_right_spring_link" [label="arm_left_right_spring_link"];
+"arm_right_link_1_s" [label="arm_right_link_1_s"];
+"arm_right_link_2_l" [label="arm_right_link_2_l"];
+"arm_right_link_3_e" [label="arm_right_link_3_e"];
+"arm_right_link_4_u" [label="arm_right_link_4_u"];
+"arm_right_link_5_r" [label="arm_right_link_5_r"];
+"arm_right_link_6_b" [label="arm_right_link_6_b"];
+"arm_right_link_7_t" [label="arm_right_link_7_t"];
+"arm_right_link_tool0" [label="arm_right_link_tool0"];
+"arm_right_link_tcp" [label="arm_right_link_tcp"];
+"arm_right_link_gripper_adapter_plate" [label="arm_right_link_gripper_adapter_plate"];
+"arm_right_link_robotiq_coupling" [label="arm_right_link_robotiq_coupling"];
+"right_gripper_robotiq_arg2f_base_link" [label="right_gripper_robotiq_arg2f_base_link"];
+"right_gripper_left_outer_knuckle" [label="right_gripper_left_outer_knuckle"];
+"right_gripper_left_outer_finger" [label="right_gripper_left_outer_finger"];
+"right_gripper_left_inner_finger" [label="right_gripper_left_inner_finger"];
+"right_gripper_left_inner_knuckle" [label="right_gripper_left_inner_knuckle"];
+"right_gripper_right_inner_knuckle" [label="right_gripper_right_inner_knuckle"];
+"right_gripper_right_outer_knuckle" [label="right_gripper_right_outer_knuckle"];
+"right_gripper_right_outer_finger" [label="right_gripper_right_outer_finger"];
+"right_gripper_right_inner_finger" [label="right_gripper_right_inner_finger"];
+"torso_link_b2" [label="torso_link_b2"];
+node [shape=ellipse, color=blue, fontcolor=blue];
+"base_link" -> "torso_joint_b1" [label="xyz: 0.0925 0 0.8619 \nrpy: 0 -0 0"]
+"torso_joint_b1" -> "torso_link_b1"
+"torso_link_b1" -> "arm_left_joint_1_s" [label="xyz: 0.1 0.023 0.3381 \nrpy: 1.57 -0 0"]
+"arm_left_joint_1_s" -> "arm_left_link_1_s"
+"arm_left_link_1_s" -> "arm_left_joint_2_l" [label="xyz: 0 0.0454 -0.242 \nrpy: -1.57 0 0"]
+"arm_left_joint_2_l" -> "arm_left_link_2_l"
+"arm_left_link_2_l" -> "arm_left_joint_3_e" [label="xyz: 0 0.175 -0.0454 \nrpy: 1.57 -0 0"]
+"arm_left_joint_3_e" -> "arm_left_link_3_e"
+"arm_left_link_3_e" -> "arm_left_joint_4_u" [label="xyz: 1e-05 -0.0155 -0.185 \nrpy: -1.57 0 0"]
+"arm_left_joint_4_u" -> "arm_left_link_4_u"
+"arm_left_link_4_u" -> "arm_left_joint_5_r" [label="xyz: 2e-05 0.1487 0.0155 \nrpy: 1.57 -0 0"]
+"arm_left_joint_5_r" -> "arm_left_link_5_r"
+"arm_left_link_5_r" -> "arm_left_joint_6_b" [label="xyz: 1e-05 0.015 -0.2113 \nrpy: -1.57 0 0"]
+"arm_left_joint_6_b" -> "arm_left_link_6_b"
+"arm_left_link_6_b" -> "arm_left_joint_7_t" [label="xyz: 0 0.118 -0.015 \nrpy: 1.57 -0 0"]
+"arm_left_joint_7_t" -> "arm_left_link_7_t"
+"arm_left_link_7_t" -> "arm_left_joint_tool0" [label="xyz: 0 0 -0.0569999 \nrpy: 3.13 -0 0"]
+"arm_left_joint_tool0" -> "arm_left_link_tool0"
+"arm_left_link_tool0" -> "arm_left_joint_tcp" [label="xyz: 0 0 0.2094 \nrpy: 0 -0 1.94465"]
+"arm_left_joint_tcp" -> "arm_left_link_tcp"
+"arm_left_link_tool0" -> "left_gripper_to_robot_joint" [label="xyz: 0 0 0 \nrpy: 0 -0 1.94465"]
+"left_gripper_to_robot_joint" -> "arm_left_link_force_sensor_adapter_plate"
+"arm_left_link_force_sensor_adapter_plate" -> "arm_left_gripper_flange_joint" [label="xyz: 0 0 0.039 \nrpy: 0 -0 0"]
+"arm_left_gripper_flange_joint" -> "arm_left_link_force_sensor"
+"arm_left_link_force_sensor" -> "arm_left_gripper_force_sensor_joint" [label="xyz: 0 0 0.02 \nrpy: 1.5708 -0 0"]
+"arm_left_gripper_force_sensor_joint" -> "arm_left_link_gripper_adapter_plate"
+"arm_left_link_gripper_adapter_plate" -> "arm_left_gripper_coupling_joint" [label="xyz: 0 0.016 0 \nrpy: -1.5708 0 0"]
+"arm_left_gripper_coupling_joint" -> "arm_left_link_robotiq_coupling"
+"arm_left_link_robotiq_coupling" -> "arm_left_link_robotiq_coupling_arm_left_base_joint" [label="xyz: 0 0 0.0039 \nrpy: 0 -0 -3.14159"]
+"arm_left_link_robotiq_coupling_arm_left_base_joint" -> "arm_left_base"
+"arm_left_base" -> "arm_left_left_driver_joint" [label="xyz: 0 -0.0306011 0.054904 \nrpy: 0 -0 3.14159"]
+"arm_left_left_driver_joint" -> "arm_left_left_driver"
+"arm_left_left_driver" -> "arm_left_left_coupler_joint" [label="xyz: 0 0.0315 -0.0041 \nrpy: 0 -0 0"]
+"arm_left_left_coupler_joint" -> "arm_left_left_coupler"
+"arm_left_left_coupler" -> "arm_left_left_follower_joint" [label="xyz: 0 0.0061 0.0471 \nrpy: 0 -0 0"]
+"arm_left_left_follower_joint" -> "arm_left_left_follower"
+"arm_left_left_follower" -> "arm_left_left_pad_joint" [label="xyz: 0 0 0 \nrpy: 0 -0 0"]
+"arm_left_left_pad_joint" -> "arm_left_left_pad"
+"arm_left_base" -> "arm_left_left_spring_link_joint" [label="xyz: 0 -0.012 0.0614 \nrpy: 0 -0 3.14159"]
+"arm_left_left_spring_link_joint" -> "arm_left_left_spring_link"
+"arm_left_base" -> "arm_left_right_driver_joint" [label="xyz: 0 0.0306011 0.054904 \nrpy: 0 -0 0"]
+"arm_left_right_driver_joint" -> "arm_left_right_driver"
+"arm_left_right_driver" -> "arm_left_right_coupler_joint" [label="xyz: 0 0.0315 -0.0041 \nrpy: 0 -0 0"]
+"arm_left_right_coupler_joint" -> "arm_left_right_coupler"
+"arm_left_right_coupler" -> "arm_left_right_follower_joint" [label="xyz: 0 0.0061 0.0471 \nrpy: 0 -0 0"]
+"arm_left_right_follower_joint" -> "arm_left_right_follower"
+"arm_left_right_follower" -> "arm_left_right_pad_joint" [label="xyz: 0 0 0 \nrpy: 0 -0 0"]
+"arm_left_right_pad_joint" -> "arm_left_right_pad"
+"arm_left_base" -> "arm_left_right_spring_link_joint" [label="xyz: 0 0.012 0.0614 \nrpy: 0 -0 0"]
+"arm_left_right_spring_link_joint" -> "arm_left_right_spring_link"
+"torso_link_b1" -> "arm_right_joint_1_s" [label="xyz: 0.1 -0.023 0.3381 \nrpy: 1.57 -2.1684e-19 -3.14"]
+"arm_right_joint_1_s" -> "arm_right_link_1_s"
+"arm_right_link_1_s" -> "arm_right_joint_2_l" [label="xyz: 0 0.0454 -0.242 \nrpy: -1.57 0 0"]
+"arm_right_joint_2_l" -> "arm_right_link_2_l"
+"arm_right_link_2_l" -> "arm_right_joint_3_e" [label="xyz: 0 0.175 -0.0454 \nrpy: 1.57 -0 0"]
+"arm_right_joint_3_e" -> "arm_right_link_3_e"
+"arm_right_link_3_e" -> "arm_right_joint_4_u" [label="xyz: 1e-05 -0.0155 -0.185 \nrpy: -1.57 0 0"]
+"arm_right_joint_4_u" -> "arm_right_link_4_u"
+"arm_right_link_4_u" -> "arm_right_joint_5_r" [label="xyz: 2e-05 0.1487 0.0155 \nrpy: 1.57 -0 0"]
+"arm_right_joint_5_r" -> "arm_right_link_5_r"
+"arm_right_link_5_r" -> "arm_right_joint_6_b" [label="xyz: 1e-05 0.015 -0.2113 \nrpy: -1.57 0 0"]
+"arm_right_joint_6_b" -> "arm_right_link_6_b"
+"arm_right_link_6_b" -> "arm_right_joint_7_t" [label="xyz: 0 0.118 -0.015 \nrpy: 1.57 -0 0"]
+"arm_right_joint_7_t" -> "arm_right_link_7_t"
+"arm_right_link_7_t" -> "arm_right_joint_tool0" [label="xyz: 0 0 -0.0569999 \nrpy: 3.13 -0 0"]
+"arm_right_joint_tool0" -> "arm_right_link_tool0"
+"arm_right_link_tool0" -> "arm_right_joint_tcp" [label="xyz: 0 0 0.1994 \nrpy: 0 -0 0"]
+"arm_right_joint_tcp" -> "arm_right_link_tcp"
+"arm_right_link_tool0" -> "right_gripper_to_robot_joint" [label="xyz: 0 0 0 \nrpy: 1.5708 -0 0"]
+"right_gripper_to_robot_joint" -> "arm_right_link_gripper_adapter_plate"
+"arm_right_link_gripper_adapter_plate" -> "right_gripper_gripper_coupling_joint" [label="xyz: 0 0.016 0 \nrpy: -1.5708 0 0"]
+"right_gripper_gripper_coupling_joint" -> "arm_right_link_robotiq_coupling"
+"arm_right_link_robotiq_coupling" -> "right_gripper_joint" [label="xyz: 0 0 0.0039 \nrpy: 0 -0 -3.14159"]
+"right_gripper_joint" -> "right_gripper_robotiq_arg2f_base_link"
+"right_gripper_robotiq_arg2f_base_link" -> "right_gripper_finger_joint" [label="xyz: 0 -0.030601 0.054905 \nrpy: 2.2958 -0 0"]
+"right_gripper_finger_joint" -> "right_gripper_left_outer_knuckle"
+"right_gripper_left_outer_knuckle" -> "right_gripper_left_outer_finger_joint" [label="xyz: 0 0.01822 0.0260018 \nrpy: 0 -0 0"]
+"right_gripper_left_outer_finger_joint" -> "right_gripper_left_outer_finger"
+"right_gripper_left_outer_finger" -> "right_gripper_left_inner_finger_joint" [label="xyz: 0 0.0817554 -0.0282203 \nrpy: -0.725 0 0"]
+"right_gripper_left_inner_finger_joint" -> "right_gripper_left_inner_finger"
+"right_gripper_robotiq_arg2f_base_link" -> "right_gripper_left_inner_knuckle_joint" [label="xyz: 0 -0.0127 0.06142 \nrpy: 2.2958 -0 0"]
+"right_gripper_left_inner_knuckle_joint" -> "right_gripper_left_inner_knuckle"
+"right_gripper_robotiq_arg2f_base_link" -> "right_gripper_right_inner_knuckle_joint" [label="xyz: 0 0.0127 0.06142 \nrpy: 2.2958 -0 3.14159"]
+"right_gripper_right_inner_knuckle_joint" -> "right_gripper_right_inner_knuckle"
+"right_gripper_robotiq_arg2f_base_link" -> "right_gripper_right_outer_knuckle_joint" [label="xyz: 0 0.030601 0.054905 \nrpy: 2.2958 -0 -3.14159"]
+"right_gripper_right_outer_knuckle_joint" -> "right_gripper_right_outer_knuckle"
+"right_gripper_right_outer_knuckle" -> "right_gripper_right_outer_finger_joint" [label="xyz: 0 0.01822 0.0260018 \nrpy: 0 -0 0"]
+"right_gripper_right_outer_finger_joint" -> "right_gripper_right_outer_finger"
+"right_gripper_right_outer_finger" -> "right_gripper_right_inner_finger_joint" [label="xyz: 0 0.0817554 -0.0282203 \nrpy: -0.725 0 0"]
+"right_gripper_right_inner_finger_joint" -> "right_gripper_right_inner_finger"
+"base_link" -> "torso_joint_b2" [label="xyz: 0.0925 0 0.8619 \nrpy: 0 -0 0"]
+"torso_joint_b2" -> "torso_link_b2"
+}
