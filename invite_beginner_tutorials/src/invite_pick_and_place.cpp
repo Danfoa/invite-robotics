@@ -3,6 +3,7 @@
  *********************************************************************
  Author:      Alejandro Acevedo
  Modified by: Daniel Ordonez - daniels.ordonez@gmail.com    10/May/2018
+ Only left arm for the place action
 */
 
 #include <moveit_msgs/DisplayRobotState.h>
@@ -201,38 +202,40 @@ int main(int argc, char **argv){
   drop_pose.position.x = 0.60;                //[meters]
   drop_pose.position.y = 0.35;                //[meters]
   drop_pose.position.z = 0.83;                //[meters]
-  csda10f_move_group.setStartState(*csda10f_move_group.getCurrentState());
-  csda10f_move_group.setPoseTarget(drop_pose, "arm_left_link_tcp");
+
+  
+  arm_left_move_group.setStartState(*arm_left_move_group.getCurrentState());
+  arm_left_move_group.setPoseTarget(drop_pose, "arm_left_link_tcp");
 
   // This movement will involve the manipulation of the 15 joints at the same time, and will be a long sweep, that is why we give some seconds to the solver
   // to find a solution...
-  csda10f_move_group.setPlanningTime(20.0);
-  csda10f_move_group.setMaxAccelerationScalingFactor(0.5); 
-  csda10f_move_group.setMaxVelocityScalingFactor(0.2);
-  csda10f_move_group.setNumPlanningAttempts(2);       //Even do it will take time replanning improves results... we are not in a hurry.
+  arm_left_move_group.setPlanningTime(20.0);
+  arm_left_move_group.setMaxAccelerationScalingFactor(0.5); 
+  arm_left_move_group.setMaxVelocityScalingFactor(0.2);
+  arm_left_move_group.setNumPlanningAttempts(2);       //Even do it will take time replanning improves results... we are not in a hurry.
 
   // Plan the motion wiht constraints.
-  success = (csda10f_move_group.plan(my_plan) == moveit::planning_interface::MoveItErrorCode::SUCCESS);
+  success = (arm_left_move_group.plan(my_plan) == moveit::planning_interface::MoveItErrorCode::SUCCESS);
   // If no solution is found for dropping the object into the drum, roll back to home position and try again.
   if(!success){
     ROS_DEBUG("Planning from table to drum was not possible, going back to home position for replanning");
     // Use the previously defined home position for ease of motion, this position was defined on the moveit_config package
-    csda10f_move_group.setStartState(*csda10f_move_group.getCurrentState());
-    csda10f_move_group.setNamedTarget("home_arms_folded");
-    success = (csda10f_move_group.plan(my_plan) == moveit::planning_interface::MoveItErrorCode::SUCCESS);
+    arm_left_move_group.setStartState(*arm_left_move_group.getCurrentState());
+    arm_left_move_group.setNamedTarget("home_arms_folded");
+    success = (arm_left_move_group.plan(my_plan) == moveit::planning_interface::MoveItErrorCode::SUCCESS);
     visual_tools.deleteAllMarkers();
     visual_tools.publishText(text_pose, "Planning to drop position not feasible\nComming back to home position for replanning...", rvt::WHITE, rvt::XXLARGE);
-    visual_tools.publishTrajectoryLine(my_plan.trajectory_, csda10f_joint_model_group);
+    //visual_tools.publishTrajectoryLine(my_plan.trajectory_, csda10f_joint_model_group);
     visual_tools.trigger();
     visual_tools.prompt("Press the 'next' button on the 'RvizVisualToolsGui' pannel");
     // Perform motion on real robot
-    csda10f_move_group.execute(my_plan);
+    arm_left_move_group.execute(my_plan);
     ros::Duration(1.5).sleep();
     // Replan to target position 
     ROS_DEBUG("Replanning to target position...");
-    csda10f_move_group.setStartState(*csda10f_move_group.getCurrentState());
-    csda10f_move_group.setPoseTarget(drop_pose, "arm_left_link_tcp");
-    success = (csda10f_move_group.plan(my_plan) == moveit::planning_interface::MoveItErrorCode::SUCCESS);
+    arm_left_move_group.setStartState(*arm_left_move_group.getCurrentState());
+    arm_left_move_group.setPoseTarget(drop_pose, "arm_left_link_tcp");
+    success = (arm_left_move_group.plan(my_plan) == moveit::planning_interface::MoveItErrorCode::SUCCESS);
   }
   if(!success){
     ROS_ERROR("No planning found to target position ... :c");
