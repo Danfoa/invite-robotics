@@ -153,7 +153,7 @@ int main(int argc, char **argv){
   box_pose.orientation.w = 1.0;
   box_pose.position.x = 0.65;
   box_pose.position.y = -0.75;
-  box_pose.position.z = 1.4;
+  box_pose.position.z = 1.0;
 
   collision_object.primitives.push_back(primitive);
   collision_object.primitive_poses.push_back(box_pose);
