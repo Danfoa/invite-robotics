@@ -34,6 +34,8 @@
 
 /* Author: Sachin Chitta, Dave Coleman 
    Modified by: Daniel Ordonez Apraez - daniels.ordonez@gmail.com
+                Alejandro Acevedo haacevedos@unal.edu.co
+
 /* 
 This document is a modification of the Move Grup Moveit Tutorial, in order 
 for it to work with CSDA10F robot, it is intended to familiarize the operator with several 
@@ -59,6 +61,8 @@ this code.
 #include <moveit_visual_tools/moveit_visual_tools.h>
 
 #include <math.h>
+
+#include <moveit/trajectory_processing/iterative_time_parameterization.h>
 
 int main(int argc, char **argv){
   ros::init(argc, argv, "move_group_interface_tutorial");
@@ -143,8 +147,10 @@ int main(int argc, char **argv){
   // Note that we are just planning, not asking move_group
   // to actually move the robot.
   moveit::planning_interface::MoveGroupInterface::Plan my_plan;
+  move_group.plan(my_plan);
+  move_group.execute(my_plan);
 
-  bool success = (move_group.plan(my_plan) == moveit::planning_interface::MoveItErrorCode::SUCCESS);
+  bool success = (move_group.execute(my_plan) == moveit::planning_interface::MoveItErrorCode::SUCCESS);
   ROS_INFO_NAMED("tutorial", "Visualizing plan 1 (joint space goal) %s", success ? "" : "FAILED");
 
   // Visualize the plan in Rviz
@@ -173,8 +179,11 @@ int main(int argc, char **argv){
   target_pose1.position.y = -0.5;     //[meters]
   target_pose1.position.z = 1.3;      //[meters]
   move_group.setPoseTarget(target_pose1);
+  move_group.plan(my_plan);
+  move_group.execute(my_plan);
 
-  success = (move_group.plan(my_plan) == moveit::planning_interface::MoveItErrorCode::SUCCESS);
+
+  success = (move_group.execute(my_plan) == moveit::planning_interface::MoveItErrorCode::SUCCESS);
 
   ROS_INFO_NAMED("tutorial", "Visualizing plan 2 (pose goal) %s", success ? "SUCCESS" : "FAILED");
 
@@ -205,7 +214,7 @@ int main(int argc, char **argv){
 // Adding/Removing Objects and Attaching/Detaching Objects
   // ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
   //
-  // Define a collision object ROS message.
+/*  // Define a collision object ROS message.
   moveit_msgs::CollisionObject collision_object;
   collision_object.header.frame_id = move_group.getPlanningFrame();
 
@@ -248,6 +257,8 @@ int main(int argc, char **argv){
   // Now when we plan a trajectory it will avoid the obstacle
   move_group.setStartState(*move_group.getCurrentState());
   move_group.setPoseTarget(target_pose1);
+    move_group.move();
+
 
   success = (move_group.plan(my_plan) == moveit::planning_interface::MoveItErrorCode::SUCCESS);
   ROS_INFO_NAMED("tutorial", "Visualizing plan 3 (pose goal move with colision avoidance) %s", success ? "" : "FAILED");
@@ -267,7 +278,7 @@ int main(int argc, char **argv){
   visual_tools.publishText(text_pose, "Object attached to robot", rvt::WHITE, rvt::XXLARGE);
   visual_tools.trigger();
 
-  /* Sleep to allow MoveGroup to recieve and process the attached collision object message */
+  // Sleep to allow MoveGroup to recieve and process the attached collision object message 
   ros::Duration(1.0).sleep();
 
   // Now, let's detach the collision object from the robot.
@@ -278,7 +289,7 @@ int main(int argc, char **argv){
   visual_tools.publishText(text_pose, "Object dettached from robot", rvt::WHITE, rvt::XXLARGE);
   visual_tools.trigger();
 
-  /* Sleep to allow MoveGroup to recieve and process the detach collision object message */
+  // Sleep to allow MoveGroup to recieve and process the detach collision object message 
   ros::Duration(1.0).sleep();
 
   // Now, let's remove the collision object from the world.
@@ -291,8 +302,8 @@ int main(int argc, char **argv){
   visual_tools.publishText(text_pose, "Object removed", rvt::WHITE, rvt::XXLARGE);
   visual_tools.trigger();
 
-  /* Sleep to give Rviz time to show the object is no longer there.*/
-  ros::Duration(1.0).sleep();
+  // Sleep to give Rviz time to show the object is no longer there.
+  ros::Duration(1.0).sleep(); */ 
 
 
   // Planning with Path Constraints
@@ -312,6 +323,26 @@ int main(int argc, char **argv){
   ocm.absolute_z_axis_tolerance = 0.2;
   ocm.weight = 1.0;
 
+  robot_state::RobotState start_state(*move_group.getCurrentState());
+  geometry_msgs::Pose start_pose2;
+
+  start_pose2.orientation.x = orientation.x();
+  start_pose2.orientation.y = orientation.y();
+  start_pose2.orientation.z = orientation.z();
+  start_pose2.orientation.w = orientation.w();
+  start_pose2.position.x = 0.5;      //[meters]
+  start_pose2.position.y = -0.65;     //[meters]
+  start_pose2.position.z = 1.2;      //[meters]
+  move_group.setPoseTarget(start_pose2);
+  move_group.plan(my_plan);
+  move_group.execute(my_plan);
+  visual_tools.trigger();
+  visual_tools.prompt("Press the 'next' button on the 'RvizVisualToolsGui' pannel");
+
+
+
+
+
   // Now, set it as the path constraint for the group.
   moveit_msgs::Constraints test_constraints;
   test_constraints.orientation_constraints.push_back(ocm);
@@ -321,34 +352,32 @@ int main(int argc, char **argv){
   // Note that this will only work if the current state already
   // satisfies the path constraints. So, we need to set the start
   // state to a new pose.
-  robot_state::RobotState start_state(*move_group.getCurrentState());
-  geometry_msgs::Pose start_pose2;
+
   //Use the same orientation as the previous step
   
-  start_pose2.orientation.x = orientation.x();
-  start_pose2.orientation.y = orientation.y();
-  start_pose2.orientation.z = orientation.z();
-  start_pose2.orientation.w = orientation.w();
-  start_pose2.position.x = 0.5;      //[meters]
-  start_pose2.position.y = -0.65;     //[meters]
-  start_pose2.position.z = 1.2;      //[meters]
   start_state.setFromIK(joint_model_group, start_pose2);
-  move_group.setStartState(start_state);
-
+  move_group.setPlanningTime(10.0);  
+ 
   // Now we will plan to the earlier pose target from the new
   // start state that we have just created.
   target_pose1.position.x = 0.75;      //[meters]
   target_pose1.position.y = -0.8;      //[meters]
   target_pose1.position.z = 1.4;       //[meters]
   move_group.setPoseTarget(target_pose1);
+  move_group.plan(my_plan);
+  move_group.execute(my_plan);
+
+
+
+
 
   // Planning with constraints can be slow because every sample must call an inverse 
   // kinematics solver.
   // Lets increase the planning time from the default 5 seconds to be sure the planner has 
   // enough time to succeed.
-  move_group.setPlanningTime(10.0);
 
-  success = (move_group.plan(my_plan) == moveit::planning_interface::MoveItErrorCode::SUCCESS);
+
+  success = (move_group.execute(my_plan) == moveit::planning_interface::MoveItErrorCode::SUCCESS);
   ROS_INFO_NAMED("tutorial", "Visualizing plan 3 (constraints) %s", success ? "" : "FAILED");
 
   // Visualize the plan in Rviz
@@ -383,6 +412,8 @@ int main(int argc, char **argv){
   target_pose3.position.z -= 0.2;
   waypoints.push_back(target_pose3);  // down
 
+
+
   // Cartesian motions are frequently needed to be slower for actions such as approach and retreat
   // grasp motions. Here we demonstrate how to reduce the speed of the robot arm via a scaling factor
   // of the maxiumum speed of each joint. Note this is not the speed of the end effector point.
@@ -397,7 +428,21 @@ int main(int argc, char **argv){
   const double jump_threshold = 0.0;
   const double eef_step = 0.01;
   double fraction = move_group.computeCartesianPath(waypoints, eef_step, jump_threshold, trajectory);
-  ROS_INFO_NAMED("tutorial", "Visualizing plan 4 (cartesian path) (%.2f%% acheived)", fraction * 100.0);
+
+
+  robot_trajectory::RobotTrajectory rt(move_group.getCurrentState()->getRobotModel(), "arm_right");
+// Second get a RobotTrajectory from trajectory
+  rt.setRobotTrajectoryMsg(*move_group.getCurrentState(), trajectory);
+ 
+  // Thrid create a IterativeParabolicTimeParameterization object
+  trajectory_processing::IterativeParabolicTimeParameterization iptp;
+
+  // Fourth compute computeTimeStamps
+  success = iptp.computeTimeStamps(rt);
+  ROS_INFO("Computed time stamp %s",success?"SUCCEDED":"FAILED");
+
+  // Get RobotTrajectory_msg from RobotTrajectory
+  rt.getRobotTrajectoryMsg(trajectory);
 
   // Visualize the plan in Rviz
   visual_tools.deleteAllMarkers();
@@ -405,30 +450,48 @@ int main(int argc, char **argv){
   visual_tools.publishPath(waypoints, rvt::LIME_GREEN, rvt::SMALL);
   for (std::size_t i = 0; i < waypoints.size(); ++i)
     visual_tools.publishAxisLabeled(waypoints[i], "point" + std::to_string(i), rvt::MEDIUM);
+ 
+  // Finally plan and execute the trajectory
+  my_plan.trajectory_ = trajectory;
+  ROS_INFO_NAMED("tutorial", "Visualizing plan 4 (cartesian path) (%.2f%% acheived)", fraction * 100.0);
+  ros::Duration(2.0).sleep();
+  move_group.execute(my_plan);
+
   visual_tools.trigger();
   visual_tools.prompt("Press the 'next' button on the 'RvizVisualToolsGui' pannel");
+
+
+
+  
 
   
   // Dual-arm pose goals
   // ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
   // First define a new group for addressing the two arms.
-  static const std::string PLANNING_GROUP2 = "csda10f";
+  static const std::string PLANNING_GROUP2 = "arms";
+  moveit::planning_interface::MoveGroupInterface::Plan two_arms_plan;
+
   moveit::planning_interface::MoveGroupInterface two_arms_move_group(PLANNING_GROUP2);
+
 
   // Define two separate pose goals, one for each end-effector. Note that
   // we are reusing the goal for the right arm above
   two_arms_move_group.setPoseTarget(target_pose1, "arm_right_link_tcp");
 
+
+
   geometry_msgs::Pose target_pose4;
   target_pose4 = target_pose1;
   target_pose4.position.y *= -1;
-
   two_arms_move_group.setPoseTarget(target_pose4, "arm_left_link_tcp");
 
-  // Now, we can plan and visualize
-  moveit::planning_interface::MoveGroupInterface::Plan two_arms_plan;
 
-  success = (two_arms_move_group.plan(two_arms_plan) == moveit::planning_interface::MoveItErrorCode::SUCCESS);
+  // Now, we can plan and visualize
+
+  two_arms_move_group.plan(two_arms_plan);
+  two_arms_move_group.execute(two_arms_plan);
+
+  success = (two_arms_move_group.execute(two_arms_plan) == moveit::planning_interface::MoveItErrorCode::SUCCESS);
   ROS_INFO_NAMED("tutorial", "Visualizing plan 7 (dual arm plan) %s", success ? "" : "FAILED");
 
   // Visualize the plan in Rviz
@@ -445,6 +508,7 @@ int main(int argc, char **argv){
   visual_tools.deleteAllMarkers();
   visual_tools.publishText(text_pose, "End of tutorial...have a happy day :)", rvt::WHITE, rvt::XXLARGE);
   visual_tools.trigger();
+  ros::Duration(3.0).sleep();
 
   ros::shutdown();
   return 0;
