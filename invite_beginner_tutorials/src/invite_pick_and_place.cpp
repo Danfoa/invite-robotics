@@ -3,6 +3,7 @@
  *********************************************************************
  Author:      Alejandro Acevedo
  Modified by: Daniel Ordonez - daniels.ordonez@gmail.com    10/May/2018
+ Only left arm for the place action
 */
 
 #include <moveit_msgs/DisplayRobotState.h>
@@ -53,7 +54,9 @@ int main(int argc, char **argv){
   const robot_state::JointModelGroup *arm_left_joint_model_group = arm_left_move_group.getCurrentState()->getJointModelGroup("arm_left");
 
   // Holder for motion plans.
-  moveit::planning_interface::MoveGroupInterface::Plan my_plan;
+  moveit::planning_interface::MoveGroupInterface::Plan csda10f_plan;
+  moveit::planning_interface::MoveGroupInterface::Plan left_arm_plan;
+
   // RobotState instance that will hold movoe group robot states instances.
   robot_state::RobotState start_state(*arm_left_move_group.getCurrentState());
 
@@ -80,15 +83,15 @@ int main(int argc, char **argv){
   // Use the previously defined home position for ease of motion, this position was defined on the moveit_config package
   csda10f_move_group.setStartState(*csda10f_move_group.getCurrentState());
   csda10f_move_group.setNamedTarget("home_right_arms_folded");
-  success = (csda10f_move_group.plan(my_plan) == moveit::planning_interface::MoveItErrorCode::SUCCESS);
+  success = (csda10f_move_group.plan(csda10f_plan) == moveit::planning_interface::MoveItErrorCode::SUCCESS);
   visual_tools.deleteAllMarkers();
   visual_tools.publishText(text_pose, "Go back to home position\nPress next to perform motion", rvt::WHITE, rvt::XXLARGE);
-  visual_tools.publishTrajectoryLine(my_plan.trajectory_, csda10f_joint_model_group);
+  visual_tools.publishTrajectoryLine(csda10f_plan.trajectory_, csda10f_joint_model_group);
   visual_tools.trigger();
   visual_tools.prompt("Press the 'next' button on the 'RvizVisualToolsGui' pannel");
 
   // Perform motion on real robot
-  csda10f_move_group.execute(my_plan);
+  csda10f_move_group.execute(csda10f_plan);
   ros::Duration(1.5).sleep();
 
 // *****************************************************************************************
@@ -159,7 +162,7 @@ int main(int argc, char **argv){
   arm_left_move_group.setStartState(*arm_left_move_group.getCurrentState());
   arm_left_move_group.setPoseTarget(approach_pose);
   // Compute motion plan 
-  success = (arm_left_move_group.plan(my_plan) == moveit::planning_interface::MoveItErrorCode::SUCCESS);
+  success = (arm_left_move_group.plan(left_arm_plan) == moveit::planning_interface::MoveItErrorCode::SUCCESS);
   ROS_INFO("Pick Tutorial: picking movements %s", success ? "SUCCESS" : "FAILED");
   
   // Visualizing plan
@@ -167,13 +170,13 @@ int main(int argc, char **argv){
   visual_tools.deleteAllMarkers();
   visual_tools.publishAxisLabeled(approach_pose, "Picking Position");
   visual_tools.publishText(text_pose, "Planning for object grasping\nPress next to perform motion on the real robot", rvt::WHITE, rvt::XLARGE);
-  visual_tools.publishTrajectoryLine(my_plan.trajectory_, arm_left_joint_model_group);
+  visual_tools.publishTrajectoryLine(left_arm_plan.trajectory_, arm_left_joint_model_group);
   visual_tools.trigger();
   visual_tools.prompt("Press the 'next' button on the 'RvizVisualToolsGui' pannel");
   
   // Once user allow it, exceute the planned trajectory
   ROS_INFO("Performing motion on real robot...");
-  arm_left_move_group.execute(my_plan);
+  arm_left_move_group.execute(left_arm_plan);
   ros::Duration(1.5).sleep();
 
 
@@ -199,40 +202,46 @@ int main(int argc, char **argv){
   // Set drop position *******************************
   geometry_msgs::Pose drop_pose = approach_pose;
   drop_pose.position.x = 0.60;                //[meters]
-  drop_pose.position.y = 0.35;                //[meters]
-  drop_pose.position.z = 0.83;                //[meters]
-  csda10f_move_group.setStartState(*csda10f_move_group.getCurrentState());
-  csda10f_move_group.setPoseTarget(drop_pose, "arm_left_link_tcp");
+  drop_pose.position.y = 0.36;                //[meters]
+  drop_pose.position.z = 0.87;                //[meters]
+
+  
+  arm_left_move_group.setStartState(*arm_left_move_group.getCurrentState());
+  arm_left_move_group.setPoseTarget(drop_pose, "arm_left_link_tcp");
 
   // This movement will involve the manipulation of the 15 joints at the same time, and will be a long sweep, that is why we give some seconds to the solver
   // to find a solution...
-  csda10f_move_group.setPlanningTime(20.0);
-  csda10f_move_group.setMaxAccelerationScalingFactor(0.5); 
-  csda10f_move_group.setMaxVelocityScalingFactor(0.2);
-  csda10f_move_group.setNumPlanningAttempts(2);       //Even do it will take time replanning improves results... we are not in a hurry.
+  arm_left_move_group.setPlanningTime(20.0);
+  arm_left_move_group.setMaxAccelerationScalingFactor(0.5); 
+  arm_left_move_group.setMaxVelocityScalingFactor(0.2);
+  arm_left_move_group.setNumPlanningAttempts(2);       //Even do it will take time replanning improves results... we are not in a hurry.
 
   // Plan the motion wiht constraints.
-  success = (csda10f_move_group.plan(my_plan) == moveit::planning_interface::MoveItErrorCode::SUCCESS);
+  success = (arm_left_move_group.plan(left_arm_plan) == moveit::planning_interface::MoveItErrorCode::SUCCESS);
+  ROS_INFO("Pick Tutorial: place movement %s", success ? "SUCCESS" : "FAILED");
+
   // If no solution is found for dropping the object into the drum, roll back to home position and try again.
   if(!success){
     ROS_DEBUG("Planning from table to drum was not possible, going back to home position for replanning");
     // Use the previously defined home position for ease of motion, this position was defined on the moveit_config package
     csda10f_move_group.setStartState(*csda10f_move_group.getCurrentState());
     csda10f_move_group.setNamedTarget("home_arms_folded");
-    success = (csda10f_move_group.plan(my_plan) == moveit::planning_interface::MoveItErrorCode::SUCCESS);
+    success = (csda10f_move_group.plan(csda10f_plan) == moveit::planning_interface::MoveItErrorCode::SUCCESS);
+    ROS_INFO("Pick Tutorial: return to front home position %s", success ? "SUCCESS" : "FAILED");
     visual_tools.deleteAllMarkers();
     visual_tools.publishText(text_pose, "Planning to drop position not feasible\nComming back to home position for replanning...", rvt::WHITE, rvt::XXLARGE);
-    visual_tools.publishTrajectoryLine(my_plan.trajectory_, csda10f_joint_model_group);
+    //visual_tools.publishTrajectoryLine(csda10f_plan.trajectory_, csda10f_joint_model_group);
     visual_tools.trigger();
     visual_tools.prompt("Press the 'next' button on the 'RvizVisualToolsGui' pannel");
     // Perform motion on real robot
-    csda10f_move_group.execute(my_plan);
+    csda10f_move_group.execute(csda10f_plan);
     ros::Duration(1.5).sleep();
     // Replan to target position 
     ROS_DEBUG("Replanning to target position...");
-    csda10f_move_group.setStartState(*csda10f_move_group.getCurrentState());
-    csda10f_move_group.setPoseTarget(drop_pose, "arm_left_link_tcp");
-    success = (csda10f_move_group.plan(my_plan) == moveit::planning_interface::MoveItErrorCode::SUCCESS);
+    arm_left_move_group.setStartState(*arm_left_move_group.getCurrentState());
+    arm_left_move_group.setPoseTarget(drop_pose, "arm_left_link_tcp");
+    success = (arm_left_move_group.plan(left_arm_plan) == moveit::planning_interface::MoveItErrorCode::SUCCESS);
+    ROS_INFO("Pick Tutorial: place movement %s", success ? "SUCCESS" : "FAILED");
   }
   if(!success){
     ROS_ERROR("No planning found to target position ... :c");
@@ -243,13 +252,13 @@ int main(int argc, char **argv){
   visual_tools.publishAxisLabeled(approach_pose, "start");
   visual_tools.publishAxisLabeled(drop_pose, "goal");
   visual_tools.publishText(text_pose, "Perform motion of the cup mantaining orientation to avoid liquid spilling\nPress next to perform motion on real robot", rvt::WHITE, rvt::XLARGE);
-  visual_tools.publishTrajectoryLine(my_plan.trajectory_, csda10f_joint_model_group);
+  visual_tools.publishTrajectoryLine(left_arm_plan.trajectory_, arm_left_joint_model_group);
   visual_tools.trigger();
   visual_tools.prompt("Press the 'next' button on the 'RvizVisualToolsGui' pannel");
 
   // Once user allow it, exceute the planned trajectory
   ROS_INFO("Performing motion on real robot...");
-  csda10f_move_group.execute(my_plan);
+  arm_left_move_group.execute(left_arm_plan);
   ros::Duration(1.5).sleep();
 
  
@@ -257,24 +266,22 @@ int main(int argc, char **argv){
   ROS_INFO("Detach the object from the robot");
   left_gripper_mg.detachObject(object.id);
 
-  // When done with the path constraint be sure to clear it.
-  csda10f_move_group.clearPathConstraints();
-
   //************************************************************************************************
   // STEP 6: PLAN TO PRE TEACH HOME POSITION
 
   // Use the previously defined home position for ease of motion, this position was defined on the moveit_config package
   csda10f_move_group.setStartState(*csda10f_move_group.getCurrentState());
   csda10f_move_group.setNamedTarget("home_arms_folded");
-  success = (csda10f_move_group.plan(my_plan) == moveit::planning_interface::MoveItErrorCode::SUCCESS);
+  success = (csda10f_move_group.plan(csda10f_plan) == moveit::planning_interface::MoveItErrorCode::SUCCESS);
+  ROS_INFO("Pick Tutorial: return to front home position %s", success ? "SUCCESS" : "FAILED");
   visual_tools.deleteAllMarkers();
   visual_tools.publishText(text_pose, "Go back to home position\n Press next to perform motion", rvt::WHITE, rvt::XXLARGE);
-  visual_tools.publishTrajectoryLine(my_plan.trajectory_, csda10f_joint_model_group);
+  visual_tools.publishTrajectoryLine(csda10f_plan.trajectory_, csda10f_joint_model_group);
   visual_tools.trigger();
   visual_tools.prompt("Press the 'next' button on the 'RvizVisualToolsGui' pannel");
 
   // Perform motion on real robot
-  csda10f_move_group.execute(my_plan);
+  csda10f_move_group.execute(csda10f_plan);
   ros::Duration(1.5).sleep();
 
   ros::shutdown();

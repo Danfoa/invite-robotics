@@ -73,6 +73,14 @@
         <joint name="right_gripper_right_outer_finger_joint" />
         <joint name="right_gripper_right_inner_finger_joint" />
     </group>
+    <group name="arm_left_torso">
+        <group name="arm_left" />
+        <group name="torso" />
+    </group>
+    <group name="arm_right_torso">
+        <group name="arm_right" />
+        <group name="torso" />
+    </group>
     <!--GROUP STATES: Purpose: Define a named state for a particular group, in terms of joint values. This is useful to define states like 'folded arms'-->
     <group_state name="home_arms_open" group="csda10f">
         <joint name="arm_left_joint_1_s" value="0" />
@@ -164,11 +172,10 @@
     <disable_collisions link1="arm_left_base" link2="arm_left_right_follower" reason="Never" />
     <disable_collisions link1="arm_left_base" link2="arm_left_right_pad" reason="Never" />
     <disable_collisions link1="arm_left_base" link2="arm_left_right_spring_link" reason="Adjacent" />
-    <disable_collisions link1="arm_left_base" link2="right_gripper_left_outer_knuckle" reason="Never" />
     <disable_collisions link1="arm_left_left_coupler" link2="arm_left_left_driver" reason="Adjacent" />
     <disable_collisions link1="arm_left_left_coupler" link2="arm_left_left_follower" reason="Adjacent" />
     <disable_collisions link1="arm_left_left_coupler" link2="arm_left_left_pad" reason="Never" />
-    <disable_collisions link1="arm_left_left_coupler" link2="arm_left_left_spring_link" reason="Never" />
+    <disable_collisions link1="arm_left_left_coupler" link2="arm_left_left_spring_link" reason="Default" />
     <disable_collisions link1="arm_left_left_coupler" link2="arm_left_link_3_e" reason="Never" />
     <disable_collisions link1="arm_left_left_coupler" link2="arm_left_link_4_u" reason="Never" />
     <disable_collisions link1="arm_left_left_coupler" link2="arm_left_link_5_r" reason="Never" />
@@ -183,13 +190,11 @@
     <disable_collisions link1="arm_left_left_coupler" link2="arm_left_right_follower" reason="Never" />
     <disable_collisions link1="arm_left_left_coupler" link2="arm_left_right_pad" reason="Never" />
     <disable_collisions link1="arm_left_left_coupler" link2="arm_left_right_spring_link" reason="Never" />
-    <disable_collisions link1="arm_left_left_coupler" link2="arm_right_link_gripper_adapter_plate" reason="Never" />
-    <disable_collisions link1="arm_left_left_coupler" link2="arm_right_link_robotiq_coupling" reason="Never" />
     <disable_collisions link1="arm_left_left_coupler" link2="right_gripper_left_outer_knuckle" reason="Never" />
     <disable_collisions link1="arm_left_left_coupler" link2="right_gripper_right_inner_finger" reason="Never" />
     <disable_collisions link1="arm_left_left_driver" link2="arm_left_left_follower" reason="Never" />
     <disable_collisions link1="arm_left_left_driver" link2="arm_left_left_pad" reason="Never" />
-    <disable_collisions link1="arm_left_left_driver" link2="arm_left_left_spring_link" reason="Never" />
+    <disable_collisions link1="arm_left_left_driver" link2="arm_left_left_spring_link" reason="Default" />
     <disable_collisions link1="arm_left_left_driver" link2="arm_left_link_3_e" reason="Never" />
     <disable_collisions link1="arm_left_left_driver" link2="arm_left_link_4_u" reason="Never" />
     <disable_collisions link1="arm_left_left_driver" link2="arm_left_link_5_r" reason="Never" />
@@ -204,10 +209,9 @@
     <disable_collisions link1="arm_left_left_driver" link2="arm_left_right_follower" reason="Never" />
     <disable_collisions link1="arm_left_left_driver" link2="arm_left_right_pad" reason="Never" />
     <disable_collisions link1="arm_left_left_driver" link2="arm_left_right_spring_link" reason="Never" />
-    <disable_collisions link1="arm_left_left_driver" link2="arm_right_link_gripper_adapter_plate" reason="Never" />
-    <disable_collisions link1="arm_left_left_driver" link2="right_gripper_left_outer_knuckle" reason="Never" />
     <disable_collisions link1="arm_left_left_driver" link2="right_gripper_right_inner_finger" reason="Never" />
-    <disable_collisions link1="arm_left_left_driver" link2="right_gripper_right_inner_knuckle" reason="Never" />
+    <disable_collisions link1="arm_left_left_driver" link2="right_gripper_right_outer_finger" reason="Never" />
+    <disable_collisions link1="arm_left_left_driver" link2="right_gripper_right_outer_knuckle" reason="Never" />
     <disable_collisions link1="arm_left_left_follower" link2="arm_left_left_pad" reason="Adjacent" />
     <disable_collisions link1="arm_left_left_follower" link2="arm_left_left_spring_link" reason="Default" />
     <disable_collisions link1="arm_left_left_follower" link2="arm_left_link_3_e" reason="Never" />
@@ -221,8 +225,7 @@
     <disable_collisions link1="arm_left_left_follower" link2="arm_left_link_robotiq_coupling" reason="Never" />
     <disable_collisions link1="arm_left_left_follower" link2="arm_left_right_coupler" reason="Never" />
     <disable_collisions link1="arm_left_left_follower" link2="arm_left_right_driver" reason="Never" />
-    <disable_collisions link1="arm_left_left_follower" link2="arm_right_link_gripper_adapter_plate" reason="Never" />
-    <disable_collisions link1="arm_left_left_follower" link2="arm_right_link_robotiq_coupling" reason="Never" />
+    <disable_collisions link1="arm_left_left_follower" link2="right_gripper_left_outer_knuckle" reason="Never" />
     <disable_collisions link1="arm_left_left_follower" link2="right_gripper_right_inner_finger" reason="Never" />
     <disable_collisions link1="arm_left_left_pad" link2="arm_left_left_spring_link" reason="Never" />
     <disable_collisions link1="arm_left_left_pad" link2="arm_left_link_3_e" reason="Never" />
@@ -237,9 +240,9 @@
     <disable_collisions link1="arm_left_left_pad" link2="arm_left_right_coupler" reason="Never" />
     <disable_collisions link1="arm_left_left_pad" link2="arm_left_right_driver" reason="Never" />
     <disable_collisions link1="arm_left_left_pad" link2="arm_left_right_spring_link" reason="Never" />
-    <disable_collisions link1="arm_left_left_pad" link2="right_gripper_left_inner_finger" reason="Never" />
+    <disable_collisions link1="arm_left_left_pad" link2="right_gripper_left_outer_knuckle" reason="Never" />
     <disable_collisions link1="arm_left_left_pad" link2="right_gripper_right_inner_finger" reason="Never" />
-    <disable_collisions link1="arm_left_left_pad" link2="right_gripper_right_inner_knuckle" reason="Never" />
+    <disable_collisions link1="arm_left_left_pad" link2="right_gripper_right_outer_finger" reason="Never" />
     <disable_collisions link1="arm_left_left_spring_link" link2="arm_left_link_3_e" reason="Never" />
     <disable_collisions link1="arm_left_left_spring_link" link2="arm_left_link_4_u" reason="Never" />
     <disable_collisions link1="arm_left_left_spring_link" link2="arm_left_link_5_r" reason="Never" />
@@ -252,7 +255,7 @@
     <disable_collisions link1="arm_left_left_spring_link" link2="arm_left_right_coupler" reason="Never" />
     <disable_collisions link1="arm_left_left_spring_link" link2="arm_left_right_driver" reason="Never" />
     <disable_collisions link1="arm_left_left_spring_link" link2="arm_left_right_pad" reason="Never" />
-    <disable_collisions link1="arm_left_left_spring_link" link2="right_gripper_left_outer_knuckle" reason="Never" />
+    <disable_collisions link1="arm_left_left_spring_link" link2="right_gripper_right_inner_finger" reason="Never" />
     <disable_collisions link1="arm_left_link_1_s" link2="arm_left_link_2_l" reason="Adjacent" />
     <disable_collisions link1="arm_left_link_1_s" link2="arm_left_link_3_e" reason="Never" />
     <disable_collisions link1="arm_left_link_1_s" link2="arm_left_link_4_u" reason="Never" />
@@ -305,6 +308,7 @@
     <disable_collisions link1="arm_left_link_4_u" link2="arm_right_link_1_s" reason="Never" />
     <disable_collisions link1="arm_left_link_4_u" link2="arm_right_link_2_l" reason="Never" />
     <disable_collisions link1="arm_left_link_4_u" link2="arm_right_link_3_e" reason="Never" />
+    <disable_collisions link1="arm_left_link_4_u" link2="arm_right_link_4_u" reason="Never" />
     <disable_collisions link1="arm_left_link_5_r" link2="arm_left_link_6_b" reason="Adjacent" />
     <disable_collisions link1="arm_left_link_5_r" link2="arm_left_link_7_t" reason="Never" />
     <disable_collisions link1="arm_left_link_5_r" link2="arm_left_link_force_sensor" reason="Never" />
@@ -316,7 +320,6 @@
     <disable_collisions link1="arm_left_link_5_r" link2="arm_left_right_follower" reason="Never" />
     <disable_collisions link1="arm_left_link_5_r" link2="arm_left_right_pad" reason="Never" />
     <disable_collisions link1="arm_left_link_5_r" link2="arm_left_right_spring_link" reason="Never" />
-    <disable_collisions link1="arm_left_link_5_r" link2="arm_right_link_2_l" reason="Never" />
     <disable_collisions link1="arm_left_link_6_b" link2="arm_left_link_7_t" reason="Adjacent" />
     <disable_collisions link1="arm_left_link_6_b" link2="arm_left_link_force_sensor" reason="Never" />
     <disable_collisions link1="arm_left_link_6_b" link2="arm_left_link_force_sensor_adapter_plate" reason="Never" />
@@ -351,6 +354,7 @@
     <disable_collisions link1="arm_left_link_force_sensor_adapter_plate" link2="arm_left_right_follower" reason="Never" />
     <disable_collisions link1="arm_left_link_force_sensor_adapter_plate" link2="arm_left_right_pad" reason="Never" />
     <disable_collisions link1="arm_left_link_force_sensor_adapter_plate" link2="arm_left_right_spring_link" reason="Never" />
+    <disable_collisions link1="arm_left_link_force_sensor_adapter_plate" link2="right_gripper_right_outer_knuckle" reason="Never" />
     <disable_collisions link1="arm_left_link_gripper_adapter_plate" link2="arm_left_link_robotiq_coupling" reason="Adjacent" />
     <disable_collisions link1="arm_left_link_gripper_adapter_plate" link2="arm_left_right_coupler" reason="Never" />
     <disable_collisions link1="arm_left_link_gripper_adapter_plate" link2="arm_left_right_driver" reason="Never" />
@@ -362,28 +366,26 @@
     <disable_collisions link1="arm_left_link_robotiq_coupling" link2="arm_left_right_follower" reason="Never" />
     <disable_collisions link1="arm_left_link_robotiq_coupling" link2="arm_left_right_pad" reason="Never" />
     <disable_collisions link1="arm_left_link_robotiq_coupling" link2="arm_left_right_spring_link" reason="Never" />
-    <disable_collisions link1="arm_left_link_robotiq_coupling" link2="right_gripper_left_inner_knuckle" reason="Never" />
-    <disable_collisions link1="arm_left_link_robotiq_coupling" link2="right_gripper_right_outer_knuckle" reason="Never" />
     <disable_collisions link1="arm_left_right_coupler" link2="arm_left_right_driver" reason="Adjacent" />
     <disable_collisions link1="arm_left_right_coupler" link2="arm_left_right_follower" reason="Adjacent" />
     <disable_collisions link1="arm_left_right_coupler" link2="arm_left_right_pad" reason="Never" />
-    <disable_collisions link1="arm_left_right_coupler" link2="arm_left_right_spring_link" reason="Never" />
-    <disable_collisions link1="arm_left_right_coupler" link2="right_gripper_right_inner_knuckle" reason="Never" />
+    <disable_collisions link1="arm_left_right_coupler" link2="arm_left_right_spring_link" reason="Default" />
     <disable_collisions link1="arm_left_right_driver" link2="arm_left_right_follower" reason="Never" />
     <disable_collisions link1="arm_left_right_driver" link2="arm_left_right_pad" reason="Never" />
-    <disable_collisions link1="arm_left_right_driver" link2="arm_left_right_spring_link" reason="Never" />
-    <disable_collisions link1="arm_left_right_driver" link2="right_gripper_left_outer_finger" reason="Never" />
+    <disable_collisions link1="arm_left_right_driver" link2="arm_left_right_spring_link" reason="Default" />
+    <disable_collisions link1="arm_left_right_driver" link2="arm_right_link_gripper_adapter_plate" reason="Never" />
+    <disable_collisions link1="arm_left_right_driver" link2="arm_right_link_robotiq_coupling" reason="Never" />
     <disable_collisions link1="arm_left_right_driver" link2="right_gripper_left_outer_knuckle" reason="Never" />
-    <disable_collisions link1="arm_left_right_driver" link2="right_gripper_right_outer_knuckle" reason="Never" />
     <disable_collisions link1="arm_left_right_follower" link2="arm_left_right_pad" reason="Adjacent" />
     <disable_collisions link1="arm_left_right_follower" link2="arm_left_right_spring_link" reason="Default" />
+    <disable_collisions link1="arm_left_right_follower" link2="right_gripper_right_inner_finger" reason="Never" />
     <disable_collisions link1="arm_left_right_follower" link2="right_gripper_right_outer_finger" reason="Never" />
     <disable_collisions link1="arm_left_right_follower" link2="right_gripper_right_outer_knuckle" reason="Never" />
     <disable_collisions link1="arm_left_right_pad" link2="arm_left_right_spring_link" reason="Never" />
-    <disable_collisions link1="arm_left_right_pad" link2="right_gripper_left_outer_knuckle" reason="Never" />
+    <disable_collisions link1="arm_left_right_pad" link2="right_gripper_left_inner_finger" reason="Never" />
+    <disable_collisions link1="arm_left_right_pad" link2="right_gripper_right_inner_finger" reason="Never" />
     <disable_collisions link1="arm_left_right_pad" link2="right_gripper_right_outer_finger" reason="Never" />
     <disable_collisions link1="arm_left_right_pad" link2="right_gripper_right_outer_knuckle" reason="Never" />
-    <disable_collisions link1="arm_left_right_spring_link" link2="right_gripper_left_outer_knuckle" reason="Never" />
     <disable_collisions link1="arm_left_right_spring_link" link2="right_gripper_right_outer_knuckle" reason="Never" />
     <disable_collisions link1="arm_right_link_1_s" link2="arm_right_link_2_l" reason="Adjacent" />
     <disable_collisions link1="arm_right_link_1_s" link2="arm_right_link_3_e" reason="Never" />

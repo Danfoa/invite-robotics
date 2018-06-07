@@ -577,7 +577,7 @@ Visualization Manager:
             Show Axes: false
             Show Trail: false
             Value: true
-        Robot Alpha: 0.5
+        Robot Alpha: 1
         Show Robot Collision: false
         Show Robot Visual: true
       Value: true
@@ -588,7 +588,6 @@ Visualization Manager:
       Namespaces:
         Cylinder: true
         Pose-Left-Arm: true
-        Pose-Right-Arm: true
         Sphere: true
         Text: true
         goal: true
@@ -596,8 +595,6 @@ Visualization Manager:
         point1: true
         point2: true
         point3: true
-        pose1: true
-        start: true
       Queue Size: 100
       Value: true
     - Class: moveit_rviz_plugin/Trajectory
@@ -877,25 +874,25 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz/XYOrbit
-      Distance: 3.96905041
+      Distance: 5.24767876
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.0599999987
         Stereo Focal Distance: 1
         Swap Stereo Eyes: false
         Value: false
       Focal Point:
-        X: 0.00319433212
-        Y: 0.444735289
-        Z: -5.53759492e-08
+        X: -1.16937184
+        Y: 0.615874767
+        Z: 5.40670499e-07
       Focal Shape Fixed Size: false
       Focal Shape Size: 0.0500000007
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.00999999978
-      Pitch: 0.285202116
+      Pitch: 0.335202068
       Target Frame: base_link
       Value: XYOrbit (rviz)
-      Yaw: 5.44857836
+      Yaw: 6.11857796
     Saved: ~
 Window Geometry:
   Displays:
