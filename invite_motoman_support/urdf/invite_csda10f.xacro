@@ -26,7 +26,7 @@
 	<joint name="left_gripper_to_robot_joint" type="fixed">
     	<parent link="arm_left_link_tool0" />
     	<child link="arm_left_link_force_sensor_adapter_plate" />
-		<origin xyz="0 0 0" rpy="0 0 ${111.42*pi/180}"/>
+		<origin xyz="0 0 0" rpy="0 0 ${90*pi/180}"/>
 		<axis xyz="0 0 1"/>
  	 </joint>
 
@@ -49,7 +49,7 @@
     </joint>
 
 	<joint name="arm_left_joint_tcp" type="fixed" >
-      <origin xyz="0 0 0.2094" rpy="0 0 ${111.42*pi/180}"/>
+      <origin xyz="0 0 0.2094" rpy="0 0 ${90*pi/180}"/>
       <parent link="arm_left_link_tool0" />
       <child link="arm_left_link_tcp" />
     </joint>

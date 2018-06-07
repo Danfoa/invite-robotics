@@ -52,6 +52,10 @@ add_executable(invite_pick_and_place src/invite_pick_and_place.cpp)
 target_link_libraries(invite_pick_and_place ${catkin_LIBRARIES} ${Boost_LIBRARIES})
 install(TARGETS invite_pick_and_place DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION})
 
+add_executable(invite_motion_test src/invite_motion_test.cpp)
+target_link_libraries(invite_motion_test ${catkin_LIBRARIES} ${Boost_LIBRARIES})
+install(TARGETS invite_motion_test DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION})
+
 install(PROGRAMS
   scripts/invite_move_group_python_interface.py
   DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
