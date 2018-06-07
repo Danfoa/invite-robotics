@@ -153,7 +153,7 @@ int main(int argc, char **argv){
   box_pose.orientation.w = 1.0;
   box_pose.position.x = 0.65;
   box_pose.position.y = -0.75;
-  box_pose.position.z = 1.4;
+  box_pose.position.z = 1.0;
 
   collision_object.primitives.push_back(primitive);
   collision_object.primitive_poses.push_back(box_pose);
@@ -230,7 +230,7 @@ int main(int argc, char **argv){
   target_pose1.position.x = 0.75;      //[meters]
   target_pose1.position.y = -0.8;      //[meters]
   target_pose1.position.z = 1.4;       //[meters]
-  move_group.setStartStateToCurrentState();
+  move_group.setStartState(*move_group.getCurrentState());
   move_group.setPoseTarget(target_pose1);
 
   // Planning with constraints can be slow because every sample must call an inverse 
@@ -262,6 +262,7 @@ int main(int argc, char **argv){
   // Cartesian Paths
   // ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
   std::vector<geometry_msgs::Pose> waypoints;
+  move_group.setStartState(*move_group.getCurrentState());
   geometry_msgs::Pose start_pose2 = move_group.getCurrentPose("arm_right_link_tcp").pose;
   waypoints.push_back(start_pose2);
 
@@ -326,7 +327,7 @@ int main(int argc, char **argv){
   target_pose3.position.z -= 0.15;      //[meters]
   target_pose3.position.y += 0.00;       //[meters]
   target_pose3.position.x -= 0.30;      //[meters]
-
+  arm_left_move_group.setStartState(*move_group.getCurrentState());
   arm_left_move_group.setPoseTarget(target_pose3, "arm_left_link_tcp");
 
   // Now, we can plan and visualize
