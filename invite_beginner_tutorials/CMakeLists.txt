@@ -52,6 +52,12 @@ add_executable(invite_pick_and_place src/invite_pick_and_place.cpp)
 target_link_libraries(invite_pick_and_place ${catkin_LIBRARIES} ${Boost_LIBRARIES})
 install(TARGETS invite_pick_and_place DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION})
 
+# Tutorial executables.
+add_executable(camera_orientation_test src/camera_orientation_test.cpp)
+target_link_libraries(camera_orientation_test ${catkin_LIBRARIES} ${Boost_LIBRARIES})
+install(TARGETS camera_orientation_test DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION})
+
+
 install(PROGRAMS
   scripts/invite_move_group_python_interface.py
   DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
