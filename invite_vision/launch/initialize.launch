@@ -1,0 +1,11 @@
+<launch>
+
+    <include file="$(find invite_vision)/launch/vision_setup.launch"/>
+    <include file="$(find invite_vision)/launch/pre_processing.launch">
+        <arg name="tunning" value="true"/>
+    </include>
+
+    
+    <node pkg="invite_vision" type="concatenate_cameras_pointcloud" name="concatenator"/>
+    <!-- <node pkg="invite_vision" type="drum_finder" name="drum_finder" output="screen"/> -->
+</launch>

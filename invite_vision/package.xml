@@ -69,4 +69,11 @@
   <exec_depend>actionlib</exec_depend>
   <exec_depend>actionlib_msgs</exec_depend>
 
+  <!-- <depend>moveit_core</depend> -->
+  <depend>moveit_ros_planning_interface</depend>
+  <depend>moveit_ros_perception</depend>
+  <!-- <depend>interactive_markers</depend> -->
+  <!-- <depend>moveit_visual_tools</depend> -->
+
+
 </package>

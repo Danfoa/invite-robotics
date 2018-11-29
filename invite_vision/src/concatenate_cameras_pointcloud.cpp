@@ -20,11 +20,6 @@ const int MSG_QUEUE = 8;
 
 ros::Publisher pub;
 
-// tf::Vector3 upper_cam_position(0.87251, 0.237802, 1.89592); 
-// tf::Vector3 lower_cam_position(0.713277, 1.31721, 1.44293);
-// tf::Quaternion upper_cam_orientation(-0.7070500191913, -0.695960729680754, 0.0898608112137424, 0.087429787325731);
-// tf::Quaternion lower_cam_orientation(-0.00815435540059931, -0.83807389015755, 0.545479700303542, 0.00419018865331527);
-
 void processCloud (const sensor_msgs::PointCloud2ConstPtr& input_upper, const sensor_msgs::PointCloud2ConstPtr& input_lower){
   // Create a container for the data.
   PointCloud2 output;

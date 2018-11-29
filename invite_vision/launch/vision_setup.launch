@@ -3,7 +3,7 @@
   <arg name="upper_camera_serial" default="171864"/>
   <arg name="lower_camera_serial" default="171865"/>
 
-  <arg name="rate" default="0.33" doc="Frequenz of camera data request in seconds"/>
+  <arg name="rate" default="1.0" doc="Frequenz of camera data request in seconds"/>
 
   <node ns="n35_upper_camera" pkg="ensenso_camera" type="ensenso_camera_node" name="ensenso_camera" output="screen">
     <param name="serial" value="$(arg upper_camera_serial)"/>
