@@ -50,8 +50,8 @@ double max_iterations;
 double distance_threshold;
 double z_normal_weight;
 
-Eigen::VectorXf drum_parameters(8);
-bool drumFound;
+Eigen::VectorXf drum_params;
+bool drum_found;
 
 void processCloud (const sensor_msgs::PointCloud2ConstPtr& input){
   // Create a container for the data.
@@ -67,17 +67,26 @@ void processCloud (const sensor_msgs::PointCloud2ConstPtr& input){
   pcl::fromROSMsg( *input, *cloud_normals );
   ROS_INFO_STREAM("input cloud size [" << (int) cloud->width << "," << (int) cloud->height <<"]");
 
-  if( !drumFound ){
-    Eigen::VectorXf observed_drum_coeff = findCylinderCoefficients( cloud , cloud_normals, inliers_cylinder);
+  if( !drum_found ){
+    Eigen::VectorXf observed_drum_params = findCylinderCoefficients( cloud , cloud_normals, inliers_cylinder);
     // Check if the drum found is reliable.
     if( inliers_cylinder->indices.size() < 100)
       ROS_ERROR_STREAM("Drum not found! " << inliers_cylinder->indices.size()<< " inliers");
     else{
-    
-      observed_drum_coeff[7] = getDrumHeight( cloud, inliers_cylinder );
-      // // TO-DO: perform filtering or learning rate 
-      drum_parameters = observed_drum_coeff;
-
+      observed_drum_params[7] = getDrumHeight( cloud, inliers_cylinder );
+      // // TO-DO: perform filtering or learning rate
+      if( drum_params.size() != 8 )    // On first reading use raw observation.
+        drum_params = observed_drum_params;
+      else{                           // Modify the state estimate using the previous estimate and the current observation 
+        Eigen::VectorXf prev_params, error = observed_drum_params - drum_params;
+        double error_norm = error.norm();
+        prev_params = drum_params;
+        drum_params = drum_params + (1 - error_norm/(1 + error_norm)) * error;
+        if( (prev_params - drum_params).norm() < 0.01){
+          drum_found = true;
+          ROS_INFO("Drum parameters fine tunning done: Height: %.2f Radius: %.2f X: %.2f Y: %.2f", drum_params[7], drum_params[6], drum_params[0, drum_params[1]]);
+        }
+      }
       // Write the drum inliers to disk
       extract.setInputCloud (cloud);
       extract.setIndices (inliers_cylinder);
@@ -85,12 +94,14 @@ void processCloud (const sensor_msgs::PointCloud2ConstPtr& input){
       pcl::PointCloud<pcl::PointNormal>::Ptr cloud_cylinder (new pcl::PointCloud<pcl::PointNormal> ());
       extract.filter (*cloud_cylinder);
 
-      publishDrumCollisionObject( drum_parameters );
+      publishDrumCollisionObject( drum_params );
       
       pcl::toROSMsg( *cloud_cylinder, output);
       // Publish the data.
       pub.publish(output);
     }
+  }else{ // Use found parameters to eliminate drum points from cloud and label bag points  
+
   }
 
 
@@ -139,12 +150,12 @@ Eigen::VectorXf findCylinderCoefficients( pcl::PointCloud<pcl::PointNormal>::Ptr
   // Obtain the cylinder inliers and coefficients
   seg.segment(*inliers_cylinder, *coefficients_cylinder);
   ros::Duration delta_t = ros::Time::now() - start_time;
-  Eigen::VectorXf drum_parameters(8);
+  Eigen::VectorXf drum_params(8);
   for( int i = 0; i < 8; i++ )
-    drum_parameters[i] = coefficients_cylinder->values[i];
+    drum_params[i] = coefficients_cylinder->values[i];
 
   ROS_INFO_STREAM("Finding the drum took: " << delta_t);
-  return drum_parameters;
+  return drum_params;
 }
 
 double getDrumHeight( pcl::PointCloud<pcl::PointNormal>::Ptr cloud, pcl::PointIndices::Ptr inliers ){
@@ -198,7 +209,7 @@ double getDrumHeight( pcl::PointCloud<pcl::PointNormal>::Ptr cloud, pcl::PointIn
   return upper_bin_range;
 }
 
-void publishDrumCollisionObject( Eigen::VectorXf &drum_parameters){
+void publishDrumCollisionObject( Eigen::VectorXf &drum_params){
   moveit::planning_interface::PlanningSceneInterface planning_scene_interface;
   moveit_msgs::CollisionObject collision_object;
   collision_object.header.frame_id = "/base_link";
@@ -211,21 +222,21 @@ void publishDrumCollisionObject( Eigen::VectorXf &drum_parameters){
   primitive.type = primitive.CYLINDER;
   primitive.dimensions.resize(2);
   /* Setting height of cylinder. */
-  primitive.dimensions[0] = drum_parameters[7];
+  primitive.dimensions[0] = drum_params[7];
   /* Setting radius of cylinder. */
-  primitive.dimensions[1] = drum_parameters[6];
+  primitive.dimensions[1] = drum_params[6];
 
   geometry_msgs::Pose drum_pose;
   tf::Quaternion orientation;
-  orientation.setRPY(0.0 , 0.0 , 0.0);
+  orientation.setRPY(0.0 , 0.0 , 0.0);        // Asume Drum axis is the robot Z axis 
   drum_pose.orientation.x = orientation.x();
   drum_pose.orientation.y = orientation.y();
   drum_pose.orientation.z = orientation.z();
   drum_pose.orientation.w = orientation.w();
 
-  drum_pose.position.x = drum_parameters[0];
-  drum_pose.position.y = drum_parameters[1];
-  drum_pose.position.z = drum_parameters[7] / 2;
+  drum_pose.position.x = drum_params[0];
+  drum_pose.position.y = drum_params[1];
+  drum_pose.position.z = drum_params[7] / 2;
 
   collision_object.primitives.push_back(primitive);
   collision_object.primitive_poses.push_back(drum_pose);
