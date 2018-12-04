@@ -37,36 +37,6 @@ joint_limits:
     max_velocity: 6.97
     has_acceleration_limits: false
     max_acceleration: 0
-  arm_left_left_driver_joint:
-    has_velocity_limits: true
-    max_velocity: 1.91986177778
-    has_acceleration_limits: false
-    max_acceleration: 0
-  arm_left_left_follower_joint:
-    has_velocity_limits: true
-    max_velocity: 1.91986177778
-    has_acceleration_limits: false
-    max_acceleration: 0
-  arm_left_left_spring_link_joint:
-    has_velocity_limits: true
-    max_velocity: 1.91986177778
-    has_acceleration_limits: false
-    max_acceleration: 0
-  arm_left_right_driver_joint:
-    has_velocity_limits: true
-    max_velocity: 1.91986177778
-    has_acceleration_limits: false
-    max_acceleration: 0
-  arm_left_right_follower_joint:
-    has_velocity_limits: true
-    max_velocity: 1.91986177778
-    has_acceleration_limits: false
-    max_acceleration: 0
-  arm_left_right_spring_link_joint:
-    has_velocity_limits: true
-    max_velocity: 1.91986177778
-    has_acceleration_limits: false
-    max_acceleration: 0
   arm_right_joint_1_s:
     has_velocity_limits: true
     max_velocity: 2.95
@@ -100,6 +70,36 @@ joint_limits:
   arm_right_joint_7_t:
     has_velocity_limits: true
     max_velocity: 6.97
+    has_acceleration_limits: false
+    max_acceleration: 0
+  left_gripper_finger_joint:
+    has_velocity_limits: true
+    max_velocity: 2
+    has_acceleration_limits: false
+    max_acceleration: 0
+  left_gripper_left_inner_finger_joint:
+    has_velocity_limits: true
+    max_velocity: 2
+    has_acceleration_limits: false
+    max_acceleration: 0
+  left_gripper_left_inner_knuckle_joint:
+    has_velocity_limits: true
+    max_velocity: 2
+    has_acceleration_limits: false
+    max_acceleration: 0
+  left_gripper_right_inner_finger_joint:
+    has_velocity_limits: true
+    max_velocity: 2
+    has_acceleration_limits: false
+    max_acceleration: 0
+  left_gripper_right_inner_knuckle_joint:
+    has_velocity_limits: true
+    max_velocity: 2
+    has_acceleration_limits: false
+    max_acceleration: 0
+  left_gripper_right_outer_knuckle_joint:
+    has_velocity_limits: true
+    max_velocity: 2
     has_acceleration_limits: false
     max_acceleration: 0
   right_gripper_finger_joint:
