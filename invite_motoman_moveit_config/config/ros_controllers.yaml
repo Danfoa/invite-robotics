@@ -1,0 +1,37 @@
+motoman_csda10f:
+# MoveIt-specific simulation settings
+  moveit_sim_hw_interface:
+    joint_model_group: controllers_initial_group_
+    joint_model_group_pose: controllers_initial_pose_
+# Settings for ros_control control loop
+  generic_hw_control_loop:
+    loop_hz: 300
+    cycle_time_error_threshold: 0.01
+# Settings for ros_control hardware interface
+  hardware_interface:
+    joints:
+      - torso_joint_b1
+      - arm_left_joint_1_s
+      - arm_left_joint_2_l
+      - arm_left_joint_3_e
+      - arm_left_joint_4_u
+      - arm_left_joint_5_r
+      - arm_left_joint_6_b
+      - arm_left_joint_7_t
+      - left_gripper_finger_joint
+      - arm_right_joint_1_s
+      - arm_right_joint_2_l
+      - arm_right_joint_3_e
+      - arm_right_joint_4_u
+      - arm_right_joint_5_r
+      - arm_right_joint_6_b
+      - arm_right_joint_7_t
+      - right_gripper_finger_joint
+    sim_control_mode: 1  # 0: position, 1: velocity
+# Publish all joint states
+# Creates the /joint_states topic necessary in ROS
+  joint_state_controller:
+    type: joint_state_controller/JointStateController
+    publish_rate: 50
+  controller_list:
+    []

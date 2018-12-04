@@ -16,7 +16,7 @@ INTRUCTIONS:
 <robot xmlns:xacro="http://ros.org/wiki/xacro">
 	<xacro:macro name="invite_csda10f_left_gripper" params="prefix">
 		<!--Import macro from 2-finger adaptative robotiq gripper-->
-		<xacro:include filename="$(find robotiq_2f_model)/model/robotiq_2f_85.urdf.xacro" />
+		<xacro:include filename="$(find robotiq_2f_85_gripper_visualization)/urdf/robotiq_arg2f_85_model_macro.xacro" />
 
 <!--LINKS********************************************************************************************************************************-->
 		<!--Aluminium Adapter plate for Robotiq coupling and CSDA10F arm flange-->	
@@ -97,7 +97,10 @@ INTRUCTIONS:
 			</collision>
 		</link>-->
 
-<!--Joints ******************************************************************************************************************-->
+		<!-- Instance of C3 85mm Model  -->
+		<xacro:robotiq_arg2f_85 prefix="${prefix}"/>
+
+	<!--Joints ******************************************************************************************************************-->
 		<!--Joint force sensor adaptor plate to force sensor-->
 		<joint name="${prefix}gripper_flange_joint" type="fixed">
 			<origin  xyz="0 0 0.039" rpy="0 0 0"/>
@@ -119,10 +122,12 @@ INTRUCTIONS:
 			<child link="${prefix}link_robotiq_coupling" />
 		</joint>
 
-		<!--ROBOTIQ 85mm Gripper instance creation-->
-		<xacro:robotiq_2f_85 name="arm_left" parent="${prefix}link_robotiq_coupling" precise_collision="false" adaptive_transmission="false">
+		<!--Joint from the robotiq coupling to the gripper itself-->
+		<joint name="${prefix}joint" type="fixed">
 			<origin xyz="0 0 0.0039" rpy="0 0 ${pi}"/>
-		</xacro:robotiq_2f_85>
+			<parent link="${prefix}link_robotiq_coupling" />
+			<child link="${prefix}robotiq_arg2f_base_link" />
+		</joint>
 
 	</xacro:macro>
 </robot>

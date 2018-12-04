@@ -28,7 +28,7 @@ TO-DO: Add finger tips to 140mm xacro
 <robot xmlns:xacro="http://ros.org/wiki/xacro">
 	<xacro:macro name="invite_csda10f_right_gripper" params="prefix">
 		<!--Import macro from 2-finger adaptative robotiq gripper-->
-		<xacro:include filename="$(find robotiq_arg2f_model_visualization)/urdf/robotiq_arg2f_140_model_macro.xacro" />
+		<xacro:include filename="$(find robotiq_2f_140_gripper_visualization)/urdf/robotiq_arg2f_140_model_macro.xacro" />
 
 		<!--Aluminium Adapter plate for Robotiq coupling and CSDA10F arm flange-->	
 		<link name="${prefix}link_gripper_adapter_plate">
@@ -70,20 +70,21 @@ TO-DO: Add finger tips to 140mm xacro
 			</collision>
 		</link>-->
 
-		<xacro:robotiq_arg2f_140 prefix="right_gripper_"/>
+		<!-- Instance of C3 140mm Model  -->
+		<xacro:robotiq_arg2f_140 prefix="${prefix}"/>
 
-		
+	<!--Joints ******************************************************************************************************************-->		
 		<!--Joint from the adapter plate to the robotiq gripper coupling-->
-		<joint name="right_gripper_gripper_coupling_joint" type="fixed">
+		<joint name="${prefix}gripper_coupling_joint" type="fixed">
 			<origin  xyz="0 0.0160 0" rpy="${-pi/2} 0 0"/>
 			<parent link="${prefix}link_gripper_adapter_plate" />
 			<child link="${prefix}link_robotiq_coupling" />
 		</joint>
 		<!--Joint from the robotiq coupling to the gripper itself-->
-		<joint name="right_gripper_joint" type="fixed">
+		<joint name="${prefix}joint" type="fixed">
 			<origin xyz="0 0.0 0.0039" rpy="0 0 ${pi}" />
 			<parent link="${prefix}link_robotiq_coupling" />
-			<child link="right_gripper_robotiq_arg2f_base_link" />
+			<child link="${prefix}robotiq_arg2f_base_link" />
 		</joint>
 
 	</xacro:macro>
