@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 import rospy
 import sys
+import datetime
 
 import actionlib
 from actionlib_msgs.msg import GoalStatus
@@ -40,9 +41,13 @@ def main():
 
     rate = rospy.Rate(loop_rate)
     while not rospy.is_shutdown():
+        start = datetime.datetime.now()
+
         request_data_upper_cam_client.send_goal(goal)    # Request upper camera data
         # Wait for results 
         request_data_upper_cam_client.wait_for_result()
+
+        rospy.loginfo( "Upper camera request took {}".format( datetime.datetime.now() - start )) 
 
         # Check if any errors occured with the action request.
         if request_data_upper_cam_client.get_state() != GoalStatus.SUCCEEDED:
