@@ -38,4 +38,4 @@ This is a non-profit/collaborative project between the National University of Co
 | Motion execution of 15 DoF at a time            |  Bug reported   |    
 | Gazebo robot simulation             |  Supported      | 
 | Gazebo grippers simulation          |  In progress          | 
-| Grippers control through ROS control|  In progress | 
+| Grippers control through ROS control|  Supported | 

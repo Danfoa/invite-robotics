@@ -1,0 +1,27 @@
+<!-- Launch file for Segway platform startup -->
+
+<launch>
+    
+    <!-- Launch action server for gripper -->
+
+    <include file="$(find robotiq_2f_gripper_control)/launch/robotiq_action_server.launch">
+        <arg name="comport" value="/dev/ttyUSB0"/>
+        <arg name="baud" value="115200"/>
+        <arg name="stroke" value="0.140"/>
+        <arg name="joint_name" value="finger_joint"/>
+        <arg name="verbose" value="true"/>
+    </include>
+
+    <!-- Launch action client example  -->
+    <node pkg="robotiq_2f_gripper_control" type="robotiq_2f_action_client_example.py" 
+        name="robotiq_140_client" output="screen">
+        <param name="action_name" value="command_robotiq_action" />
+    </node>
+
+    <node name="gripper_joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher">
+        <rosparam param="source_list">[/joint_states]</rosparam>
+        <rosparam param="use_gui">false</rosparam>
+    </node>
+
+    <node name="rviz" pkg="rviz" type="rviz" args="-d $(find robotiq_2f_140_gripper_visualization)/visualize.rviz" required="true" />
+</launch>
