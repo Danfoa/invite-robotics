@@ -46,3 +46,15 @@ controller_list:
             arm_right_joint_5_r,
             arm_right_joint_6_b,
             arm_right_joint_7_t]
+  - name: "left_gripper/robotiq_controller"
+    # action_ns: follow_joint_trajectory
+    # type: FollowJointTrajectory
+    # default: true
+    joints:
+      - left_gripper_finger_joint
+  - name: "right_gripper/robotiq_controller"
+    # action_ns: follow_joint_trajectory
+    # type: FollowJointTrajectory
+    # default: true
+    joints:
+      - right_gripper_finger_joint

@@ -33,7 +33,7 @@
 	<joint name="right_gripper__to_robot_joint" type="fixed">
 		<parent link="arm_right_link_tool0" />
 		<child link="right_gripper_link_gripper_adapter_plate" />
-		<origin xyz="0 0 0" rpy="${pi/2} 0 0"/>
+		<origin xyz="0 0 0" rpy="${pi/2} 0 ${pi/2}"/>
 		<axis xyz="0 0 1"/>
   	</joint>
 
