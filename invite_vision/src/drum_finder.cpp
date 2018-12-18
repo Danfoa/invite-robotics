@@ -39,6 +39,7 @@ typedef sensor_msgs::PointCloud2 PointCloud2;
 double getDrumHeight( pcl::PointCloud<pcl::PointNormal>::Ptr, pcl::PointIndices::Ptr);
 void publishDrumCollisionObject(  Eigen::VectorXf& );
 Eigen::VectorXf findCylinderCoefficients(pcl::PointCloud<pcl::PointNormal>::Ptr, pcl::PointCloud<pcl::Normal>::Ptr, pcl::PointIndices::Ptr);
+void findCylinderInliers( pcl::PointCloud<pcl::PointNormal>::Ptr, pcl::PointIndices::Ptr, Eigen::VectorXf&);
 void parameter_update(invite_vision::DrumFinderConfig&, uint32_t);
 
 ros::Publisher pub;
@@ -50,7 +51,16 @@ double max_iterations;
 double distance_threshold;
 double z_normal_weight;
 
-Eigen::VectorXf drum_params;
+Eigen::VectorXf drum_params; /* Structure: 
+                                point_on_axis.x : the X coordinate of a point located on the cylinder axis
+                                point_on_axis.y : the Y coordinate of a point located on the cylinder axis
+                                point_on_axis.z : the Z coordinate of a point located on the cylinder axis
+                                axis_direction.x : the X coordinate of the cylinder's axis direction
+                                axis_direction.y : the Y coordinate of the cylinder's axis direction
+                                axis_direction.z : the Z coordinate of the cylinder's axis direction
+                                radius : the cylinder's radius
+                                height : highest z coordinate of the cylinder
+                            */
 bool drum_found;
 
 void processCloud (const sensor_msgs::PointCloud2ConstPtr& input){
@@ -65,7 +75,7 @@ void processCloud (const sensor_msgs::PointCloud2ConstPtr& input){
 
   pcl::fromROSMsg( *input, *cloud );
   pcl::fromROSMsg( *input, *cloud_normals );
-  ROS_INFO_STREAM("input cloud size [" << (int) cloud->width << "," << (int) cloud->height <<"]");
+  ROS_DEBUG_STREAM("input cloud size [" << (int) cloud->width << "," << (int) cloud->height <<"]");
 
   if( !drum_found ){
     Eigen::VectorXf observed_drum_params = findCylinderCoefficients( cloud , cloud_normals, inliers_cylinder);
@@ -79,32 +89,29 @@ void processCloud (const sensor_msgs::PointCloud2ConstPtr& input){
         drum_params = observed_drum_params;
       else{                           // Modify the state estimate using the previous estimate and the current observation 
         Eigen::VectorXf prev_params, error = observed_drum_params - drum_params;
-        double error_norm = error.norm();
+        float error_norm = error.cwiseQuotient(drum_params).norm() / 8;
         prev_params = drum_params;
         drum_params = drum_params + (1 - error_norm/(1 + error_norm)) * error;
-        if( (prev_params - drum_params).norm() < 0.01){
+        ROS_INFO("Drum parameters error %.5f", error_norm);
+        if( error_norm < 0.1){
           drum_found = true;
-          ROS_INFO("Drum parameters fine tunning done: Height: %.2f Radius: %.2f X: %.2f Y: %.2f", drum_params[7], drum_params[6], drum_params[0, drum_params[1]]);
+          ROS_WARN("Drum parameters fine tunning done: Height: %.2f Radius: %.2f X: %.2f Y: %.2f", drum_params[7], drum_params[6], drum_params[0], drum_params[1]);
         }
       }
-      // Write the drum inliers to disk
-      extract.setInputCloud (cloud);
-      extract.setIndices (inliers_cylinder);
-      extract.setNegative (false);
-      pcl::PointCloud<pcl::PointNormal>::Ptr cloud_cylinder (new pcl::PointCloud<pcl::PointNormal> ());
-      extract.filter (*cloud_cylinder);
-
-      publishDrumCollisionObject( drum_params );
       
-      pcl::toROSMsg( *cloud_cylinder, output);
-      // Publish the data.
-      pub.publish(output);
     }
-  }else{ // Use found parameters to eliminate drum points from cloud and label bag points  
+  }else // Use found parameters to eliminate drum points from cloud and label bag points  
+    findCylinderInliers( cloud, inliers_cylinder, drum_params);
 
-  }
-
-
+    // Write the drum inliers to disk
+  extract.setInputCloud (cloud);
+  extract.setIndices (inliers_cylinder);
+  extract.setNegative ( drum_found );
+  pcl::PointCloud<pcl::PointNormal>::Ptr cloud_cylinder (new pcl::PointCloud<pcl::PointNormal> ());
+  extract.filter (*cloud_cylinder);
+  pcl::toROSMsg( *cloud_cylinder, output);
+  // Publish the data.
+  pub.publish(output);
 }
 
 int main (int argc, char** argv){
@@ -121,7 +128,7 @@ int main (int argc, char** argv){
   // Subscribe to input pointcloud topic 
   ros::Subscriber sub = nodeHandle.subscribe<sensor_msgs::PointCloud2> ("/joint_cameras_point_cloud/area_of_interest", 1, processCloud);
   
-  pub = nodeHandle.advertise<PointCloud2> ("/joint_cameras_point_cloud/drum_inliers", 1);
+  pub = nodeHandle.advertise<PointCloud2> ("/joint_cameras_point_cloud/bag_inliers", 1);
 
   // Spin
   ros::spin ();
@@ -157,6 +164,27 @@ Eigen::VectorXf findCylinderCoefficients( pcl::PointCloud<pcl::PointNormal>::Ptr
   ROS_INFO_STREAM("Finding the drum took: " << delta_t);
   return drum_params;
 }
+
+void findCylinderInliers( pcl::PointCloud<pcl::PointNormal>::Ptr cloud, pcl::PointIndices::Ptr inliers_cylinder, Eigen::VectorXf& drum_params ){
+  ros::Time start_time = ros::Time::now();
+  // Clear inliers vector
+  inliers_cylinder->indices.clear();
+
+  double drum_top = drum_params[7];
+  for(pcl::PointCloud<pcl::PointNormal>::iterator point = cloud->begin(); point!= cloud->end(); point++){
+    int index = std::distance(cloud->begin(), point); 
+    if( point->z < drum_top * 1.15 ){  // Points below drum top
+      double distance = std::sqrt( std::pow(point->x - drum_params[0], 2) + std::pow(point->y - drum_params[1], 2) );      // Get distance to drum axis squared 
+      if( std::abs(distance - drum_params[6]) < distance_threshold )                                                      // Check if point is inlier
+        inliers_cylinder->indices.push_back(index);
+    }
+  }
+  // Obtain the cylinder inliers and coefficients
+  ros::Duration delta_t = ros::Time::now() - start_time;
+  ROS_INFO_STREAM("Finding the drum inliers took: " << delta_t);
+  ROS_INFO("%d Drum Inliers found: ", (int) inliers_cylinder->indices.size());
+}
+
 
 double getDrumHeight( pcl::PointCloud<pcl::PointNormal>::Ptr cloud, pcl::PointIndices::Ptr inliers ){
   ROS_INFO("Finding drum top");
