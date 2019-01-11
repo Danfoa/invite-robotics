@@ -1,7 +1,7 @@
 <launch>
 
   <!-- Rviz output configuration argument-->
-  <arg name="verbose" default="false"/>
+  <arg name="verbose" default="true"/>
   <arg unless="$(arg verbose)" name="rviz_output_config" value="log" />
   <arg     if="$(arg verbose)" name="rviz_output_config" value="screen" />
 

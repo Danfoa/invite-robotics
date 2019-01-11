@@ -8,7 +8,7 @@ Panels:
         - /PointCloud21
         - /PointCloud22
       Splitter Ratio: 0.447368413
-    Tree Height: 877
+    Tree Height: 353
   - Class: rviz/Help
     Name: Help
   - Class: rviz/Views
@@ -50,6 +50,7 @@ Visualization Manager:
       MoveIt_Goal_Tolerance: 0
       MoveIt_Planning_Attempts: 10
       MoveIt_Planning_Time: 5
+      MoveIt_Use_Cartesian_Path: false
       MoveIt_Use_Constraint_Aware_IK: true
       MoveIt_Warehouse_Host: 127.0.0.1
       MoveIt_Warehouse_Port: 33829
@@ -72,36 +73,6 @@ Visualization Manager:
           Expand Link Details: false
           Expand Tree: false
           Link Tree Style: Links in Alphabetic Order
-          arm_left_base:
-            Alpha: 1
-            Show Axes: false
-            Show Trail: false
-            Value: true
-          arm_left_left_coupler:
-            Alpha: 1
-            Show Axes: false
-            Show Trail: false
-            Value: true
-          arm_left_left_driver:
-            Alpha: 1
-            Show Axes: false
-            Show Trail: false
-            Value: true
-          arm_left_left_follower:
-            Alpha: 1
-            Show Axes: false
-            Show Trail: false
-            Value: true
-          arm_left_left_pad:
-            Alpha: 1
-            Show Axes: false
-            Show Trail: false
-            Value: true
-          arm_left_left_spring_link:
-            Alpha: 1
-            Show Axes: false
-            Show Trail: false
-            Value: true
           arm_left_link_1_s:
             Alpha: 1
             Show Axes: false
@@ -137,26 +108,6 @@ Visualization Manager:
             Show Axes: false
             Show Trail: false
             Value: true
-          arm_left_link_force_sensor:
-            Alpha: 1
-            Show Axes: false
-            Show Trail: false
-            Value: true
-          arm_left_link_force_sensor_adapter_plate:
-            Alpha: 1
-            Show Axes: false
-            Show Trail: false
-            Value: true
-          arm_left_link_gripper_adapter_plate:
-            Alpha: 1
-            Show Axes: false
-            Show Trail: false
-            Value: true
-          arm_left_link_robotiq_coupling:
-            Alpha: 1
-            Show Axes: false
-            Show Trail: false
-            Value: true
           arm_left_link_tcp:
             Alpha: 1
             Show Axes: false
@@ -165,31 +116,6 @@ Visualization Manager:
             Alpha: 1
             Show Axes: false
             Show Trail: false
-          arm_left_right_coupler:
-            Alpha: 1
-            Show Axes: false
-            Show Trail: false
-            Value: true
-          arm_left_right_driver:
-            Alpha: 1
-            Show Axes: false
-            Show Trail: false
-            Value: true
-          arm_left_right_follower:
-            Alpha: 1
-            Show Axes: false
-            Show Trail: false
-            Value: true
-          arm_left_right_pad:
-            Alpha: 1
-            Show Axes: false
-            Show Trail: false
-            Value: true
-          arm_left_right_spring_link:
-            Alpha: 1
-            Show Axes: false
-            Show Trail: false
-            Value: true
           arm_right_link_1_s:
             Alpha: 1
             Show Axes: false
@@ -225,16 +151,6 @@ Visualization Manager:
             Show Axes: false
             Show Trail: false
             Value: true
-          arm_right_link_gripper_adapter_plate:
-            Alpha: 1
-            Show Axes: false
-            Show Trail: false
-            Value: true
-          arm_right_link_robotiq_coupling:
-            Alpha: 1
-            Show Axes: false
-            Show Trail: false
-            Value: true
           arm_right_link_tcp:
             Alpha: 1
             Show Axes: false
@@ -256,7 +172,87 @@ Visualization Manager:
             Alpha: 1
             Show Axes: false
             Show Trail: false
+          left_gripper_left_inner_finger:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          left_gripper_left_inner_finger_pad:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          left_gripper_left_inner_knuckle:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          left_gripper_left_outer_finger:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          left_gripper_left_outer_knuckle:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          left_gripper_link_force_sensor:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          left_gripper_link_force_sensor_adapter_plate:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          left_gripper_link_gripper_adapter_plate:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          left_gripper_link_robotiq_coupling:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          left_gripper_right_inner_finger:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          left_gripper_right_inner_finger_pad:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          left_gripper_right_inner_knuckle:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          left_gripper_right_outer_finger:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          left_gripper_right_outer_knuckle:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          left_gripper_robotiq_arg2f_base_link:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
           right_gripper_left_inner_finger:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          right_gripper_left_inner_finger_pad:
             Alpha: 1
             Show Axes: false
             Show Trail: false
@@ -276,7 +272,22 @@ Visualization Manager:
             Show Axes: false
             Show Trail: false
             Value: true
+          right_gripper_link_gripper_adapter_plate:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          right_gripper_link_robotiq_coupling:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
           right_gripper_right_inner_finger:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          right_gripper_right_inner_finger_pad:
             Alpha: 1
             Show Axes: false
             Show Trail: false
@@ -356,36 +367,6 @@ Visualization Manager:
           Expand Link Details: false
           Expand Tree: false
           Link Tree Style: Links in Alphabetic Order
-          arm_left_base:
-            Alpha: 1
-            Show Axes: false
-            Show Trail: false
-            Value: true
-          arm_left_left_coupler:
-            Alpha: 1
-            Show Axes: false
-            Show Trail: false
-            Value: true
-          arm_left_left_driver:
-            Alpha: 1
-            Show Axes: false
-            Show Trail: false
-            Value: true
-          arm_left_left_follower:
-            Alpha: 1
-            Show Axes: false
-            Show Trail: false
-            Value: true
-          arm_left_left_pad:
-            Alpha: 1
-            Show Axes: false
-            Show Trail: false
-            Value: true
-          arm_left_left_spring_link:
-            Alpha: 1
-            Show Axes: false
-            Show Trail: false
-            Value: true
           arm_left_link_1_s:
             Alpha: 1
             Show Axes: false
@@ -421,26 +402,6 @@ Visualization Manager:
             Show Axes: false
             Show Trail: false
             Value: true
-          arm_left_link_force_sensor:
-            Alpha: 1
-            Show Axes: false
-            Show Trail: false
-            Value: true
-          arm_left_link_force_sensor_adapter_plate:
-            Alpha: 1
-            Show Axes: false
-            Show Trail: false
-            Value: true
-          arm_left_link_gripper_adapter_plate:
-            Alpha: 1
-            Show Axes: false
-            Show Trail: false
-            Value: true
-          arm_left_link_robotiq_coupling:
-            Alpha: 1
-            Show Axes: false
-            Show Trail: false
-            Value: true
           arm_left_link_tcp:
             Alpha: 1
             Show Axes: false
@@ -449,31 +410,6 @@ Visualization Manager:
             Alpha: 1
             Show Axes: false
             Show Trail: false
-          arm_left_right_coupler:
-            Alpha: 1
-            Show Axes: false
-            Show Trail: false
-            Value: true
-          arm_left_right_driver:
-            Alpha: 1
-            Show Axes: false
-            Show Trail: false
-            Value: true
-          arm_left_right_follower:
-            Alpha: 1
-            Show Axes: false
-            Show Trail: false
-            Value: true
-          arm_left_right_pad:
-            Alpha: 1
-            Show Axes: false
-            Show Trail: false
-            Value: true
-          arm_left_right_spring_link:
-            Alpha: 1
-            Show Axes: false
-            Show Trail: false
-            Value: true
           arm_right_link_1_s:
             Alpha: 1
             Show Axes: false
@@ -509,16 +445,6 @@ Visualization Manager:
             Show Axes: false
             Show Trail: false
             Value: true
-          arm_right_link_gripper_adapter_plate:
-            Alpha: 1
-            Show Axes: false
-            Show Trail: false
-            Value: true
-          arm_right_link_robotiq_coupling:
-            Alpha: 1
-            Show Axes: false
-            Show Trail: false
-            Value: true
           arm_right_link_tcp:
             Alpha: 1
             Show Axes: false
@@ -540,7 +466,87 @@ Visualization Manager:
             Alpha: 1
             Show Axes: false
             Show Trail: false
+          left_gripper_left_inner_finger:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          left_gripper_left_inner_finger_pad:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          left_gripper_left_inner_knuckle:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          left_gripper_left_outer_finger:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          left_gripper_left_outer_knuckle:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          left_gripper_link_force_sensor:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          left_gripper_link_force_sensor_adapter_plate:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          left_gripper_link_gripper_adapter_plate:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          left_gripper_link_robotiq_coupling:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          left_gripper_right_inner_finger:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          left_gripper_right_inner_finger_pad:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          left_gripper_right_inner_knuckle:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          left_gripper_right_outer_finger:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          left_gripper_right_outer_knuckle:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          left_gripper_robotiq_arg2f_base_link:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
           right_gripper_left_inner_finger:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          right_gripper_left_inner_finger_pad:
             Alpha: 1
             Show Axes: false
             Show Trail: false
@@ -560,7 +566,22 @@ Visualization Manager:
             Show Axes: false
             Show Trail: false
             Value: true
+          right_gripper_link_gripper_adapter_plate:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          right_gripper_link_robotiq_coupling:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
           right_gripper_right_inner_finger:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          right_gripper_right_inner_finger_pad:
             Alpha: 1
             Show Axes: false
             Show Trail: false
@@ -618,36 +639,6 @@ Visualization Manager:
         Expand Link Details: false
         Expand Tree: false
         Link Tree Style: Links in Alphabetic Order
-        arm_left_base:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        arm_left_left_coupler:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        arm_left_left_driver:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        arm_left_left_follower:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        arm_left_left_pad:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        arm_left_left_spring_link:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
         arm_left_link_1_s:
           Alpha: 1
           Show Axes: false
@@ -683,26 +674,6 @@ Visualization Manager:
           Show Axes: false
           Show Trail: false
           Value: true
-        arm_left_link_force_sensor:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        arm_left_link_force_sensor_adapter_plate:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        arm_left_link_gripper_adapter_plate:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        arm_left_link_robotiq_coupling:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
         arm_left_link_tcp:
           Alpha: 1
           Show Axes: false
@@ -711,31 +682,6 @@ Visualization Manager:
           Alpha: 1
           Show Axes: false
           Show Trail: false
-        arm_left_right_coupler:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        arm_left_right_driver:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        arm_left_right_follower:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        arm_left_right_pad:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        arm_left_right_spring_link:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
         arm_right_link_1_s:
           Alpha: 1
           Show Axes: false
@@ -771,16 +717,6 @@ Visualization Manager:
           Show Axes: false
           Show Trail: false
           Value: true
-        arm_right_link_gripper_adapter_plate:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        arm_right_link_robotiq_coupling:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
         arm_right_link_tcp:
           Alpha: 1
           Show Axes: false
@@ -802,7 +738,87 @@ Visualization Manager:
           Alpha: 1
           Show Axes: false
           Show Trail: false
+        left_gripper_left_inner_finger:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        left_gripper_left_inner_finger_pad:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        left_gripper_left_inner_knuckle:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        left_gripper_left_outer_finger:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        left_gripper_left_outer_knuckle:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        left_gripper_link_force_sensor:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        left_gripper_link_force_sensor_adapter_plate:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        left_gripper_link_gripper_adapter_plate:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        left_gripper_link_robotiq_coupling:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        left_gripper_right_inner_finger:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        left_gripper_right_inner_finger_pad:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        left_gripper_right_inner_knuckle:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        left_gripper_right_outer_finger:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        left_gripper_right_outer_knuckle:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        left_gripper_robotiq_arg2f_base_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
         right_gripper_left_inner_finger:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        right_gripper_left_inner_finger_pad:
           Alpha: 1
           Show Axes: false
           Show Trail: false
@@ -822,7 +838,22 @@ Visualization Manager:
           Show Axes: false
           Show Trail: false
           Value: true
+        right_gripper_link_gripper_adapter_plate:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        right_gripper_link_robotiq_coupling:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
         right_gripper_right_inner_finger:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        right_gripper_right_inner_finger_pad:
           Alpha: 1
           Show Axes: false
           Show Trail: false
@@ -886,7 +917,7 @@ Visualization Manager:
       Channel Name: z
       Class: rviz/PointCloud2
       Color: 255; 255; 255
-      Color Transformer: Intensity
+      Color Transformer: FlatColor
       Decay Time: 0
       Enabled: true
       Invert Rainbow: false
@@ -898,10 +929,10 @@ Visualization Manager:
       Position Transformer: XYZ
       Queue Size: 1
       Selectable: true
-      Size (Pixels): 1
+      Size (Pixels): 3
       Size (m): 0.00499999989
       Style: Points
-      Topic: /joint_cameras_point_cloud/area_of_interest
+      Topic: /joint_cameras_point_cloud/bag_inliers
       Unreliable: false
       Use Fixed Frame: true
       Use rainbow: true
@@ -913,7 +944,7 @@ Visualization Manager:
         Min Value: -10
         Value: true
       Axis: Z
-      Channel Name: z
+      Channel Name: normal_z
       Class: rviz/PointCloud2
       Color: 255; 255; 255
       Color Transformer: Intensity
@@ -921,9 +952,9 @@ Visualization Manager:
       Enabled: true
       Invert Rainbow: false
       Max Color: 255; 255; 255
-      Max Intensity: 1.32562673
+      Max Intensity: 1.00013447
       Min Color: 0; 0; 0
-      Min Intensity: 0.300090879
+      Min Intensity: -0.855921924
       Name: PointCloud2
       Position Transformer: XYZ
       Queue Size: 1
@@ -967,25 +998,25 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz/Orbit
-      Distance: 2.39411259
+      Distance: 2.86526179
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.0599999987
         Stereo Focal Distance: 1
         Swap Stereo Eyes: false
         Value: false
       Focal Point:
-        X: 0.323350519
-        Y: 0.585112453
-        Z: 0.859299421
+        X: 0.344613969
+        Y: 0.746054471
+        Z: 0.447674096
       Focal Shape Fixed Size: true
       Focal Shape Size: 0.0500000007
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.00999999978
-      Pitch: 0.674793422
+      Pitch: 0.564795494
       Target Frame: base_link
       Value: Orbit (rviz)
-      Yaw: 6.0271163
+      Yaw: 6.21704912
     Saved:
       - Class: rviz/Orbit
         Distance: 2.3781476
@@ -1019,7 +1050,7 @@ Window Geometry:
     collapsed: false
   MotionPlanning - Trajectory Slider:
     collapsed: false
-  QMainWindow State: 000000ff00000000fd0000000100000000000002ad00000402fc020000000cfb000000100044006900730070006c006100790073010000000000000402000000d700fffffffb0000000800480065006c00700000000342000000bb0000007300fffffffb0000000a005600690065007700730000000190000000b7000000ad00fffffffb0000000c00430061006d00650072006100000002ff000001610000000000000000fb0000001e004d006f00740069006f006e00200050006c0061006e006e0069006e00670100000374000001890000000000000000fb0000002e004d006f00740069006f006e0050006c0061006e006e0069006e00670020002d00200053006c00690064006500720000000000ffffffff0000000000000000fb0000001c004d006f00740069006f006e0050006c0061006e006e0069006e006700000001fc000002060000018300fffffffb00000024005200760069007a00560069007300750061006c0054006f006f006c0073004700750069000000036f000000930000004300fffffffb000000120020002d00200053006c00690064006500720000000000ffffffff0000000000000000fb00000026005400720061006a006500630074006f007200790020002d00200053006c00690064006500720000000000ffffffff0000000000000000fb0000003c005400720061006a006500630074006f007200790020002d0020005400720061006a006500630074006f0072007900200053006c00690064006500720000000000ffffffff0000004a00fffffffb00000044004d006f00740069006f006e0050006c0061006e006e0069006e00670020002d0020005400720061006a006500630074006f0072007900200053006c00690064006500720000000000ffffffff0000004a00ffffff000004cd0000040200000001000000020000000100000002fc0000000100000002000000010000000a0054006f006f006c00730000000000ffffffff0000000000000000
+  QMainWindow State: 000000ff00000000fd0000000100000000000002ad00000402fc020000000cfb000000100044006900730070006c0061007900730100000000000001f6000000d700fffffffb0000000800480065006c00700000000342000000bb0000007300fffffffb0000000a005600690065007700730000000190000000b7000000ad00fffffffb0000000c00430061006d00650072006100000002ff000001610000000000000000fb0000001e004d006f00740069006f006e00200050006c0061006e006e0069006e00670100000374000001890000000000000000fb0000002e004d006f00740069006f006e0050006c0061006e006e0069006e00670020002d00200053006c00690064006500720000000000ffffffff0000000000000000fb0000001c004d006f00740069006f006e0050006c0061006e006e0069006e006701000001fc000002060000019700fffffffb00000024005200760069007a00560069007300750061006c0054006f006f006c0073004700750069000000036f000000930000004300fffffffb000000120020002d00200053006c00690064006500720000000000ffffffff0000000000000000fb00000026005400720061006a006500630074006f007200790020002d00200053006c00690064006500720000000000ffffffff0000000000000000fb0000003c005400720061006a006500630074006f007200790020002d0020005400720061006a006500630074006f0072007900200053006c00690064006500720000000000ffffffff0000004a00fffffffb00000044004d006f00740069006f006e0050006c0061006e006e0069006e00670020002d0020005400720061006a006500630074006f0072007900200053006c00690064006500720000000000ffffffff0000004a00ffffff000004cd0000040200000001000000020000000100000002fc0000000100000002000000010000000a0054006f006f006c00730000000000ffffffff0000000000000000
   RvizVisualToolsGui:
     collapsed: false
   Trajectory - Trajectory Slider:

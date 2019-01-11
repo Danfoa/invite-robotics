@@ -1,6 +1,9 @@
 <launch>
-  <env name="ROSCONSOLE_FORMAT" value="[${severity}] [${node}]: ${message}"/> 
-
+  <!-- <env name="ROSCONSOLE_FORMAT" value="[${severity}] [${node}]: ${message}"/>  -->
+  <!-- <env name="ROSCONSOLE_CONFIG_FILE" -->
+    <!-- value="$(find invite_vision)/config/rosconsole.config"/> -->
+  <env name="ROSCONSOLE_FORMAT"
+      value="[${severity}] [${node}] [${time}]: ${message}"/>
   
   <!-- The planning and execution components of MoveIt! configured to run -->
   <!-- using the ROS-Industrial interface. -->
@@ -10,7 +13,7 @@
   <!--  - if sim=false, a robot_ip and controller(fs100|dx100) arguments is required -->
   <arg name="sim" default="false" />
    <!--Load default scene-->
-  <arg name="load_scene" default="true"/>
+  <arg name="load_scene" default="false"/>
   <!-- Scene objects to load as default -->
   <arg name="scene_file" if="$(arg load_scene)" default="$(find invite_motoman_moveit_config)/scenes/default_scene_objects.scene"/> 
   <arg name="robot_enable" default="false" />
@@ -38,6 +41,14 @@
     </include>
   </group>
 
+  <!-- Start grippers   -->
+  <include file="$(find robotiq_2f_gripper_control)/launch/robotiq_dual_action_server.launch">
+    <arg name="right_gripper_comport" default="/dev/ttyRobotiq0"/>
+    <arg name="left_gripper_comport" default="/dev/ttyRobotiq1"/>
+    <arg name="rate" default="10"/>
+    <arg name="run_test" default="False"/>
+  </include>
+
   <!-- publish the robot state (tf transforms) -->
   <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" />
 
@@ -50,6 +61,7 @@
     <arg name="config" value="true"/>
     <arg name="verbose" value="$(arg verbose)"/>
   </include>
+  
   
   <!--<include file="$(find invite_motoman_moveit_config)/launch/default_warehouse_db.launch" />-->
   

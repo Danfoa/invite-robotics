@@ -20,8 +20,8 @@
   <!-- URDF or robot available at: https://github.com/amrith1007/motoman_experimental/tree/kinetic-devel/motoman_csda10f_support-->
   <depend>motoman_csda10f_support</depend>
   
-  <depend>robotiq_arg2f_model_visualization</depend>
-  <depend>robotiq_2f_model</depend>
+  <depend>robotiq_2f_85_gripper_visualization</depend>
+  <depend>robotiq_2f_140_gripper_visualization</depend>
   
   <depend>joint_state_publisher</depend>
   <depend>robot_state_publisher</depend>

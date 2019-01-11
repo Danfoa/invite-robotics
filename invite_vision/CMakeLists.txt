@@ -24,13 +24,21 @@ find_package(catkin
   pcl_ros 
   sensor_msgs
   moveit_ros_planning_interface
-  moveit_visual_tools)
+  std_msgs
+  message_generation)
 
 find_package( PkgConfig REQUIRED)
 pkg_check_modules( gsl REQUIRED gsl )
 
-generate_messages(DEPENDENCIES actionlib_msgs)
+add_message_files(
+  DIRECTORY 
+    msg
+  FILES
+    DrumParams.msg
+)
 
+generate_messages(DEPENDENCIES actionlib_msgs std_msgs)
+  
 generate_dynamic_reconfigure_options(
   cfg/drum_params.cfg
 )
@@ -42,6 +50,7 @@ catkin_package(
   DEPENDS
     EIGEN3
     moveit_ros_planning_interface
+    message_runtime
 )
 
 include_directories(SYSTEM ${Boost_INCLUDE_DIR} ${EIGEN3_INCLUDE_DIRS})
