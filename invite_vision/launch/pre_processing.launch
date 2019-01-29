@@ -1,0 +1,70 @@
+<launch>
+  <env name="ROSCONSOLE_FORMAT" value="[${severity}] [${node}]: ${message}"/>
+    
+  <node pkg="nodelet" type="nodelet" name="pcl_pre_processing" args="manager" output="screen" />
+
+  <arg name="tunning" default="false"/>
+  <arg name="input_topic" default="/joint_cameras_point_cloud"/>
+
+  <!-- Run a VoxelGrid filter to clean NaNs and downsample the data -->
+  <node pkg="nodelet" type="nodelet" name="voxel_grid" args="load pcl/VoxelGrid pcl_pre_processing" output="screen">
+    <remap from="~input" to="$(arg input_topic)" />
+    <remap from="~output" to="$(arg input_topic)/voxel_grid_filtered" />    
+    <rosparam>
+      # Dynamic parameters
+      leaf_size: 0.003               # The size of a leaf (on x,y,z) used for downsampling. Range: 0.0 to 1.0
+      filter_field_name: z           # The field name used for filtering; z axis points out from the camera, meaning is the depth dimension.
+      filter_limit_min: 0.3         # The minimum allowed field value a point will be considered from Range: -1000.0 to 1000.0 
+      filter_limit_max: 3.0          # The maximum allowed field value a point will be considered from Range: -1000.0 to 1000.0 
+      filter_limit_negative: false   # Set to true if we want to return the data outside [filter_limit_min; filter_limit_max]
+      keep_organized: true           # Keep cloud structure; if set to true NaNs points will be kept.
+      # Static parameters
+      max_queue_size: 1             # Incomming messages queue/buffer (process always newest cloud).
+    </rosparam>
+  </node>
+
+  <!-- Pass Through filters -->
+  <node pkg="nodelet" type="nodelet" name="pass_through_y" args="load pcl/PassThrough pcl_pre_processing" output="screen">
+    <remap from="~input" to="$(arg input_topic)/voxel_grid_filtered" />
+    <remap from="~output" to="$(arg input_topic)/y_filter" />    
+    <rosparam>
+      # Dynamic parameters
+      filter_field_name: y           # The field name used for filtering; z axis points out from the camera, meaning is the depth dimension.
+      filter_limit_min: -0.1         # The minimum allowed field value a point will be considered from Range: -1000.0 to 1000.0 
+      filter_limit_max: 0.7          # The maximum allowed field value a point will be considered from Range: -1000.0 to 1000.0 
+      # Static parameters
+      max_queue_size: 1             # Incomming messages queue/buffer (process always newest cloud).
+    </rosparam>
+  </node>
+
+  <node pkg="nodelet" type="nodelet" name="pass_through_x" args="load pcl/PassThrough pcl_pre_processing" output="screen">
+    <remap from="~input" to="$(arg input_topic)/y_filter" />
+    <remap from="~output" to="$(arg input_topic)/area_of_interest" />    
+    <rosparam>
+      # Dynamic parameters
+      filter_field_name: x           # The field name used for filtering; z axis points out from the camera, meaning is the depth dimension.
+      filter_limit_min: 0.35         # The minimum allowed field value a point will be considered from Range: -1000.0 to 1000.0 
+      filter_limit_max: 1.0          # The maximum allowed field value a point will be considered from Range: -1000.0 to 1000.0 
+      # Static parameters
+      max_queue_size: 1             # Incomming messages queue/buffer (process always newest cloud).
+    </rosparam>
+  </node>
+
+  <!-- Remove Noisy Data by an stadistical outliner removal filter
+  <node pkg="nodelet" type="nodelet" name="stadistical_outliner_removal" args="load pcl/StatisticalOutlierRemoval  pcl_pre_processing" output="screen">
+    <remap from="~input" to="$(arg input_topic)/area_of_interest" />
+    <remap from="~output" to="$(arg input_topic)/sor_filtered" />
+    <rosparam>
+      # Dynamic paramerers
+      mean_k: 25                    # The number of points to use for mean distance estimation Range: 2 to 100 
+      stddev: 0.7                   # The standard deviation multiplier threshold. All points outside the mean +- sigma * std_mul will be considered outliers. Range: 0.0 to 5.0 
+      max_queue_size: 1             # Incomming messages queue.
+    </rosparam>
+  </node> -->
+
+  <!-- If enable, launch rqt GUI for realtime Node parameter tunning; this will allow users to tune pre and post processing parameters -->
+  <group if="$(arg tunning)">
+    <node name="pre_processing_config" pkg="rqt_reconfigure" type="rqt_reconfigure"/>
+  </group>
+
+</launch>

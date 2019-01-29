@@ -1,0 +1,76 @@
+#!/usr/bin/env python
+import rospy
+import sys
+
+import actionlib
+from actionlib_msgs.msg import GoalStatus
+from ensenso_camera_msgs.msg import RequestDataAction, RequestDataGoal
+
+
+def main():
+    loop_rate = rospy.get_param("~rate", 10)            #  [Hz]
+    timeout = rospy.get_param("~timeout", 20)
+
+    goal = RequestDataGoal()
+    # goal.parameter_set = rospy.get_param("~parameter_set", "")
+
+    # goal.request_raw_images = rospy.get_param("~raw_images", True)
+    # goal.request_rectified_images = rospy.get_param("~rectified_images", False)
+    # goal.request_disparity_map = rospy.get_param("~disparity_map", False)
+    goal.request_point_cloud = rospy.get_param("~point_cloud", True)
+    goal.request_normals = rospy.get_param("~normals", True)
+
+    goal.publish_results = True
+
+
+    # Request lower and upper camera data                        "/namespace/action_name"
+    request_data_lower_cam_client = actionlib.SimpleActionClient("/n35_lower_camera/request_data", RequestDataAction)
+    request_data_upper_cam_client = actionlib.SimpleActionClient("/n35_upper_camera/request_data", RequestDataAction)
+
+    rospy.loginfo("Waiting for lower camera request server...")    
+    server_connection_lower_result = request_data_lower_cam_client.wait_for_server(rospy.Duration(timeout))
+
+    rospy.loginfo("Waiting for upper camera request server...")    
+    server_connection_upper_result = request_data_upper_cam_client.wait_for_server(rospy.Duration(timeout))
+
+    if not server_connection_upper_result or not server_connection_lower_result:
+        rospy.logerr("Upper camera node is {}running\nLower camera node is {}running".format( ('' if server_connection_upper_result else 'not '), ('' if server_connection_lower_result else 'not ') ))
+        rospy.logerr("Please check that \n1. Both cameras are powered on.\n" + 
+                        "2. Both upper and lower camera_nodes are running and that connection to the camera was achieved\n" + 
+                        "3. Both cameras have their firmware updated (open nxView to confirm this or update firmware)")
+        sys.exit()
+
+    rospy.loginfo("Initializing cameras data requests every {}".format(loop_rate))
+
+    rate = rospy.Rate(loop_rate)
+    while not rospy.is_shutdown():
+        request_data_lower_cam_client.send_goal(goal)    # Request lower camera data
+        request_data_upper_cam_client.send_goal(goal)    # Request upper camera data
+        # Wait for results 
+        request_data_lower_cam_client.wait_for_result()  
+        request_data_upper_cam_client.wait_for_result()
+
+        # Check if any errors occured with the action request.
+        if request_data_lower_cam_client.get_state() != GoalStatus.SUCCEEDED:
+            rospy.logwarn("Lower camera request data failed.")
+        else:
+            result = request_data_lower_cam_client.get_result()
+            if result.error.code != 0:
+                rospy.logerr("Error on Lower camera action result {}: {}".format(result.error.code, result.error.message))
+        
+        if request_data_upper_cam_client.get_state() != GoalStatus.SUCCEEDED:
+            rospy.logwarn("Upper camera request data failed.")
+        else:
+            result = request_data_upper_cam_client.get_result()
+            if result.error.code != 0:
+                rospy.logerr("Error on Upper camera action result {}: {}".format(result.error.code, result.error.message))
+
+        rate.sleep()
+
+
+if __name__ == "__main__":
+    try:
+        rospy.init_node("ensenso_camera_request_data")
+        main()
+    except rospy.ROSInterruptException:
+        pass

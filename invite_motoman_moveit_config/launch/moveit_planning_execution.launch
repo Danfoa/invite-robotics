@@ -1,6 +1,9 @@
 <launch>
-  <env name="ROSCONSOLE_FORMAT" value="[${severity}] [${node}]: ${message}"/> 
-
+  <!-- <env name="ROSCONSOLE_FORMAT" value="[${severity}] [${node}]: ${message}"/>  -->
+  <!-- <env name="ROSCONSOLE_CONFIG_FILE" -->
+    <!-- value="$(find invite_vision)/config/rosconsole.config"/> -->
+  <env name="ROSCONSOLE_FORMAT"
+      value="[${severity}] [${node}] [${time}]: ${message}"/>
   
   <!-- The planning and execution components of MoveIt! configured to run -->
   <!-- using the ROS-Industrial interface. -->
@@ -54,6 +57,7 @@
     <arg name="config" value="true"/>
     <arg name="verbose" value="$(arg verbose)"/>
   </include>
+  
   
   <!--<include file="$(find invite_motoman_moveit_config)/launch/default_warehouse_db.launch" />-->
   

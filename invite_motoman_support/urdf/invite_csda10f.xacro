@@ -54,7 +54,7 @@
       <child link="arm_left_link_tcp" />
     </joint>
 
-    <!--<link name="ensenso_upper_optical_frame" />
+    <link name="ensenso_upper_optical_frame" />
     <link name="ensenso_lower_optical_frame" />
 	
 	<joint name="upper_camera_joint" type="fixed" >
@@ -69,7 +69,7 @@
       <!-- <origin xyz="0.695186 1.32848 1.41829" rpy="-1.9854 -0.00862869 -3.13558"/> -->
       <parent link="base_link" />
       <child link="ensenso_lower_optical_frame" />
-    </joint>-->
+    </joint>
 	
 	<!-- Q upper cammera   0.087429787325731 -0.7070500191913 -0.695960729680754 0.0898608112137424 -->
 	<!-- Q lower cammera   0.00419018865331527 -0.00815435540059931 -0.83807389015755 0.545479700303542 -->

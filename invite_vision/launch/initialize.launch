@@ -1,0 +1,15 @@
+<launch>
+    <arg name="request_data_continuously" default="true"/>
+
+    <include file="$(find invite_vision)/launch/vision_setup.launch">
+        <arg name="output" value="log"/>
+        <arg name="request_data_continuously" value="$(arg request_data_continuously)"/>
+    </include>
+    <include file="$(find invite_vision)/launch/pre_processing.launch">
+        <arg name="tunning" value="false"/>
+    </include>
+
+    <!-- TO-DO: Make this a Nodelet connected to ensenso_driver Nodelet Threads -->
+    <node pkg="invite_vision" type="concatenate_cameras_pointcloud" name="concatenator"/>
+    
+</launch>

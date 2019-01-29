@@ -3,7 +3,7 @@
   <include file="$(find invite_motoman_moveit_config)/launch/planning_context.launch" />
 
   <!-- GDB Debug Option -->
-  <arg name="debug" default="false" />
+  <arg name="debug" default="true" />
   <arg unless="$(arg debug)" name="launch_prefix" value="" />
   <arg     if="$(arg debug)" name="launch_prefix"
 	   value="gdb -x $(find invite_motoman_moveit_config)/launch/gdb_settings.gdb --ex run --args" />
@@ -47,8 +47,8 @@
     <param name="jiggle_fraction" value="$(arg jiggle_fraction)" />
 
      <!-- MoveGroup capabilities to load -->
-    <param name="capabilities" value="move_group/MoveGroupCartesianPathService
-				      move_group/MoveGroupExecuteService
+    <!--<param name="capabilities" value="move_group/MoveGroupCartesianPathService
+				      move_group/MoveGroupExecuteTrajectoryAction
 				      move_group/MoveGroupKinematicsService
 				      move_group/MoveGroupMoveAction
 				      move_group/MoveGroupPickPlaceAction
@@ -56,7 +56,7 @@
 				      move_group/MoveGroupQueryPlannersService
 				      move_group/MoveGroupStateValidationService
 				      move_group/MoveGroupGetPlanningSceneService
-				      " />
+				      " />-->
 
     <!-- Publish the planning scene of the physical robot so that rviz plugin can know actual robot -->
     <param name="planning_scene_monitor/publish_planning_scene" value="$(arg publish_monitored_planning_scene)" />
