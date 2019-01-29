@@ -12,36 +12,29 @@ endif()
 
 find_package(catkin 
   REQUIRED
-  dynamic_reconfigure
-  genmsg 
-  actionlib_msgs 
-  actionlib
+    genmsg 
+    actionlib_msgs 
+    actionlib
   COMPONENTS 
-  roscpp 
-  rospy 
-  ensenso_camera 
-  pcl_conversions 
-  pcl_ros 
-  sensor_msgs
-  moveit_ros_planning_interface
-  std_msgs
-  message_generation)
-
-find_package( PkgConfig REQUIRED)
-pkg_check_modules( gsl REQUIRED gsl )
-
-add_message_files(
-  DIRECTORY 
-    msg
-  FILES
-    DrumParams.msg
+    roscpp 
+    rospy 
+    ensenso_camera 
+    pcl_conversions 
+    pcl_ros 
+    sensor_msgs
+    std_msgs
+    message_generation
 )
 
-generate_messages(DEPENDENCIES actionlib_msgs std_msgs)
+#add_message_files(
+#  DIRECTORY 
+#    msg
+#  FILES
+#)
+
+# generate_messages(DEPENDENCIES std_msgs)
   
-generate_dynamic_reconfigure_options(
-  cfg/drum_params.cfg
-)
+# generate_dynamic_reconfigure_options()
 
 catkin_package(
 #  INCLUDE_DIRS include
@@ -49,7 +42,6 @@ catkin_package(
 #  CATKIN_DEPENDS other_catkin_pkg
   DEPENDS
     EIGEN3
-    moveit_ros_planning_interface
     message_runtime
 )
 
@@ -63,18 +55,6 @@ roslint_python(
   scripts/request_lower_camera_data
 )
 
-add_executable(concatenate_cameras_pointcloud
-  src/concatenate_cameras_pointcloud.cpp
-)
-
+add_executable(concatenate_cameras_pointcloud  src/concatenate_cameras_pointcloud.cpp)
 add_dependencies(concatenate_cameras_pointcloud ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 target_link_libraries(concatenate_cameras_pointcloud ${catkin_LIBRARIES})
-
-add_executable(drum_finder
-  src/drum_finder.cpp
-)
-
-add_dependencies(drum_finder ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
-add_dependencies(drum_finder ${PROJECT_NAME}_gencfg)
-target_link_libraries(drum_finder ${catkin_LIBRARIES} ${gsl_LIBRARIES})
-
