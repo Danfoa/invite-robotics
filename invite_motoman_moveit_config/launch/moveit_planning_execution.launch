@@ -9,11 +9,7 @@
   <!-- the "sim" argument controls whether we connect to a Simulated or Real robot -->
   <!--  - if sim=false, a robot_ip and controller(fs100|dx100) arguments is required -->
   <arg name="sim" default="false" />
-   <!--Load default scene-->
-  <arg name="load_scene" default="true"/>
-  <!-- Scene objects to load as default -->
-  <arg name="scene_file" if="$(arg load_scene)" default="$(find invite_motoman_moveit_config)/scenes/default_scene_objects.scene"/> 
-  <arg name="robot_enable" default="false" />
+  <arg name="robot_enable" default="true" />
   <arg name="verbose" default="false" />
   <arg name="robot_ip" unless="$(arg sim)" default="192.168.0.1" doc="IP of controller" />
   <arg name="controller" unless="$(arg sim)" default="fs100" doc="Series of the controller (dx100, fs100)" />
@@ -38,6 +34,14 @@
     </include>
   </group>
 
+  <!-- Start grippers   -->
+  <include file="$(find robotiq_2f_gripper_control)/launch/robotiq_dual_action_server.launch">
+    <arg name="right_gripper_comport" default="/dev/ttyRobotiq1"/>
+    <arg name="left_gripper_comport" default="/dev/ttyRobotiq0"/>
+    <arg name="rate" default="10"/>
+    <arg name="run_test" default="False"/>
+  </include>
+
   <!-- publish the robot state (tf transforms) -->
   <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" />
 
@@ -58,11 +62,5 @@
     <include file="$(find invite_motoman_support)/launch/robot_enable.launch" />
   </group>
 
-  <group if="$(arg load_scene)">
-    <!-- Load `scene_file` scene objects for collision checking -->
-    <node name="moveit_publish_scene_from_text" pkg="moveit_ros_planning" type="moveit_publish_scene_from_text" args= "$(arg scene_file)"
-          output="screen"/>
-  </group>
-  
 </launch>
 

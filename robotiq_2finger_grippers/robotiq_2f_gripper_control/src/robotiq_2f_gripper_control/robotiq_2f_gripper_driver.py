@@ -1,3 +1,4 @@
+#! /usr/bin/env python
 """--------------------------------------------------------------------
 COPYRIGHT 2015 Stanley Innovation Inc.
 
@@ -187,7 +188,7 @@ class Robotiq2FingerGripperDriver:
             success = True
             success &= self._gripper.process_action_cmd()
             success &= self._gripper.process_status_cmd()
-            if not success:
+            if not success and not rospy.is_shutdown():
                 rospy.logerr("Failed to contact gripper %d"% self._gripper.device_id)
             else:
                 stat = RobotiqGripperStatus()
@@ -206,7 +207,7 @@ class Robotiq2FingerGripperDriver:
         success = True
         success &= self._gripper.process_action_cmd()
         success &= self._gripper.process_status_cmd()
-        if not success:
+        if not success and not rospy.is_shutdown():
             rospy.logerr("Failed to contact gripper %d"% self._gripper.device_id)
         else:          
             js = JointState()

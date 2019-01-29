@@ -68,7 +68,8 @@ catkin_package(
 #  INCLUDE_DIRS include
 #  LIBRARIES robotiq_2f_gripper_control
 #  CATKIN_DEPENDS rospy std_msgs
-#  DEPENDS system_lib
+  DEPENDS 
+    rospy
 )
 
 ###########

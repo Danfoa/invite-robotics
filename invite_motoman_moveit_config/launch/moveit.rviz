@@ -3,11 +3,9 @@ Panels:
     Help Height: 84
     Name: Displays
     Property Tree Widget:
-      Expanded:
-        - /MotionPlanning1/Planning Request1
-        - /Axes2/Status1
+      Expanded: ~
       Splitter Ratio: 0.447368413
-    Tree Height: 838
+    Tree Height: 273
   - Class: rviz/Help
     Name: Help
   - Class: rviz/Views
@@ -17,28 +15,13 @@ Panels:
     Splitter Ratio: 0.5
   - Class: rviz_visual_tools/RvizVisualToolsGui
     Name: RvizVisualToolsGui
+  - Class: rviz_visual_tools/RvizVisualToolsGui
+    Name: RvizVisualToolsGui
 Visualization Manager:
   Class: ""
   Displays:
-    - Alpha: 0.5
-      Cell Size: 1
-      Class: rviz/Grid
-      Color: 160; 160; 164
-      Enabled: true
-      Line Style:
-        Line Width: 0.0299999993
-        Value: Lines
-      Name: Grid
-      Normal Cell Count: 0
-      Offset:
-        X: 0
-        Y: 0
-        Z: 0
-      Plane: XY
-      Plane Cell Count: 10
-      Reference Frame: <Fixed Frame>
-      Value: true
-    - Class: moveit_rviz_plugin/MotionPlanning
+    - Acceleration_Scaling_Factor: 1
+      Class: moveit_rviz_plugin/MotionPlanning
       Enabled: true
       Move Group Namespace: ""
       MoveIt_Allow_Approximate_IK: false
@@ -595,282 +578,7 @@ Visualization Manager:
         Show Robot Collision: false
         Show Robot Visual: true
       Value: true
-    - Class: rviz/MarkerArray
-      Enabled: true
-      Marker Topic: /rviz_visual_tools
-      Name: MarkerArray
-      Namespaces:
-        {}
-      Queue Size: 100
-      Value: true
-    - Class: moveit_rviz_plugin/Trajectory
-      Color Enabled: false
-      Enabled: true
-      Interrupt Display: false
-      Links:
-        All Links Enabled: true
-        Expand Joint Details: false
-        Expand Link Details: false
-        Expand Tree: false
-        Link Tree Style: Links in Alphabetic Order
-        arm_left_base:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        arm_left_left_coupler:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        arm_left_left_driver:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        arm_left_left_follower:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        arm_left_left_pad:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        arm_left_left_spring_link:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        arm_left_link_1_s:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        arm_left_link_2_l:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        arm_left_link_3_e:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        arm_left_link_4_u:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        arm_left_link_5_r:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        arm_left_link_6_b:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        arm_left_link_7_t:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        arm_left_link_force_sensor:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        arm_left_link_force_sensor_adapter_plate:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        arm_left_link_gripper_adapter_plate:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        arm_left_link_robotiq_coupling:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        arm_left_link_tcp:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-        arm_left_link_tool0:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-        arm_left_right_coupler:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        arm_left_right_driver:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        arm_left_right_follower:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        arm_left_right_pad:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        arm_left_right_spring_link:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        arm_right_link_1_s:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        arm_right_link_2_l:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        arm_right_link_3_e:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        arm_right_link_4_u:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        arm_right_link_5_r:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        arm_right_link_6_b:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        arm_right_link_7_t:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        arm_right_link_gripper_adapter_plate:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        arm_right_link_robotiq_coupling:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        arm_right_link_tcp:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-        arm_right_link_tool0:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-        base_link:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        ensenso_lower_optical_frame:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-        ensenso_upper_optical_frame:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-        right_gripper_left_inner_finger:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        right_gripper_left_inner_knuckle:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        right_gripper_left_outer_finger:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        right_gripper_left_outer_knuckle:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        right_gripper_right_inner_finger:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        right_gripper_right_inner_knuckle:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        right_gripper_right_outer_finger:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        right_gripper_right_outer_knuckle:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        right_gripper_robotiq_arg2f_base_link:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        torso_link_b1:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        torso_link_b2:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-      Loop Animation: false
-      Name: Trajectory
-      Robot Alpha: 0.5
-      Robot Color: 150; 50; 150
-      Robot Description: robot_description
-      Show Robot Collision: false
-      Show Robot Visual: true
-      Show Trail: false
-      State Display Time: 0.05 s
-      Trail Step Size: 1
-      Trajectory Topic: /move_group/display_planned_path
-      Value: true
-    - Class: rviz/Axes
-      Enabled: true
-      Length: 1.20000005
-      Name: Axes
-      Radius: 0.0199999996
-      Reference Frame: <Fixed Frame>
-      Value: true
+      Velocity_Scaling_Factor: 1
     - Alpha: 1
       Autocompute Intensity Bounds: true
       Autocompute Value Bounds:
@@ -878,7 +586,7 @@ Visualization Manager:
         Min Value: -10
         Value: true
       Axis: Z
-      Channel Name: z
+      Channel Name: normal_z
       Class: rviz/PointCloud2
       Color: 255; 255; 255
       Color Transformer: Intensity
@@ -886,17 +594,17 @@ Visualization Manager:
       Enabled: false
       Invert Rainbow: false
       Max Color: 255; 255; 255
-      Max Intensity: 2.25563002
+      Max Intensity: 0.999787092
       Min Color: 0; 0; 0
-      Min Intensity: 0.947039306
+      Min Intensity: -0.602338195
       Name: PointCloud2
       Position Transformer: XYZ
       Queue Size: 1
       Selectable: true
-      Size (Pixels): 3
+      Size (Pixels): 2
       Size (m): 0.00499999989
-      Style: Flat Squares
-      Topic: /point_cloud_upper
+      Style: Points
+      Topic: /self_filtered_cloud
       Unreliable: false
       Use Fixed Frame: true
       Use rainbow: true
@@ -908,7 +616,7 @@ Visualization Manager:
         Min Value: -10
         Value: true
       Axis: Z
-      Channel Name: z
+      Channel Name: label
       Class: rviz/PointCloud2
       Color: 255; 255; 255
       Color Transformer: Intensity
@@ -916,17 +624,47 @@ Visualization Manager:
       Enabled: false
       Invert Rainbow: false
       Max Color: 255; 255; 255
-      Max Intensity: 1.76569188
+      Max Intensity: 94
       Min Color: 0; 0; 0
-      Min Intensity: 0.718178332
+      Min Intensity: 1
       Name: PointCloud2
       Position Transformer: XYZ
       Queue Size: 1
       Selectable: true
       Size (Pixels): 3
       Size (m): 0.00499999989
-      Style: Flat Squares
-      Topic: /point_cloud_lower
+      Style: Boxes
+      Topic: /self_filtered_cloud/super_voxel_clusters
+      Unreliable: false
+      Use Fixed Frame: true
+      Use rainbow: true
+      Value: true
+    - Alpha: 1
+      Autocompute Intensity Bounds: true
+      Autocompute Value Bounds:
+        Max Value: 10
+        Min Value: -10
+        Value: true
+      Axis: Z
+      Channel Name: normal_z
+      Class: rviz/PointCloud2
+      Color: 255; 255; 255
+      Color Transformer: FlatColor
+      Decay Time: 0
+      Enabled: false
+      Invert Rainbow: false
+      Max Color: 255; 255; 255
+      Max Intensity: 0.999995351
+      Min Color: 0; 0; 0
+      Min Intensity: -0.85573864
+      Name: PointCloud2
+      Position Transformer: XYZ
+      Queue Size: 1
+      Selectable: true
+      Size (Pixels): 1
+      Size (m): 0.00499999989
+      Style: Points
+      Topic: /joint_cameras_point_cloud
       Unreliable: false
       Use Fixed Frame: true
       Use rainbow: true
@@ -945,6 +683,61 @@ Visualization Manager:
       Radius: 0.00999999978
       Reference Frame: ensenso_lower_optical_frame
       Value: true
+    - Class: rviz/Axes
+      Enabled: true
+      Length: 1.20000005
+      Name: Axes
+      Radius: 0.0199999996
+      Reference Frame: <Fixed Frame>
+      Value: true
+    - Class: rviz/Axes
+      Enabled: true
+      Length: 0.0500000007
+      Name: Axes
+      Radius: 0.00499999989
+      Reference Frame: arm_left_link_tcp
+      Value: true
+    - Class: rviz/Axes
+      Enabled: true
+      Length: 0.0500000007
+      Name: Axes
+      Radius: 0.00499999989
+      Reference Frame: arm_right_link_tcp
+      Value: true
+    - Class: rviz/MarkerArray
+      Enabled: true
+      Marker Topic: /state_metrics
+      Name: MarkerArray
+      Namespaces:
+        {}
+      Queue Size: 100
+      Value: true
+    - Class: rviz/MarkerArray
+      Enabled: true
+      Marker Topic: /bag_handling_grasping_poses
+      Name: MarkerArray
+      Namespaces:
+        {}
+      Queue Size: 100
+      Value: true
+    - Alpha: 0.5
+      Cell Size: 1
+      Class: rviz/Grid
+      Color: 160; 160; 164
+      Enabled: true
+      Line Style:
+        Line Width: 0.0299999993
+        Value: Lines
+      Name: Grid
+      Normal Cell Count: 0
+      Offset:
+        X: 0
+        Y: 0
+        Z: 0
+      Plane: XY
+      Plane Cell Count: 10
+      Reference Frame: <Fixed Frame>
+      Value: true
   Enabled: true
   Global Options:
     Background Color: 48; 48; 48
@@ -962,25 +755,25 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz/Orbit
-      Distance: 3.13575959
+      Distance: 3.6488986
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.0599999987
         Stereo Focal Distance: 1
         Swap Stereo Eyes: false
         Value: false
       Focal Point:
-        X: -0.12266963
-        Y: 0.78362757
-        Z: 0.918108046
+        X: 0.479565591
+        Y: 0.47039485
+        Z: 0.983709097
       Focal Shape Fixed Size: true
       Focal Shape Size: 0.0500000007
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.00999999978
-      Pitch: 0.310199589
+      Pitch: 0.359796524
       Target Frame: base_link
       Value: Orbit (rviz)
-      Yaw: 0.255338758
+      Yaw: 5.70563936
     Saved:
       - Class: rviz/Orbit
         Distance: 2.3781476
@@ -1014,10 +807,8 @@ Window Geometry:
     collapsed: false
   MotionPlanning - Trajectory Slider:
     collapsed: false
-  QMainWindow State: 000000ff00000000fd0000000100000000000001f0000003e1fc020000000cfb000000100044006900730070006c0061007900730100000000000003e1000000dd00fffffffb0000000800480065006c00700000000342000000bb0000007900fffffffb0000000a005600690065007700730000000190000000b7000000b700fffffffb0000000c00430061006d00650072006100000002ff000001610000000000000000fb0000001e004d006f00740069006f006e00200050006c0061006e006e0069006e00670100000374000001890000000000000000fb0000002e004d006f00740069006f006e0050006c0061006e006e0069006e00670020002d00200053006c00690064006500720000000000ffffffff0000000000000000fb0000001c004d006f00740069006f006e0050006c0061006e006e0069006e006700000001db00000206000001b100fffffffb00000024005200760069007a00560069007300750061006c0054006f006f006c00730047007500690000000366000000930000004c00fffffffb000000120020002d00200053006c00690064006500720000000000ffffffff0000000000000000fb00000026005400720061006a006500630074006f007200790020002d00200053006c00690064006500720000000000ffffffff0000000000000000fb0000003c005400720061006a006500630074006f007200790020002d0020005400720061006a006500630074006f0072007900200053006c00690064006500720000000000ffffffff0000005000fffffffb00000044004d006f00740069006f006e0050006c0061006e006e0069006e00670020002d0020005400720061006a006500630074006f0072007900200053006c00690064006500720000000000ffffffff0000005000ffffff00000499000003e100000001000000020000000100000002fc0000000100000002000000010000000a0054006f006f006c00730000000000ffffffff0000000000000000
+  QMainWindow State: 000000ff00000000fd0000000100000000000002ad000003dafc020000000dfb000000100044006900730070006c0061007900730100000028000001a6000000d700fffffffb0000000800480065006c00700000000342000000bb0000007300fffffffb0000000a005600690065007700730000000190000000b7000000ad00fffffffb0000000c00430061006d00650072006100000002ff000001610000000000000000fb0000001e004d006f00740069006f006e00200050006c0061006e006e0069006e00670100000374000001890000000000000000fb0000002e004d006f00740069006f006e0050006c0061006e006e0069006e00670020002d00200053006c00690064006500720000000000ffffffff0000000000000000fb0000001c004d006f00740069006f006e0050006c0061006e006e0069006e006701000001d4000001e30000018300fffffffb00000024005200760069007a00560069007300750061006c0054006f006f006c0073004700750069000000036f000000930000004300fffffffb000000120020002d00200053006c00690064006500720000000000ffffffff0000000000000000fb00000026005400720061006a006500630074006f007200790020002d00200053006c00690064006500720000000000ffffffff0000000000000000fb0000003c005400720061006a006500630074006f007200790020002d0020005400720061006a006500630074006f0072007900200053006c00690064006500720000000000ffffffff0000000000000000fb00000044004d006f00740069006f006e0050006c0061006e006e0069006e00670020002d0020005400720061006a006500630074006f0072007900200053006c00690064006500720000000000ffffffff0000004a00fffffffb00000024005200760069007a00560069007300750061006c0054006f006f006c007300470075006901000003bd000000450000004300ffffff000004cd000003da00000001000000020000000100000002fc0000000100000002000000010000000a0054006f006f006c00730100000000ffffffff0000000000000000
   RvizVisualToolsGui:
-    collapsed: false
-  Trajectory - Trajectory Slider:
     collapsed: false
   Views:
     collapsed: false

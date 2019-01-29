@@ -29,7 +29,7 @@
   <depend>xacro</depend>
 
   <!-- Dependencies for hardware connection> -->
-  <depend>motoman_driver</depend>
+  <exec_depend>motoman_driver</exec_depend>
   <depend>roslaunch</depend>
   
   <!-- The export tag contains other, unsspecified, tags -->

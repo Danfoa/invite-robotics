@@ -10,8 +10,9 @@ project(invite_motoman_support)
 find_package(catkin REQUIRED
     motoman_driver
     motoman_csda10f_support
-    robotiq_arg2f_model_visualization
-    robotiq_2f_model
+    robotiq_2f_85_gripper_visualization
+    robotiq_2f_140_gripper_visualization
+    robotiq_2f_gripper_control
     xacro
     )
 

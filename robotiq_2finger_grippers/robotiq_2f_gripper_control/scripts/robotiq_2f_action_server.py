@@ -44,19 +44,26 @@ class CommandGripperActionServer(object):
 
     def __init__(self, name, driver):
         self._action_name = name
-        self._as = actionlib.SimpleActionServer(self._action_name, CommandRobotiqGripperAction, execute_cb=self.execute_cb, auto_start = False)
+        self._action_server = actionlib.SimpleActionServer(self._action_name, CommandRobotiqGripperAction, execute_cb=self.execute_cb, auto_start = False)
         self._driver = driver       # Get handle to the Gripper Control Server
         
         # Wait until gripper driver is ready to take commands.
+        watchdog = rospy.Timer(rospy.Duration(15.0), self._connection_timeout, oneshot=True)
         while not rospy.is_shutdown() and not self._driver.is_ready:
-            rospy.sleep(0.4)
-            rospy.loginfo( self._action_name + ": Waiting for gripper to be ready")
+            rospy.sleep(0.5)
+            rospy.loginfo( self._action_name + ": Waiting for gripper to be ready...")
         
-        self._processing_goal = False
-        self._is_stalled = False
+        watchdog.shutdown() 
+        if not rospy.is_shutdown():
+            self._processing_goal = False
+            self._is_stalled = False
 
-        self._as.start()
-        rospy.loginfo("Robotiq server started")
+            self._action_server.start()
+            rospy.loginfo("Robotiq server started")
+    
+    def _connection_timeout(self, event):
+        rospy.logfatal("Gripper on port %s seems not to respond" % (self._driver._comport))
+        rospy.signal_shutdown("Gripper on port %s seems not to respond" % (self._driver._comport))
       
     def execute_cb(self, goal_command):
         rospy.loginfo( (self._action_name + ": New goal received Pos:%.3f Speed: %.3f Force: %.3f Force-Stop: %r") % (goal_command.position, goal_command.speed, goal_command.force, goal_command.stop) )
@@ -71,20 +78,20 @@ class CommandGripperActionServer(object):
         result = CommandRobotiqGripperResult()
 
         # Set timeout timer 
-        watchdog = rospy.Timer(rospy.Duration(5.0), self._timeout_cb, oneshot=True)
+        watchdog = rospy.Timer(rospy.Duration(5.0), self._execution_timeout, oneshot=True)
 
         # Wait until goal is achieved and provide feedback
         rate = rospy.Rate( rospy.get_param('~rate', 30) )
 
         while not rospy.is_shutdown() and self._processing_goal and not self._is_stalled:             # While moving and not stalled provide feedback and check for result
             feedback = self._driver.get_current_gripper_status()
-            self._as.publish_feedback( feedback )
+            self._action_server.publish_feedback( feedback )
             rospy.logdebug("Error = %.5f Requested position = %.3f Current position = %.3f" % (abs(feedback.requested_position - feedback.position), feedback.requested_position, feedback.position))
             # Check for completition of action 
             if( feedback.fault_status != 0 and not self._is_stalled):               # Check for errors
                 rospy.logerr(self._action_name + ": fault status (gFLT) is: %d", feedback.fault_status)
                 self._is_stalled = True
-                self._as.set_aborted( feedback , (self._action_name + ": fault status (gFLT) is: %d" % feedback.fault_status))
+                self._action_server.set_aborted( feedback , (self._action_name + ": fault status (gFLT) is: %d" % feedback.fault_status))
                 break
             if( abs(feedback.requested_position - feedback.position) < 0.005 or feedback.obj_detected):    # Check if position has been reached 
                 watchdog.shutdown()                         # Stop timeout watchdog.
@@ -96,15 +103,15 @@ class CommandGripperActionServer(object):
         # Send result 
         if not self._is_stalled:
             rospy.logdebug(self._action_name + ": goal reached or object detected Pos: %.3f PosRequested: %.3f ObjectDetected: %r" % (goal_command.position, feedback.requested_position, feedback.obj_detected) )
-            self._as.set_succeeded(result)  
+            self._action_server.set_succeeded(result)  
         else:
             rospy.logerr(self._action_name + ": goal aborted Pos: %.3f PosRequested: %.3f ObjectDetected: %r" % (goal_command.position, feedback.requested_position, feedback.obj_detected) )
-            self._as.set_aborted(result)  
+            self._action_server.set_aborted(result)  
 
         self._processing_goal = False 
         self._is_stalled = False 
     
-    def _timeout_cb(self, event):
+    def _execution_timeout(self, event):
         rospy.logerr("%s: Achieving goal is taking too long, dropping current goal")
         self._is_stalled = True
         self._processing_goal = False

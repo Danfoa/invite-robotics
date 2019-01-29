@@ -58,13 +58,15 @@
     <link name="ensenso_lower_optical_frame" />
 	
 	<joint name="upper_camera_joint" type="fixed" >
-      <origin xyz="0.77251 0.237802 1.89592" rpy="-2.89024 0.00537681 1.55567"/>
+      <origin xyz="0.865275 0.259338 1.89787" rpy="-2.89701 0.0272259 1.57315"/>
+      <!-- <origin xyz="0.875275 0.259338 1.89787" rpy="-2.89701 0.0272259 1.57315"/> -->
       <parent link="base_link" />
       <child link="ensenso_upper_optical_frame" />
     </joint>
 
 	<joint name="lower_camera_joint" type="fixed" >
-      <origin xyz="0.613277 1.31721 1.44293" rpy="-1.98763 0.0018727 3.12335"/>
+      <origin xyz="0.685186 1.32848 1.41829" rpy="-1.9854 -0.00862869 -3.13558"/>
+      <!-- <origin xyz="0.695186 1.32848 1.41829" rpy="-1.9854 -0.00862869 -3.13558"/> -->
       <parent link="base_link" />
       <child link="ensenso_lower_optical_frame" />
     </joint>-->
