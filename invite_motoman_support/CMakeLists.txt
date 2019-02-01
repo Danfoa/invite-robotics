@@ -12,7 +12,6 @@ find_package(catkin REQUIRED
     motoman_csda10f_support
     robotiq_2f_85_gripper_visualization
     robotiq_2f_140_gripper_visualization
-    robotiq_2f_gripper_control
     xacro
     )
 

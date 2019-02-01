@@ -12,9 +12,7 @@ endif()
 
 find_package(catkin 
   REQUIRED
-    genmsg 
-    actionlib_msgs 
-    actionlib
+
   COMPONENTS 
     roscpp 
     rospy 
@@ -23,7 +21,6 @@ find_package(catkin
     pcl_ros 
     sensor_msgs
     std_msgs
-    message_generation
 )
 
 #add_message_files(
@@ -42,7 +39,6 @@ catkin_package(
 #  CATKIN_DEPENDS other_catkin_pkg
   DEPENDS
     EIGEN3
-    message_runtime
 )
 
 include_directories(SYSTEM ${Boost_INCLUDE_DIR} ${EIGEN3_INCLUDE_DIRS})

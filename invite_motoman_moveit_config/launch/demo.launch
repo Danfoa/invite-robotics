@@ -48,6 +48,13 @@
     <arg name="debug" value="$(arg debug)"/>
   </include>
 
+  <!-- Start Simulated grippers   -->
+  <include file="$(find robotiq_2f_gripper_control)/launch/robotiq_dual_action_server.launch">
+    <arg name="rate" value="100"/>
+    <arg name="run_test" value="true"/>
+    <arg name="sim" value="true"/>
+  </include>
+
   <!-- Run Rviz and load the default config to see the state of the move_group node -->
   <include file="$(find invite_motoman_moveit_config)/launch/moveit_rviz.launch">
     <arg name="config" value="true"/>

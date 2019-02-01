@@ -37,12 +37,13 @@
     </include>
   </group>
 
-  <!-- Start grippers   -->
+   <!-- Start Simulated grippers   -->
   <include file="$(find robotiq_2f_gripper_control)/launch/robotiq_dual_action_server.launch">
-    <arg name="right_gripper_comport" default="/dev/ttyRobotiq1"/>
-    <arg name="left_gripper_comport" default="/dev/ttyRobotiq0"/>
-    <arg name="rate" default="10"/>
-    <arg name="run_test" default="False"/>
+    <arg name="right_gripper_comport" value="/dev/ttyRobotiq1"/>
+    <arg name="left_gripper_comport" value="/dev/ttyRobotiq0"/>
+    <arg name="rate" value="50"/>
+    <arg name="run_test" value="false"/>
+    <arg name="sim" value="false"/>
   </include>
 
   <!-- publish the robot state (tf transforms) -->
