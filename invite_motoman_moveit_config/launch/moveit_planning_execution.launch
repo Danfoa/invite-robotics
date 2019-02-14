@@ -12,6 +12,7 @@
   <!-- the "sim" argument controls whether we connect to a Simulated or Real robot -->
   <!--  - if sim=false, a robot_ip and controller(fs100|dx100) arguments is required -->
   <arg name="sim" default="false" />
+  <arg name="sim_grippers" default="$(arg sim)"/>
   <arg name="robot_enable" default="true" />
   <arg name="verbose" default="false" />
   <arg name="robot_ip" unless="$(arg sim)" default="192.168.0.1" doc="IP of controller" />
@@ -37,13 +38,13 @@
     </include>
   </group>
 
-   <!-- Start Simulated grippers   -->
+   <!-- Start Robotiq grippers control structure -->
   <include file="$(find robotiq_2f_gripper_control)/launch/robotiq_dual_action_server.launch">
-    <arg name="right_gripper_comport" value="/dev/ttyRobotiq1"/>
-    <arg name="left_gripper_comport" value="/dev/ttyRobotiq0"/>
+    <arg name="sim" value="$(arg sim_grippers)"/>
+    <arg name="right_gripper_comport" value="/dev/ttyRobotiq1" unless="$(arg sim_grippers)"/>
+    <arg name="left_gripper_comport" value="/dev/ttyRobotiq0" unless="$(arg sim_grippers)"/>
     <arg name="rate" value="50"/>
     <arg name="run_test" value="false"/>
-    <arg name="sim" value="false"/>
   </include>
 
   <!-- publish the robot state (tf transforms) -->
@@ -52,6 +53,7 @@
   <include file="$(find invite_motoman_moveit_config)/launch/move_group.launch">
     <arg name="publish_monitored_planning_scene" value="true"/>
     <arg name="fake_execution" if="$(arg sim)" value="true"/>
+    <arg name="planner" value="ompl" />
   </include>
 
   <include file="$(find invite_motoman_moveit_config)/launch/moveit_rviz.launch">

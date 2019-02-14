@@ -2,9 +2,10 @@ moveit_setup_assistant_config:
   URDF:
     package: invite_motoman_support
     relative_path: urdf/invite_csda10f.xacro
+    xacro_args: ""
   SRDF:
     relative_path: config/motoman_csda10f.srdf
   CONFIG:
     author_name: Daniel Felipe Ordonez
     author_email: daniels.ordonez@gmail.com
-    generated_timestamp: 1526518261
+    generated_timestamp: 1549547886

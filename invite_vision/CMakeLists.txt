@@ -34,22 +34,22 @@ find_package(catkin
 # generate_dynamic_reconfigure_options()
 
 catkin_package(
-#  INCLUDE_DIRS include
+  INCLUDE_DIRS include
 #  LIBRARIES invite_vision
 #  CATKIN_DEPENDS other_catkin_pkg
   DEPENDS
     EIGEN3
 )
-
+include_directories(include)
 include_directories(SYSTEM ${Boost_INCLUDE_DIR} ${EIGEN3_INCLUDE_DIRS})
 include_directories(${catkin_INCLUDE_DIRS})
 link_directories(${catkin_LIBRARY_DIRS})
 
-roslint_python(
-  scripts/request_cameras_data
-  scripts/request_upper_camera_data
-  scripts/request_lower_camera_data
-)
+#roslint_python(
+#  scripts/request_cameras_data
+#  scripts/request_upper_camera_data
+#  scripts/request_lower_camera_data
+#)
 
 add_executable(concatenate_cameras_pointcloud  src/concatenate_cameras_pointcloud.cpp)
 add_dependencies(concatenate_cameras_pointcloud ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})

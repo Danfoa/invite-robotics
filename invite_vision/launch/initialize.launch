@@ -1,9 +1,9 @@
 <launch>
-    <arg name="request_data_continuously" default="true"/>
+    <arg name="continuous" default="true"/>
 
     <include file="$(find invite_vision)/launch/vision_setup.launch">
-        <arg name="output" value="log"/>
-        <arg name="request_data_continuously" value="$(arg request_data_continuously)"/>
+        <arg name="output" value="screen"/>
+        <arg name="continuous" value="$(arg continuous)"/>
     </include>
     <include file="$(find invite_vision)/launch/pre_processing.launch">
         <arg name="tunning" value="false"/>

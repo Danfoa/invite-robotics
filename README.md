@@ -35,7 +35,7 @@ This is a non-profit/collaborative project between the National University of Co
 | MoveGroupInterface tutorial with CSDA10F               |  Supported     |
 | TRAC-IK Integration for most move groups               |  Supported      | 
 | Motion planning with 15 DoF            |  Supported   | 
-| Motion execution of 15 DoF at a time            |  Bug reported   |    
+| Motion execution of 15 DoF at a time            |  Supported   |    
 | Gazebo robot simulation             |  Supported      | 
 | Gazebo grippers simulation          |  In progress          | 
 | Grippers control through ROS control|  Supported | 

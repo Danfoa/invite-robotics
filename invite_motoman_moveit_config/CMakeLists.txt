@@ -15,9 +15,6 @@ find_package(Eigen3 REQUIRED)
 find_package(catkin REQUIRED
   trac_ik_kinematics_plugin             ## Kinematics solver for both arms
   invite_motoman_support
-  moveit_core
-  moveit_ros_planning
-  moveit_ros_planning_interface
   pluginlib
   geometric_shapes
   moveit_visual_tools
@@ -27,9 +24,6 @@ catkin_package(
   CATKIN_DEPENDS 
     trac_ik_kinematics_plugin 
     invite_motoman_support
-    moveit_core
-    moveit_ros_planning_interface
-    interactive_markers
   DEPENDS
     EIGEN3
 )

@@ -38,18 +38,18 @@
   	</joint>
 
 <!--Define the TCP of the grippers -->
-    <link name="arm_right_link_tcp" />
+  <link name="arm_right_link_tcp" />
 	<link name="arm_left_link_tcp" />
 
 <!--Define the position of the TCP with respect to the arm flange-->
     <joint name="arm_right_joint_tcp" type="fixed" >
-      <origin xyz="0 0 0.1994" rpy="0 0 0"/>
+      <origin xyz="0 0 ${0.1994 + 0.03}" rpy="0 0 ${pi/2}"/>
       <parent link="arm_right_link_tool0" />
       <child link="arm_right_link_tcp" />
     </joint>
 
 	<joint name="arm_left_joint_tcp" type="fixed" >
-      <origin xyz="0 0 0.2094" rpy="0 0 ${111.42*pi/180}"/>
+      <origin xyz="0 0 ${0.2094 + 0.03}" rpy="0 0 ${111.42*pi/180}"/>
       <parent link="arm_left_link_tool0" />
       <child link="arm_left_link_tcp" />
     </joint>

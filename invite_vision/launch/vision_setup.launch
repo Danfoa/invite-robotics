@@ -3,7 +3,7 @@
   <arg name="upper_camera_serial" default="171864"/>
   <arg name="lower_camera_serial" default="171865"/>
 
-  <arg name="request_data_continuously" default="true"/>
+  <arg name="continuous" default="true"/>
   <arg name="rate" default="10" doc="Frequenz of camera data request in seconds"/>
 
   <node ns="n35_upper_camera" pkg="ensenso_camera" type="ensenso_camera_node" name="ensenso_camera" output="$(arg output)">
@@ -20,7 +20,7 @@
     <param name="settings" value="$(find invite_vision)/config/ensenso_conf_171865_fast.json"/>    
   </node>
 
-  <group if="$(arg request_data_continuously)">
+  <group if="$(arg continuous)">
     <node pkg="invite_vision" type="request_upper_camera_data" name="request_upper_camera_data" output="$(arg output)">
       <param name="rate" value="$(arg rate)"/>
     </node>

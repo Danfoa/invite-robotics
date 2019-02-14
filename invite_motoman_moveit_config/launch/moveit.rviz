@@ -1,11 +1,12 @@
 Panels:
   - Class: rviz/Displays
-    Help Height: 84
+    Help Height: 75
     Name: Displays
     Property Tree Widget:
-      Expanded: ~
+      Expanded:
+        - /MotionPlanning1/Planning Request1
       Splitter Ratio: 0.447368413
-    Tree Height: 273
+    Tree Height: 380
   - Class: rviz/Help
     Name: Help
   - Class: rviz/Views
@@ -30,8 +31,7 @@ Visualization Manager:
       MoveIt_Allow_Sensor_Positioning: false
       MoveIt_Goal_Tolerance: 0
       MoveIt_Planning_Attempts: 10
-      MoveIt_Planning_Time: 5
-      MoveIt_Use_Cartesian_Path: false
+      MoveIt_Planning_Time: 7
       MoveIt_Use_Constraint_Aware_IK: true
       MoveIt_Warehouse_Host: 127.0.0.1
       MoveIt_Warehouse_Port: 33829
@@ -39,10 +39,10 @@ Visualization Manager:
         Center:
           X: 0
           Y: 0
-          Z: 0
+          Z: 1
         Size:
-          X: 2
-          Y: 2
+          X: 3
+          Y: 3
           Z: 2
       Name: MotionPlanning
       Planned Path:
@@ -321,11 +321,11 @@ Visualization Manager:
         TextHeight: 0.0799999982
       Planning Request:
         Colliding Link Color: 255; 0; 0
-        Goal State Alpha: 1
+        Goal State Alpha: 0.5
         Goal State Color: 250; 128; 0
         Interactive Marker Size: 0.150000006
         Joint Violation Color: 255; 0; 255
-        Planning Group: arm_left
+        Planning Group: csda10f
         Query Goal State: false
         Query Start State: false
         Show Workspace: false
@@ -334,7 +334,7 @@ Visualization Manager:
       Planning Scene Topic: move_group/monitored_planning_scene
       Robot Description: robot_description
       Scene Geometry:
-        Scene Alpha: 1
+        Scene Alpha: 0.400000006
         Scene Color: 77; 172; 200
         Scene Display Time: 0.200000003
         Show Scene Geometry: true
@@ -601,7 +601,7 @@ Visualization Manager:
         Show Robot Collision: false
         Show Robot Visual: true
       Value: true
-      Velocity_Scaling_Factor: 1
+      Velocity_Scaling_Factor: 0.10000000000000001
     - Alpha: 1
       Autocompute Intensity Bounds: false
       Autocompute Value Bounds:
@@ -647,7 +647,7 @@ Visualization Manager:
       Enabled: true
       Invert Rainbow: false
       Max Color: 255; 255; 255
-      Max Intensity: 94
+      Max Intensity: 41
       Min Color: 0; 0; 0
       Min Intensity: 1
       Name: PointCloud2
@@ -674,7 +674,7 @@ Visualization Manager:
       Color: 255; 255; 255
       Color Transformer: FlatColor
       Decay Time: 0
-      Enabled: false
+      Enabled: true
       Invert Rainbow: false
       Max Color: 255; 255; 255
       Max Intensity: 0.999995351
@@ -691,7 +691,7 @@ Visualization Manager:
       Unreliable: false
       Use Fixed Frame: true
       Use rainbow: true
-      Value: false
+      Value: true
     - Class: rviz/Axes
       Enabled: true
       Length: 0.100000001
@@ -743,6 +743,16 @@ Visualization Manager:
         {}
       Queue Size: 100
       Value: true
+    - Class: rviz/MarkerArray
+      Enabled: true
+      Marker Topic: /rviz_visual_tools
+      Name: MarkerArray
+      Namespaces:
+        Final: true
+        Initial: true
+        Text: true
+      Queue Size: 100
+      Value: true
     - Alpha: 0.5
       Cell Size: 1
       Class: rviz/Grid
@@ -778,25 +788,25 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz/Orbit
-      Distance: 3.6488986
+      Distance: 3.67930841
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.0599999987
         Stereo Focal Distance: 1
         Swap Stereo Eyes: false
         Value: false
       Focal Point:
-        X: 0.479565591
-        Y: 0.47039485
-        Z: 0.983709097
+        X: -0.0430916548
+        Y: 0.227305457
+        Z: 0.823152483
       Focal Shape Fixed Size: true
       Focal Shape Size: 0.0500000007
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.00999999978
-      Pitch: 0.359796524
+      Pitch: 0.309796363
       Target Frame: base_link
       Value: Orbit (rviz)
-      Yaw: 5.70563936
+      Yaw: 0.497438043
     Saved:
       - Class: rviz/Orbit
         Distance: 2.3781476
@@ -830,11 +840,11 @@ Window Geometry:
     collapsed: false
   MotionPlanning - Trajectory Slider:
     collapsed: false
-  QMainWindow State: 000000ff00000000fd0000000100000000000002ad000003dafc020000000dfb000000100044006900730070006c0061007900730100000028000001a6000000d700fffffffb0000000800480065006c00700000000342000000bb0000007300fffffffb0000000a005600690065007700730000000190000000b7000000ad00fffffffb0000000c00430061006d00650072006100000002ff000001610000000000000000fb0000001e004d006f00740069006f006e00200050006c0061006e006e0069006e00670100000374000001890000000000000000fb0000002e004d006f00740069006f006e0050006c0061006e006e0069006e00670020002d00200053006c00690064006500720000000000ffffffff0000000000000000fb0000001c004d006f00740069006f006e0050006c0061006e006e0069006e006701000001d4000001e30000018300fffffffb00000024005200760069007a00560069007300750061006c0054006f006f006c0073004700750069000000036f000000930000004300fffffffb000000120020002d00200053006c00690064006500720000000000ffffffff0000000000000000fb00000026005400720061006a006500630074006f007200790020002d00200053006c00690064006500720000000000ffffffff0000000000000000fb0000003c005400720061006a006500630074006f007200790020002d0020005400720061006a006500630074006f0072007900200053006c00690064006500720000000000ffffffff0000000000000000fb00000044004d006f00740069006f006e0050006c0061006e006e0069006e00670020002d0020005400720061006a006500630074006f0072007900200053006c00690064006500720000000000ffffffff0000004a00fffffffb00000024005200760069007a00560069007300750061006c0054006f006f006c007300470075006901000003bd000000450000004300ffffff000004cd000003da00000001000000020000000100000002fc0000000100000002000000010000000a0054006f006f006c00730100000000ffffffff0000000000000000
+  QMainWindow State: 000000ff00000000fd0000000100000000000002ad000003dafc020000000dfb000000100044006900730070006c006100790073010000002800000208000000d700fffffffb0000000800480065006c00700000000342000000bb0000007300fffffffb0000000a005600690065007700730000000190000000b7000000ad00fffffffb0000000c00430061006d00650072006100000002ff000001610000000000000000fb0000001e004d006f00740069006f006e00200050006c0061006e006e0069006e00670100000374000001890000000000000000fb0000002e004d006f00740069006f006e0050006c0061006e006e0069006e00670020002d00200053006c00690064006500720000000000ffffffff0000000000000000fb0000001c004d006f00740069006f006e0050006c0061006e006e0069006e00670100000236000001830000018300fffffffb00000024005200760069007a00560069007300750061006c0054006f006f006c0073004700750069000000036f000000930000004300fffffffb000000120020002d00200053006c00690064006500720000000000ffffffff0000000000000000fb00000026005400720061006a006500630074006f007200790020002d00200053006c00690064006500720000000000ffffffff0000000000000000fb0000003c005400720061006a006500630074006f007200790020002d0020005400720061006a006500630074006f0072007900200053006c00690064006500720000000000ffffffff0000000000000000fb00000044004d006f00740069006f006e0050006c0061006e006e0069006e00670020002d0020005400720061006a006500630074006f0072007900200053006c00690064006500720000000000ffffffff0000004a00fffffffb00000024005200760069007a00560069007300750061006c0054006f006f006c007300470075006901000003bf000000430000004300ffffff000004cd000003da00000001000000020000000100000002fc0000000100000002000000010000000a0054006f006f006c00730100000000ffffffff0000000000000000
   RvizVisualToolsGui:
     collapsed: false
   Views:
     collapsed: false
   Width: 1920
-  X: 1920
+  X: 0
   Y: 24

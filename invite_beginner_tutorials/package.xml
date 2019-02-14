@@ -63,6 +63,7 @@
   <build_depend>eigen</build_depend>
   <build_depend>geometric_shapes</build_depend>
 
+  <depend>invite_utils</depend>
   <depend>pluginlib</depend>
   <depend>moveit_core</depend>
   <depend>moveit_fake_controller_manager</depend>
