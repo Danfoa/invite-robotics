@@ -82,21 +82,21 @@ namespace invite_vision{
             // Request single camera data from both cameras.
             void requestDualCameraData(){
                 if( system_status == SystemStatus::IDLE){
-                    ROS_INFO("Requesting dual camera data");
+                    ROS_DEBUG("Requesting dual camera data");
                     upper_camera_client_->sendGoal( default_data_goal_, boost::bind(&VisionInterface::upperCameraDataReceivedCallback, this, _1, _2));
                     lower_camera_client_->sendGoal( default_data_goal_, boost::bind(&VisionInterface::lowerCameraDataReceivedCallback, this, _1, _2));
                     upper_camera_status = SystemStatus::BUSY;
                     lower_camera_status = SystemStatus::BUSY;
                     system_status = SystemStatus::BUSY;
                 } else {
-                    ROS_WARN("Request rejected: Previous data request has not been processed yet");
+                    ROS_ERROR("Request rejected: Previous data request has not been processed yet");
                 }
             }
 
             void upperCameraDataReceivedCallback(const actionlib::SimpleClientGoalState& state, const RequestDataResult::ConstPtr& result){
                 upper_camera_status = SystemStatus::IDLE;   // Set camera as ready to receive new goals now.
                 if( state == actionlib::SimpleClientGoalState::SUCCEEDED ){
-                    ROS_INFO("Upper camera request succeded");
+                    ROS_DEBUG("Upper camera request succeded");
                     // TO-DO: Setup user defined callback function for processing data directly 
                     updateSystemStatus();
                 }else{
@@ -108,7 +108,7 @@ namespace invite_vision{
             void lowerCameraDataReceivedCallback(const actionlib::SimpleClientGoalState& state, const RequestDataResult::ConstPtr& result){
                 lower_camera_status = SystemStatus::IDLE;   // Set camera as ready to receive new goals now.
                 if( state == actionlib::SimpleClientGoalState::SUCCEEDED ){
-                    ROS_INFO("Lower camera request succeded");
+                    ROS_DEBUG("Lower camera request succeded");
                     // TO-DO: Setup user defined callback function for processing data directly 
                     updateSystemStatus();
                 }else{
@@ -119,7 +119,7 @@ namespace invite_vision{
             void updateSystemStatus(){
                 if (lower_camera_status == SystemStatus::IDLE && upper_camera_status == SystemStatus::IDLE){
                     system_status = SystemStatus::IDLE;
-                    ROS_WARN("Vision system ready for new request");
+                    ROS_DEBUG("Vision system ready for new request");
                 }
                 if (lower_camera_status == SystemStatus::BUSY || upper_camera_status == SystemStatus::BUSY)
                     system_status = SystemStatus::BUSY;

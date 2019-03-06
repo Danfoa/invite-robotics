@@ -217,6 +217,22 @@
         <joint name="torso_joint_b1" value="0" />
         <joint name="torso_joint_b2" value="0" />
     </group_state>
+    <group_state name="home_arms_up" group="arms">
+        <joint name="arm_left_joint_1_s" value="0" />
+        <joint name="arm_left_joint_2_l" value="0.3" />
+        <joint name="arm_left_joint_3_e" value="0" />
+        <joint name="arm_left_joint_4_u" value="-0.5" />
+        <joint name="arm_left_joint_5_r" value="1.57" />
+        <joint name="arm_left_joint_6_b" value="-1.57" />
+        <joint name="arm_left_joint_7_t" value="0" />
+        <joint name="arm_right_joint_1_s" value="0" />
+        <joint name="arm_right_joint_2_l" value="0.3" />
+        <joint name="arm_right_joint_3_e" value="0" />
+        <joint name="arm_right_joint_4_u" value="-0.5" />
+        <joint name="arm_right_joint_5_r" value="1.57" />
+        <joint name="arm_right_joint_6_b" value="-1.57" />
+        <joint name="arm_right_joint_7_t" value="0" />
+    </group_state>
     <!--END EFFECTOR: Purpose: Represent information about an end effector.-->
     <end_effector name="right_arm_gripper" parent_link="arm_right_link_tcp" group="right_gripper" parent_group="arm_right" />
     <end_effector name="left_arm_gripper" parent_link="arm_left_link_tcp" group="left_gripper" parent_group="arm_left" />

@@ -16,7 +16,7 @@ int main(int argc, char **argv){
 
     visual_tools.reset(new moveit_visual_tools::MoveItVisualTools("base_link", "/rviz_visual_tools"));
 
-    invite_utils::CSDA10F csda10f(nh, 0.1);
+    invite_utils::CSDA10F csda10f(nh, 1);
     ros::Subscriber robot_state_sub = nh.subscribe<industrial_msgs::RobotStatus>("/robot_status", 
                                                                                     1,
                                                                                     &invite_utils::CSDA10F::updateRobotStatus,
@@ -38,9 +38,14 @@ int main(int argc, char **argv){
     initial_pose.position.z = 1.2;
 
     final_pose = initial_pose;
-    final_pose.position.z += 0.30;
+    final_pose.position.x -= 0.30;
+    final_pose.position.z += 0.90;
     final_pose.position.y += 0.1;
-    orientation.setRPY(0.0 , M_PI/2 , M_PI/6);
+    orientation.setRPY(0.0 , M_PI/4  , M_PI/6);
+    final_pose.orientation.x = orientation.x();
+    final_pose.orientation.y = orientation.y();
+    final_pose.orientation.z = orientation.z();
+    final_pose.orientation.w = orientation.w();
 
     visual_tools->deleteAllMarkers();
     visual_tools->publishAxisLabeled( initial_pose, "Initial", rvt::scales::MEDIUM);
@@ -50,8 +55,8 @@ int main(int argc, char **argv){
     
     while( ros::ok() ){
         csda10f.left_arm_mg.setStartStateToCurrentState();
-        bool is_motion_possible = csda10f.planCartesianMotionTask(&(csda10f.left_arm_mg), initial_pose, final_pose, motion_plans);
-
+        bool is_motion_possible = csda10f.planCartesianMotionTask(&(csda10f.left_arm_mg), initial_pose, final_pose, motion_plans, 15);
+        ROS_INFO("Task planning %s", is_motion_possible ? "succeded": "failed!");
         if (is_motion_possible) {
             // visual_tools->publishTrajectoryPath(motion_plans[0].trajectory_, motion_plans[0].start_state_, false);
             visual_tools->trigger();
@@ -59,6 +64,7 @@ int main(int argc, char **argv){
             csda10f.left_arm_mg.execute( motion_plans[0] ); // Approach motion.
             // csda10f.right_gripper->close();
             visual_tools->trigger();
+            ros::Duration(0.3).sleep();
             // visual_tools->prompt("Perform motion approach");
             csda10f.left_arm_mg.execute( motion_plans[1] ); // Cartesian motion.
         }else{
@@ -66,5 +72,6 @@ int main(int argc, char **argv){
         }
         ros::Duration(0.5).sleep();
     }
+    ros::shutdown();
     return 0;
 }

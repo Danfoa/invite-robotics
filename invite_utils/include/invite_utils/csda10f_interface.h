@@ -51,7 +51,7 @@ namespace invite_utils{
 
           moveit::planning_interface::MoveGroupInterface::Plan cartesian_motion_plan;
           MoveItErrorCode error_code;
-
+  
         public:
           // Move groups
           MoveGroupInterface csda10f_mg;
@@ -104,12 +104,6 @@ namespace invite_utils{
             // Take left arm home'
             csda10f_mg.setNamedTarget(home_pose_name);
             error_code = csda10f_mg.move();
-            // To-Do: work arround while multi-group goal automatic abortion bug is fixed
-            ros::Rate rate(5);
-            while (ros::ok() && this->status.in_motion.val == true){
-              rate.sleep();
-              ROS_INFO("Waiting...");
-            }
             if (error_code != MoveItErrorCode::SUCCESS){
               ROS_ERROR("Motion to position (%s) impossible, error code: (%d) %s", 
                           home_pose_name.c_str(), 
@@ -118,6 +112,7 @@ namespace invite_utils{
                           );
               return false;
             }
+            ros::Duration(0.4).sleep();
             return true;
           }
 
@@ -164,12 +159,12 @@ namespace invite_utils{
                 error += std::abs(joint_group_variable_value[i] - (*invalid_ik)[i]);
               }
               error /= 6;
-              if( error < 0.17 ){ // IK solution found is one of the already inoperative configurations.
+              if( error < 0.26 ){ // IK solution found is one of the already inoperative configurations.
                 is_ik_solution_valid = false;
                 break;
               }
             }
-            ROS_WARN_COND( !is_ik_solution_valid, "%dth th IK solution rejected", (int) invalid_states.size() + 1 );
+            ROS_DEBUG_COND( !is_ik_solution_valid, "%dth th IK solution rejected", (int) invalid_states.size() + 1 );
             return is_ik_solution_valid;
           }
 
@@ -213,7 +208,6 @@ namespace invite_utils{
                               const robot_state::JointModelGroup* joint_model_group) {
             std::vector<int> joint_indices = joint_model_group->getVariableIndexList(); 
             std::vector<double> invalid_group_ik;
-            ROS_INFO("Save IK solution as invalid.");
             const double* variables = robot_state.getVariablePositions();
             for(int i = 0; i < joint_indices.size(); i++){
               invalid_group_ik.push_back( variables[joint_indices[i]] );
@@ -223,11 +217,16 @@ namespace invite_utils{
           }
 
           bool planCartesianMotionTask(MoveGroupInterface* move_group, 
-                                                      const geometry_msgs::Pose initial_pose, 
-                                                      const geometry_msgs::Pose final_pose,
+                                                      std::vector<geometry_msgs::Pose> start_poses, 
+                                                      std::vector<geometry_msgs::Pose> final_poses,
                                                       std::vector<MoveGroupInterface::Plan> &motion_plans,
-                                                      uint max_configurations = 25) {
-            ROS_INFO("Starting cartesian task planning for move group [%s]", move_group->getName().c_str());
+                                                      uint max_configurations = 10) {
+            ROS_INFO("Cartesian task planning for [%s]\n Starting Poses: %d  \n Final Poses: %d \n Max IK solutions per pose: %d", 
+                                                                      move_group->getName().c_str(),
+                                                                      (int) start_poses.size(), 
+                                                                      (int) final_poses.size(), 
+                                                                      max_configurations);
+            ros::Time start_time = ros::Time::now();
             bool task_plan_found = false;
             motion_plans.clear();
             invalid_states.clear();
@@ -236,67 +235,85 @@ namespace invite_utils{
             moveit_msgs::RobotTrajectory trajectory;
             // Allow for a lot of freedom between intermetiade poinvalid_states
             const double jump_threshold = M_PI/2;
-            const double eef_step = 0.02;  
+            const double eef_step = 0.04;  
                                           
             MoveGroupInterface::Plan cartesian_motion_plan, approach_plan;
+                                            
+            typedef std::vector<geometry_msgs::Pose>::iterator PoseIter;
+            // Iterate through start poses.
+            for (PoseIter start_pose_iter = start_poses.begin(); start_pose_iter != start_poses.end(); start_pose_iter++) {
+              const robot_state::RobotState current_state( *csda10f_mg.getCurrentState() );  // Planning start state to.
+              robot_state::RobotState cartesian_start_state( current_state );
+              const robot_state::JointModelGroup *joint_model_group = cartesian_start_state.getJointModelGroup(move_group->getName());
+              // Define cartesian motion waypoints.
 
-            const robot_state::RobotState current_state( *csda10f_mg.getCurrentState() );  // Planning start state to.
-            robot_state::RobotState cartesian_start_state( current_state );
-            const robot_state::JointModelGroup *joint_model_group = cartesian_start_state.getJointModelGroup(move_group->getName());
-            // Define cartesian motion waypoints.
-            std::vector<geometry_msgs::Pose> waypoints = {final_pose};
-
-            bool ik_solution_found = true;
-            uint ik_configurations_count = 0;
-            while (ik_solution_found) {
-              auto ik_check_callback = boost::bind(&CSDA10F::validateIKSolution, this, _1, _2, _3);
-              ik_solution_found = cartesian_start_state.setFromIK( joint_model_group, initial_pose, 10, 0.05, ik_check_callback );
-              ik_configurations_count++;
-              // Check if IK solution is found AND if a motion plan to reach it has been found 
-              if (ik_solution_found && validateJointSpaceTargetMotion(move_group, current_state, cartesian_start_state, &approach_plan)) { 
-                // Plan cartesian motion feasibility with current IK solution.
-                move_group->setStartState(cartesian_start_state);
-                double fraction = move_group->computeCartesianPath(waypoints, eef_step, jump_threshold, trajectory, true);
-                // Check cartesian plan result.
-                if (fraction < 1) {
-                  ROS_ERROR_STREAM("Motion planning failed, " << (fraction * 100) << " % of the movement is achievable");
+              bool ik_solution_found = true;
+              uint ik_configurations_count = 1;
+              while (ik_solution_found) {
+                auto ik_check_callback = boost::bind(&CSDA10F::validateIKSolution, this, _1, _2, _3);
+                ik_solution_found = cartesian_start_state.setFromIK( joint_model_group, *start_pose_iter, 10, 0.05, ik_check_callback );
+                // Check if IK solution is found AND if a motion plan to reach it has been found 
+                if (ik_solution_found && validateJointSpaceTargetMotion(move_group, current_state, cartesian_start_state, &approach_plan)) { 
+                  // Plan cartesian motion feasibility with current IK solution.
+                  move_group->setStartState(cartesian_start_state);
+                  double fraction_of_plan = 0;
+                  // Iterate through final poses
+                  for (PoseIter final_pose_iter = final_poses.begin(); final_pose_iter != final_poses.end(); final_pose_iter++) {
+                    std::vector<geometry_msgs::Pose> waypoints = {*final_pose_iter};              
+                    fraction_of_plan = move_group->computeCartesianPath(waypoints, eef_step, jump_threshold, trajectory, true);
+                    if (!fraction_of_plan < 1)  // Current final goal is reachable through cartesian motion
+                      break;
+                  }
+                  // Check cartesian plan result.
+                  if (fraction_of_plan < 1) {
+                    ROS_ERROR_STREAM("Discarting start state (IK solution)");
+                    // Save IK solution as invalid.
+                    saveInvalidIK( cartesian_start_state, joint_model_group );
+                  } else {  // Task motion plan was found
+                    task_plan_found = true;
+                    break;
+                  }
+                } else if(ik_solution_found) {  // Solution is not reachable
                   // Save IK solution as invalid.
                   saveInvalidIK( cartesian_start_state, joint_model_group );
-                } else {  // Task motion plan was found
-                  task_plan_found = true;
-                  break;
                 }
-              } else if(ik_solution_found) {  // Solution is not reachable
-                // Save IK solution as invalid.
-                saveInvalidIK( cartesian_start_state, joint_model_group );
+                // Check dropout condition
+                if (ik_configurations_count >= max_configurations) 
+                  break;
+                ik_configurations_count++;                
               }
-              // Check dropout condition
-              if (ik_configurations_count > max_configurations) 
+              if (task_plan_found) {
+                // Ensure motion plan end and start points are the same.
+                moveit_msgs::RobotState state_msg;
+                moveit::core::robotStateToRobotStateMsg( cartesian_start_state, state_msg);
+                cartesian_motion_plan.trajectory_ = trajectory;
+                cartesian_motion_plan.start_state_ = state_msg;
+                cartesian_motion_plan.planning_time_ = 0.5;
+                approach_plan.trajectory_.joint_trajectory.points.back().positions = trajectory.joint_trajectory.points[0].positions;
+                // Save plan motions.
+                motion_plans.push_back(approach_plan);
+                motion_plans.push_back(cartesian_motion_plan);
+                ros::Duration delta_t = ros::Time::now() - start_time;
+                ROS_INFO("Task motion plan achieved in %.4f [s]" , delta_t.toSec());
                 break;
-            }
+              }else{
+                ROS_WARN("Discarting start pose after considering %d IK configurations", ik_configurations_count);
+              }
+              invalid_states.clear();
+            }                    
             // Return original state to start state 
-            move_group->setStartStateToCurrentState(); 
-
-            if (task_plan_found) {
-              // Ensure motion plan end and start points are the same.
-              moveit_msgs::RobotState state_msg;
-              moveit::core::robotStateToRobotStateMsg( cartesian_start_state, state_msg);
-              cartesian_motion_plan.trajectory_ = trajectory;
-              cartesian_motion_plan.start_state_ = state_msg;
-              cartesian_motion_plan.planning_time_ = 0.5;
-              approach_plan.trajectory_.joint_trajectory.points.back().positions = trajectory.joint_trajectory.points[0].positions;
-              // Save plan motions.
-              motion_plans.push_back(approach_plan);
-              motion_plans.push_back(cartesian_motion_plan);
-              ROS_INFO("-- Task motion plan achieved, storing %d trajectory plans", (int) motion_plans.size() );
-            }else{
-              ROS_ERROR("Task motion plan impossible");
-            }
-
-            waypoints.clear();
+            move_group->setStartStateToCurrentState();
             invalid_states.clear();
+            return task_plan_found;                   
+          }
 
-            return task_plan_found;
+          bool planCartesianMotionTask(MoveGroupInterface* move_group, 
+                                                      const geometry_msgs::Pose start_pose, 
+                                                      const geometry_msgs::Pose final_pose,
+                                                      std::vector<MoveGroupInterface::Plan> &motion_plans,
+                                                      uint max_configurations = 10) {
+            std::vector<geometry_msgs::Pose> start_poses{start_pose}, final_poses{final_pose};
+            return planCartesianMotionTask(move_group, start_poses, final_poses, motion_plans, max_configurations);
           }
 
         private:

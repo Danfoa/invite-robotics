@@ -43,7 +43,7 @@
     <rosparam>
       # Dynamic parameters
       filter_field_name: x           # The field name used for filtering; z axis points out from the camera, meaning is the depth dimension.
-      filter_limit_min: 0.35         # The minimum allowed field value a point will be considered from Range: -1000.0 to 1000.0 
+      filter_limit_min: 0.10         # The minimum allowed field value a point will be considered from Range: -1000.0 to 1000.0 
       filter_limit_max: 1.0          # The maximum allowed field value a point will be considered from Range: -1000.0 to 1000.0 
       # Static parameters
       max_queue_size: 1             # Incomming messages queue/buffer (process always newest cloud).
