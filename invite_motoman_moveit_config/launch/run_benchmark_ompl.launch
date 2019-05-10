@@ -14,7 +14,7 @@
   </include>  
 
   <!-- Start Benchmark Executable -->
-  <node name="$(anon moveit_benchmark)" pkg="moveit_ros_benchmarks" type="moveit_run_benchmark" args="$(arg cfg) --benchmark-planners" respawn="false" output="screen">
+  <node name="$(anon moveit_benchmark)" pkg="moveit_ros_benchmarks" type="moveit_run_benchmark" args="$(arg cfg) --benchmark-planners" respawn="false" output="log">
     <rosparam command="load" file="$(find invite_motoman_moveit_config)/config/kinematics.yaml"/>
     <rosparam command="load" file="$(find invite_motoman_moveit_config)/config/ompl_planning.yaml"/>
   </node>

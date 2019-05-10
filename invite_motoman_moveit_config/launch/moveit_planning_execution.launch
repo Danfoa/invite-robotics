@@ -9,6 +9,10 @@
   <!-- using the ROS-Industrial interface. -->
   <rosparam command="load" file="$(find invite_motoman_support)/config/joint_names_csda10f.yaml"/>
  
+  <!--Load default scene-->
+  <arg name="load_scene" default="true"/>
+  <!-- Scene objects to load as default -->
+  <arg name="scene_file" if="$(arg load_scene)" default="$(find invite_motoman_moveit_config)/scenes/default_scene_objects_coarse.scene"/> 
   <!-- the "sim" argument controls whether we connect to a Simulated or Real robot -->
   <!--  - if sim=false, a robot_ip and controller(fs100|dx100) arguments is required -->
   <arg name="sim" default="false" />
@@ -43,7 +47,7 @@
     <arg name="sim" value="$(arg sim_grippers)"/>
     <arg name="right_gripper_comport" value="/dev/ttyRobotiq1" unless="$(arg sim_grippers)"/>
     <arg name="left_gripper_comport" value="/dev/ttyRobotiq0" unless="$(arg sim_grippers)"/>
-    <arg name="rate" value="50"/>
+    <arg name="rate" value="10"/>
     <arg name="run_test" value="false"/>
   </include>
 
@@ -67,6 +71,13 @@
   <!-- Enable robot if requested -->
   <group if="$(arg robot_enable)">
     <include file="$(find invite_motoman_support)/launch/robot_enable.launch" />
+  </group>
+
+  <!-- Load default planning scene  -->
+  <group if="$(arg load_scene)">
+    <!-- Load `scene_file` scene objects for collision checking -->
+    <node name="moveit_publish_scene_from_text" pkg="moveit_ros_planning" type="moveit_publish_scene_from_text" args= "$(arg scene_file)"
+          output="screen"/>
   </group>
 
 </launch>

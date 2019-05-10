@@ -4,7 +4,7 @@
   <include file="$(find invite_motoman_moveit_config)/launch/planning_context.launch" />
 
   <!-- GDB Debug Option -->
-  <arg name="debug" default="true" />
+  <arg name="debug" default="false" />
   <arg unless="$(arg debug)" name="launch_prefix" value="" />
   <arg     if="$(arg debug)" name="launch_prefix"
 	   value="gdb -x $(find invite_motoman_moveit_config)/launch/gdb_settings.gdb --ex run --args" />
@@ -48,7 +48,7 @@
     <param name="jiggle_fraction" value="$(arg jiggle_fraction)" />
 
      <!-- MoveGroup capabilities to load -->
-    <!--<param name="capabilities" value="move_group/MoveGroupCartesianPathService
+    <!-- <param name="capabilities" value="move_group/MoveGroupCartesianPathService
 				      move_group/MoveGroupExecuteTrajectoryAction
 				      move_group/MoveGroupKinematicsService
 				      move_group/MoveGroupMoveAction

@@ -44,7 +44,7 @@ TO-DO: Add finger tips to 140mm xacro
 			<collision>
 				<origin rpy="${pi/2} 0 0" xyz="0 0.0045 0"/>
 				<geometry>
-					<cylinder length="0.009" radius="0.038"/>
+					<cylinder length="${0.009 + 0.03}" radius="${0.038 + 0.04}"/>
 				</geometry>
 				<material name="yellow"/>
 			</collision>

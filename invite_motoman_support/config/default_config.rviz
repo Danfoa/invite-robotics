@@ -9,7 +9,7 @@ Panels:
         - /RobotModel1
         - /Axes1
       Splitter Ratio: 0.5
-    Tree Height: 1537
+    Tree Height: 843
   - Class: rviz/Selection
     Name: Selection
   - Class: rviz/Tool Properties
@@ -28,6 +28,8 @@ Panels:
     Name: Time
     SyncMode: 0
     SyncSource: ""
+Toolbars:
+  toolButtonStyle: 2
 Visualization Manager:
   Class: ""
   Displays:
@@ -59,36 +61,6 @@ Visualization Manager:
         Expand Link Details: false
         Expand Tree: false
         Link Tree Style: Links in Alphabetic Order
-        arm_left_base:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        arm_left_left_coupler:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        arm_left_left_driver:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        arm_left_left_follower:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        arm_left_left_pad:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        arm_left_left_spring_link:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
         arm_left_link_1_s:
           Alpha: 1
           Show Axes: false
@@ -124,26 +96,6 @@ Visualization Manager:
           Show Axes: false
           Show Trail: false
           Value: true
-        arm_left_link_force_sensor:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        arm_left_link_force_sensor_adapter_plate:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        arm_left_link_gripper_adapter_plate:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        arm_left_link_robotiq_coupling:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
         arm_left_link_tcp:
           Alpha: 1
           Show Axes: false
@@ -152,31 +104,6 @@ Visualization Manager:
           Alpha: 1
           Show Axes: false
           Show Trail: false
-        arm_left_right_coupler:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        arm_left_right_driver:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        arm_left_right_follower:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        arm_left_right_pad:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        arm_left_right_spring_link:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
         arm_right_link_1_s:
           Alpha: 1
           Show Axes: false
@@ -212,16 +139,6 @@ Visualization Manager:
           Show Axes: false
           Show Trail: false
           Value: true
-        arm_right_link_gripper_adapter_plate:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        arm_right_link_robotiq_coupling:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
         arm_right_link_tcp:
           Alpha: 1
           Show Axes: false
@@ -235,7 +152,95 @@ Visualization Manager:
           Show Axes: false
           Show Trail: false
           Value: true
+        ensenso_lower_optical_frame:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        ensenso_upper_optical_frame:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        left_gripper_left_inner_finger:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        left_gripper_left_inner_finger_pad:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        left_gripper_left_inner_knuckle:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        left_gripper_left_outer_finger:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        left_gripper_left_outer_knuckle:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        left_gripper_link_force_sensor:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        left_gripper_link_force_sensor_adapter_plate:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        left_gripper_link_gripper_adapter_plate:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        left_gripper_link_robotiq_coupling:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        left_gripper_right_inner_finger:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        left_gripper_right_inner_finger_pad:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        left_gripper_right_inner_knuckle:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        left_gripper_right_outer_finger:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        left_gripper_right_outer_knuckle:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        left_gripper_robotiq_arg2f_base_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
         right_gripper_left_inner_finger:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        right_gripper_left_inner_finger_pad:
           Alpha: 1
           Show Axes: false
           Show Trail: false
@@ -255,7 +260,22 @@ Visualization Manager:
           Show Axes: false
           Show Trail: false
           Value: true
+        right_gripper_link_gripper_adapter_plate:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        right_gripper_link_robotiq_coupling:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
         right_gripper_right_inner_finger:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        right_gripper_right_inner_finger_pad:
           Alpha: 1
           Show Axes: false
           Show Trail: false
@@ -297,170 +317,19 @@ Visualization Manager:
       Value: true
       Visual Enabled: true
     - Class: rviz/TF
-      Enabled: true
+      Enabled: false
       Frame Timeout: 15
       Frames:
         All Enabled: false
-        arm_left_base:
-          Value: false
-        arm_left_left_coupler:
-          Value: false
-        arm_left_left_driver:
-          Value: false
-        arm_left_left_follower:
-          Value: false
-        arm_left_left_pad:
-          Value: false
-        arm_left_left_spring_link:
-          Value: false
-        arm_left_link_1_s:
-          Value: false
-        arm_left_link_2_l:
-          Value: false
-        arm_left_link_3_e:
-          Value: false
-        arm_left_link_4_u:
-          Value: false
-        arm_left_link_5_r:
-          Value: false
-        arm_left_link_6_b:
-          Value: false
-        arm_left_link_7_t:
-          Value: false
-        arm_left_link_force_sensor:
-          Value: false
-        arm_left_link_force_sensor_adapter_plate:
-          Value: false
-        arm_left_link_gripper_adapter_plate:
-          Value: false
-        arm_left_link_robotiq_coupling:
-          Value: false
-        arm_left_link_tcp:
-          Value: true
-        arm_left_link_tool0:
-          Value: false
-        arm_left_right_coupler:
-          Value: false
-        arm_left_right_driver:
-          Value: false
-        arm_left_right_follower:
-          Value: false
-        arm_left_right_pad:
-          Value: false
-        arm_left_right_spring_link:
-          Value: false
-        arm_right_link_1_s:
-          Value: false
-        arm_right_link_2_l:
-          Value: false
-        arm_right_link_3_e:
-          Value: false
-        arm_right_link_4_u:
-          Value: false
-        arm_right_link_5_r:
-          Value: false
-        arm_right_link_6_b:
-          Value: false
-        arm_right_link_7_t:
-          Value: false
-        arm_right_link_gripper_adapter_plate:
-          Value: false
-        arm_right_link_robotiq_coupling:
-          Value: false
-        arm_right_link_tcp:
-          Value: true
-        arm_right_link_tool0:
-          Value: false
-        base_link:
-          Value: false
-        right_gripper_left_inner_finger:
-          Value: false
-        right_gripper_left_inner_knuckle:
-          Value: false
-        right_gripper_left_outer_finger:
-          Value: false
-        right_gripper_left_outer_knuckle:
-          Value: false
-        right_gripper_right_inner_finger:
-          Value: false
-        right_gripper_right_inner_knuckle:
-          Value: false
-        right_gripper_right_outer_finger:
-          Value: false
-        right_gripper_right_outer_knuckle:
-          Value: false
-        right_gripper_robotiq_arg2f_base_link:
-          Value: false
-        torso_link_b1:
-          Value: false
-        torso_link_b2:
-          Value: false
       Marker Scale: 0.600000024
       Name: TF
       Show Arrows: false
       Show Axes: true
       Show Names: false
       Tree:
-        base_link:
-          torso_link_b1:
-            arm_left_link_1_s:
-              arm_left_link_2_l:
-                arm_left_link_3_e:
-                  arm_left_link_4_u:
-                    arm_left_link_5_r:
-                      arm_left_link_6_b:
-                        arm_left_link_7_t:
-                          arm_left_link_tool0:
-                            arm_left_link_force_sensor_adapter_plate:
-                              arm_left_link_force_sensor:
-                                arm_left_link_gripper_adapter_plate:
-                                  arm_left_link_robotiq_coupling:
-                                    arm_left_base:
-                                      arm_left_left_driver:
-                                        arm_left_left_coupler:
-                                          arm_left_left_follower:
-                                            arm_left_left_pad:
-                                              {}
-                                      arm_left_left_spring_link:
-                                        {}
-                                      arm_left_right_driver:
-                                        arm_left_right_coupler:
-                                          arm_left_right_follower:
-                                            arm_left_right_pad:
-                                              {}
-                                      arm_left_right_spring_link:
-                                        {}
-                            arm_left_link_tcp:
-                              {}
-            arm_right_link_1_s:
-              arm_right_link_2_l:
-                arm_right_link_3_e:
-                  arm_right_link_4_u:
-                    arm_right_link_5_r:
-                      arm_right_link_6_b:
-                        arm_right_link_7_t:
-                          arm_right_link_tool0:
-                            arm_right_link_gripper_adapter_plate:
-                              arm_right_link_robotiq_coupling:
-                                right_gripper_robotiq_arg2f_base_link:
-                                  right_gripper_left_inner_knuckle:
-                                    {}
-                                  right_gripper_left_outer_knuckle:
-                                    right_gripper_left_outer_finger:
-                                      right_gripper_left_inner_finger:
-                                        {}
-                                  right_gripper_right_inner_knuckle:
-                                    {}
-                                  right_gripper_right_outer_knuckle:
-                                    right_gripper_right_outer_finger:
-                                      right_gripper_right_inner_finger:
-                                        {}
-                            arm_right_link_tcp:
-                              {}
-          torso_link_b2:
-            {}
+        {}
       Update Interval: 0
-      Value: true
+      Value: false
     - Class: rviz/Axes
       Enabled: true
       Length: 0.5
@@ -489,33 +358,33 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz/Orbit
-      Distance: 6.46601057
+      Distance: 3.87763643
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.0599999987
         Stereo Focal Distance: 1
         Swap Stereo Eyes: false
         Value: false
       Focal Point:
-        X: -0.678749263
-        Y: 0.187522769
-        Z: 1.7541424
+        X: -0.24517706
+        Y: 0.464905947
+        Z: 0.754350126
       Focal Shape Fixed Size: true
       Focal Shape Size: 0.0500000007
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.00999999978
-      Pitch: 0.295397729
+      Pitch: 0.57539767
       Target Frame: <Fixed Frame>
       Value: Orbit (rviz)
-      Yaw: 0.150418013
+      Yaw: 5.40359783
     Saved: ~
 Window Geometry:
   Displays:
     collapsed: false
-  Height: 1788
+  Height: 1056
   Hide Left Dock: false
   Hide Right Dock: false
-  QMainWindow State: 000000ff00000000fd000000040000000000000349000006a2fc0200000005fb0000001200530065006c0065006300740069006f006e00000001e10000009b0000006800fffffffb0000001e0054006f006f006c002000500072006f007000650072007400690065007302000001ed000001df00000185000000a3fb000000120056006900650077007300200054006f006f02000001df000002110000018500000122fb000000200054006f006f006c002000500072006f0070006500720074006900650073003203000002880000011d000002210000017afb000000100044006900730070006c0061007900730100000034000006a2000000e900ffffff0000000100000132000006a2fc0200000003fb0000001e0054006f006f006c002000500072006f00700065007200740069006500730100000041000000780000000000000000fb0000000a005600690065007700730100000034000006a2000000ca00fffffffb0000001200530065006c0065006300740069006f006e010000025a000000b200000000000000000000000200000490000000a9fc0100000001fb0000000a00560069006500770073030000004e00000080000002e10000019700000003000004a00000003efc0100000002fb0000000800540069006d00650000000000000004a00000043900fffffffb0000000800540069006d00650100000000000004500000000000000000000005dc000006a200000004000000040000000800000008fc0000000100000002000000010000000a0054006f006f006c00730100000000ffffffff0000000000000000
+  QMainWindow State: 000000ff00000000fd000000040000000000000349000003dafc0200000005fb0000001200530065006c0065006300740069006f006e00000001e10000009b0000006100fffffffb0000001e0054006f006f006c002000500072006f007000650072007400690065007302000001ed000001df00000185000000a3fb000000120056006900650077007300200054006f006f02000001df000002110000018500000122fb000000200054006f006f006c002000500072006f0070006500720074006900650073003203000002880000011d000002210000017afb000000100044006900730070006c0061007900730100000028000003da000000d700ffffff0000000100000132000003dafc0200000003fb0000001e0054006f006f006c002000500072006f00700065007200740069006500730100000041000000780000000000000000fb0000000a005600690065007700730100000028000003da000000ad00fffffffb0000001200530065006c0065006300740069006f006e010000025a000000b200000000000000000000000200000490000000a9fc0100000001fb0000000a00560069006500770073030000004e00000080000002e10000019700000003000004a00000003efc0100000002fb0000000800540069006d00650000000000000004a00000030000fffffffb0000000800540069006d00650100000000000004500000000000000000000002f9000003da00000004000000040000000800000008fc0000000100000002000000010000000a0054006f006f006c00730100000000ffffffff0000000000000000
   Selection:
     collapsed: false
   Time:
@@ -524,6 +393,6 @@ Window Geometry:
     collapsed: false
   Views:
     collapsed: false
-  Width: 2665
-  X: 71
-  Y: 36
+  Width: 1920
+  X: 0
+  Y: 24

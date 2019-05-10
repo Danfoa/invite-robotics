@@ -4,7 +4,7 @@ sensors:
     max_range: 5.0
     max_update_rate: 0
     # queue_size: 0
-    padding_offset: 0.03
+    padding_offset: 0.02
     padding_scale: 1.0
     point_cloud_topic: /joint_cameras_point_cloud/area_of_interest
     point_subsample: 1

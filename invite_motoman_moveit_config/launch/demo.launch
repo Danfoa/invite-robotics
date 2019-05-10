@@ -50,7 +50,7 @@
 
   <!-- Start Simulated grippers   -->
   <include file="$(find robotiq_2f_gripper_control)/launch/robotiq_dual_action_server.launch">
-    <arg name="rate" value="100"/>
+    <arg name="rate" value="30"/>
     <arg name="run_test" value="false"/>
     <arg name="sim" value="true"/>
   </include>

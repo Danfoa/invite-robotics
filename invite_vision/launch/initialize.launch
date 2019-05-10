@@ -10,6 +10,6 @@
     </include>
 
     <!-- TO-DO: Make this a Nodelet connected to ensenso_driver Nodelet Threads -->
-    <node pkg="invite_vision" type="concatenate_cameras_pointcloud" name="concatenator"/>
+    <node pkg="invite_vision" type="concatenate_cameras_pointcloud" name="concatenator" output="screen"/>
     
 </launch>
