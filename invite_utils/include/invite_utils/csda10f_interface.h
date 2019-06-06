@@ -40,26 +40,38 @@ typedef moveit::planning_interface::MoveGroupInterface MoveGroupInterface;
 typedef robotiq_2f_gripper_control::RobotiqActionClient RobotiqActionClient;
 
 namespace invite_utils{
+
     namespace rvt = rviz_visual_tools;
     typedef robotiq_2f_gripper_msgs::CommandRobotiqGripperAction CommandRobotiqGripperAction;
 
+    /** Auxiliary class that handles several robot specific operations and holds helpfull member
+     * variables to control and monitor the state of the robot and its grippers.
+     */
     class CSDA10F{
         private:        
+          // Max velocity in percentage from 0 to 1 (100%) of robot motions
           float max_velocity_scaling_factor;  
+          // Default joint orientation tolerance
           float joint_goal_orientation_tolerance = 1e-4;
           // Publisher to Robot sound generator topic
           ros::Publisher sound_pub;
           // Boolean indicating whether robot should speak or not.
           bool talkative = false; 
 
+          // Planning scene monitor and client 
           planning_scene_monitor::PlanningSceneMonitorPtr psm_;
           ros::ServiceClient planning_scene_diff_client_;
+
           // moveit::planning_interface::PlanningSceneInterfacePtr psi_;
+          // Robot model instance
           robot_model::RobotModelConstPtr robot_model_;
 
           MoveItErrorCode error_code;
+          
+          // Action clients to enable or disable robot operation 
           ros::ServiceClient enabler_;
           ros::ServiceClient disabler_;
+
           ros::NodeHandlePtr nh_;
   
         public:
@@ -75,13 +87,13 @@ namespace invite_utils{
           industrial_msgs::RobotStatus status;
           // Robot state pointer
           robot_state::RobotStatePtr current_robot_state_ptr;
-          // Grippers
+          // Grippers action clients 
           RobotiqActionClient* left_gripper;
           RobotiqActionClient* right_gripper;
-
-          std::vector<std::vector<double>> invalid_states = {};
-
+          // Member variable to provide visual debugging
           moveit_visual_tools::MoveItVisualToolsPtr visual_tools;
+
+          // ---------
 
           CSDA10F(float max_speed = 0.1) : csda10f_mg("csda10f"), 
                                             arms_mg("arms"),
@@ -139,11 +151,12 @@ namespace invite_utils{
             visual_tools->trigger();
             // visual_tools->setManualSceneUpdating();
             
+            // Load default collision scene if path is given 
             std::string collision_scene_path, param_key;
             if (nh_->searchParam("bag_handling/collision_scene", param_key)) {
               nh_->getParam(param_key, collision_scene_path);
               ROS_WARN("Loading collision scene (%s)", collision_scene_path.c_str());
-              // visual_tools->loadCollisionSceneFromFile(collision_scene_path);
+              visual_tools->loadCollisionSceneFromFile(collision_scene_path);
             }else
               ROS_WARN("No collision scene loaded");
 
@@ -152,6 +165,7 @@ namespace invite_utils{
             robot_model_ = psm_->getRobotModel();
           }
 
+          // Enable robot servomotor motions
           bool enable_robot() {
             if (enabler_) {
               ROS_WARN("Enabling Robot");
@@ -164,6 +178,7 @@ namespace invite_utils{
             }
           }
 
+          // Disable robot servomotor motions
           bool disable_robot() {
             if (disabler_) {
               ROS_DEBUG("Disabling Robot");
@@ -251,6 +266,8 @@ namespace invite_utils{
               this->status = *new_status;
           }
 
+        // Return the trajectory message to take the right gripper to a position where the fingers
+        // have a determined distance between each other
         static trajectory_msgs::JointTrajectory getRightGripperPosture(float distance_between_fingers) {
           trajectory_msgs::JointTrajectory posture;
           posture.header.stamp = ros::Time::now();
@@ -269,6 +286,8 @@ namespace invite_utils{
           return posture;
         }
 
+        // Return the trajectory message to take the left gripper to a position where the fingers
+        // have a determined distance between each other
         static trajectory_msgs::JointTrajectory getLeftGripperPosture(float distance_between_fingers) {
           trajectory_msgs::JointTrajectory posture;
           posture.header.stamp = ros::Time::now();

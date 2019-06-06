@@ -22,6 +22,7 @@ find_package(catkin REQUIRED
     pluginlib
     geometric_shapes
     moveit_visual_tools
+    robotiq_2f_gripper_msgs
 )
 
 find_package(Boost REQUIRED system filesystem date_time thread)
@@ -45,9 +46,6 @@ include_directories(${catkin_INCLUDE_DIRS})
 link_directories(${catkin_LIBRARY_DIRS})
 
 # Tutorial executables.
-add_executable(invite_move_group_interface src/invite_move_group_interface.cpp)
-target_link_libraries(invite_move_group_interface ${catkin_LIBRARIES} ${Boost_LIBRARIES})
-install(TARGETS invite_move_group_interface DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION})
 
 add_executable(invite_pick_and_place src/invite_pick_and_place.cpp)
 target_link_libraries(invite_pick_and_place ${catkin_LIBRARIES} ${Boost_LIBRARIES})

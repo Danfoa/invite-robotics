@@ -4,9 +4,11 @@ Panels:
     Name: Displays
     Property Tree Widget:
       Expanded:
+        - /PointCloud21
+        - /PointCloud22
         - /MarkerArray1/Namespaces1
-      Splitter Ratio: 0.638888896
-    Tree Height: 355
+      Splitter Ratio: 0.359701484
+    Tree Height: 175
   - Class: rviz/Help
     Name: Help
   - Class: rviz/Views
@@ -151,10 +153,12 @@ Visualization Manager:
             Alpha: 1
             Show Axes: false
             Show Trail: false
+            Value: true
           ensenso_upper_optical_frame:
             Alpha: 1
             Show Axes: false
             Show Trail: false
+            Value: true
           left_gripper_left_inner_finger:
             Alpha: 1
             Show Axes: false
@@ -176,16 +180,6 @@ Visualization Manager:
             Show Trail: false
             Value: true
           left_gripper_left_outer_knuckle:
-            Alpha: 1
-            Show Axes: false
-            Show Trail: false
-            Value: true
-          left_gripper_link_force_sensor:
-            Alpha: 1
-            Show Axes: false
-            Show Trail: false
-            Value: true
-          left_gripper_link_force_sensor_adapter_plate:
             Alpha: 1
             Show Axes: false
             Show Trail: false
@@ -226,6 +220,11 @@ Visualization Manager:
             Show Trail: false
             Value: true
           left_gripper_robotiq_arg2f_base_link:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          lifting_rings:
             Alpha: 1
             Show Axes: false
             Show Trail: false
@@ -445,10 +444,12 @@ Visualization Manager:
             Alpha: 1
             Show Axes: false
             Show Trail: false
+            Value: true
           ensenso_upper_optical_frame:
             Alpha: 1
             Show Axes: false
             Show Trail: false
+            Value: true
           left_gripper_left_inner_finger:
             Alpha: 1
             Show Axes: false
@@ -470,16 +471,6 @@ Visualization Manager:
             Show Trail: false
             Value: true
           left_gripper_left_outer_knuckle:
-            Alpha: 1
-            Show Axes: false
-            Show Trail: false
-            Value: true
-          left_gripper_link_force_sensor:
-            Alpha: 1
-            Show Axes: false
-            Show Trail: false
-            Value: true
-          left_gripper_link_force_sensor_adapter_plate:
             Alpha: 1
             Show Axes: false
             Show Trail: false
@@ -520,6 +511,11 @@ Visualization Manager:
             Show Trail: false
             Value: true
           left_gripper_robotiq_arg2f_base_link:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          lifting_rings:
             Alpha: 1
             Show Axes: false
             Show Trail: false
@@ -634,7 +630,7 @@ Visualization Manager:
       Color: 255; 255; 255
       Color Transformer: Intensity
       Decay Time: 0
-      Enabled: true
+      Enabled: false
       Invert Rainbow: false
       Max Color: 255; 255; 255
       Max Intensity: 0.999787092
@@ -651,7 +647,7 @@ Visualization Manager:
       Unreliable: false
       Use Fixed Frame: true
       Use rainbow: true
-      Value: true
+      Value: false
     - Alpha: 1
       Autocompute Intensity Bounds: true
       Autocompute Value Bounds:
@@ -661,13 +657,13 @@ Visualization Manager:
       Axis: Z
       Channel Name: label
       Class: rviz/PointCloud2
-      Color: 255; 255; 255
+      Color: 170; 0; 127
       Color Transformer: Intensity
       Decay Time: 0
       Enabled: true
       Invert Rainbow: false
       Max Color: 255; 255; 255
-      Max Intensity: 41
+      Max Intensity: 104
       Min Color: 0; 0; 0
       Min Intensity: 0
       Name: PointCloud2
@@ -685,8 +681,8 @@ Visualization Manager:
     - Alpha: 1
       Autocompute Intensity Bounds: true
       Autocompute Value Bounds:
-        Max Value: 10
-        Min Value: -10
+        Max Value: 1.38229418
+        Min Value: 0.418719053
         Value: true
       Axis: Z
       Channel Name: normal_z
@@ -697,17 +693,17 @@ Visualization Manager:
       Enabled: true
       Invert Rainbow: false
       Max Color: 255; 255; 255
-      Max Intensity: 0.999995351
+      Max Intensity: 1.00020707
       Min Color: 0; 0; 0
-      Min Intensity: -0.85573864
+      Min Intensity: -0.0226736069
       Name: PointCloud2
       Position Transformer: XYZ
       Queue Size: 1
       Selectable: true
-      Size (Pixels): 1
+      Size (Pixels): 2
       Size (m): 0.00499999989
       Style: Points
-      Topic: /joint_cameras_point_cloud
+      Topic: /joint_cameras_point_cloud/sor_filtered
       Unreliable: false
       Use Fixed Frame: true
       Use rainbow: true
@@ -806,25 +802,25 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz/Orbit
-      Distance: 3.23535347
+      Distance: 1.51691556
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.0599999987
         Stereo Focal Distance: 1
         Swap Stereo Eyes: false
         Value: false
       Focal Point:
-        X: 0.108623452
-        Y: 0.541470706
-        Z: 0.892231882
+        X: 0.490909487
+        Y: 0.395208687
+        Z: 1.08317649
       Focal Shape Fixed Size: true
       Focal Shape Size: 0.0500000007
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.00999999978
-      Pitch: 0.270202249
+      Pitch: 0.269794464
       Target Frame: base_link
       Value: Orbit (rviz)
-      Yaw: 0.0686957166
+      Yaw: 0.455439627
     Saved:
       - Class: rviz/Orbit
         Distance: 2.3781476
@@ -858,7 +854,7 @@ Window Geometry:
     collapsed: false
   MotionPlanning - Trajectory Slider:
     collapsed: false
-  QMainWindow State: 000000ff00000000fd0000000100000000000002ad000003dafc020000000dfb000000100044006900730070006c0061007900730100000028000001ef000000d700fffffffb0000000800480065006c00700000000342000000bb0000007300fffffffb0000000a005600690065007700730000000190000000b7000000ad00fffffffb0000000c00430061006d00650072006100000002ff000001610000000000000000fb0000001e004d006f00740069006f006e00200050006c0061006e006e0069006e00670100000374000001890000000000000000fb0000002e004d006f00740069006f006e0050006c0061006e006e0069006e00670020002d00200053006c00690064006500720000000000ffffffff0000000000000000fb0000001c004d006f00740069006f006e0050006c0061006e006e0069006e0067010000021d0000019a0000018300fffffffb00000024005200760069007a00560069007300750061006c0054006f006f006c007300470075006901000003bd000000450000004300fffffffb000000120020002d00200053006c00690064006500720000000000ffffffff0000000000000000fb00000026005400720061006a006500630074006f007200790020002d00200053006c00690064006500720000000000ffffffff0000000000000000fb0000003c005400720061006a006500630074006f007200790020002d0020005400720061006a006500630074006f0072007900200053006c00690064006500720000000000ffffffff0000000000000000fb00000044004d006f00740069006f006e0050006c0061006e006e0069006e00670020002d0020005400720061006a006500630074006f0072007900200053006c00690064006500720000000000ffffffff0000004a00fffffffb00000024005200760069007a00560069007300750061006c0054006f006f006c007300470075006900000003bf000000430000004300ffffff000004cd000003da00000001000000020000000100000002fc0000000100000002000000010000000a0054006f006f006c00730100000000ffffffff0000000000000000
+  QMainWindow State: 000000ff00000000fd0000000100000000000002ad000003dafc020000000dfb000000100044006900730070006c00610079007301000000280000013b000000d700fffffffb0000000800480065006c00700000000342000000bb0000007300fffffffb0000000a005600690065007700730000000190000000b7000000ad00fffffffb0000000c00430061006d00650072006100000002ff000001610000000000000000fb0000001e004d006f00740069006f006e00200050006c0061006e006e0069006e00670100000374000001890000000000000000fb0000002e004d006f00740069006f006e0050006c0061006e006e0069006e00670020002d00200053006c00690064006500720000000000ffffffff0000000000000000fb0000001c004d006f00740069006f006e0050006c0061006e006e0069006e00670100000169000001ff0000018300fffffffb00000024005200760069007a00560069007300750061006c0054006f006f006c0073004700750069010000036e000000430000004300fffffffb000000120020002d00200053006c00690064006500720000000000ffffffff0000000000000000fb00000026005400720061006a006500630074006f007200790020002d00200053006c00690064006500720000000000ffffffff0000000000000000fb0000003c005400720061006a006500630074006f007200790020002d0020005400720061006a006500630074006f0072007900200053006c00690064006500720000000000ffffffff0000000000000000fb00000044004d006f00740069006f006e0050006c0061006e006e0069006e00670020002d0020005400720061006a006500630074006f0072007900200053006c00690064006500720000000000ffffffff0000004a00fffffffb00000024005200760069007a00560069007300750061006c0054006f006f006c007300470075006901000003b70000004b0000004300ffffff000004cd000003da00000001000000020000000100000002fc0000000100000002000000010000000a0054006f006f006c00730100000000ffffffff0000000000000000
   RvizVisualToolsGui:
     collapsed: false
   Views:

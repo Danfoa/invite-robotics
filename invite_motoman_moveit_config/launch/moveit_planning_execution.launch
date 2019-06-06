@@ -12,7 +12,7 @@
   <!--Load default scene-->
   <arg name="load_scene" default="true"/>
   <!-- Scene objects to load as default -->
-  <arg name="scene_file" if="$(arg load_scene)" default="$(find invite_motoman_moveit_config)/scenes/default_scene_objects_coarse.scene"/> 
+  <arg name="scene_file" if="$(arg load_scene)" default="$(find invite_motoman_moveit_config)/scenes/default_scene_objects_coarse_with_drum.scene"/> 
   <!-- the "sim" argument controls whether we connect to a Simulated or Real robot -->
   <!--  - if sim=false, a robot_ip and controller(fs100|dx100) arguments is required -->
   <arg name="sim" default="false" />
@@ -47,7 +47,7 @@
     <arg name="sim" value="$(arg sim_grippers)"/>
     <arg name="right_gripper_comport" value="/dev/ttyRobotiq1" unless="$(arg sim_grippers)"/>
     <arg name="left_gripper_comport" value="/dev/ttyRobotiq0" unless="$(arg sim_grippers)"/>
-    <arg name="rate" value="10"/>
+    <arg name="rate" value="90"/>
     <arg name="run_test" value="false"/>
   </include>
 

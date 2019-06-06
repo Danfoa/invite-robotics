@@ -71,6 +71,7 @@
   <depend>moveit_ros_perception</depend>
   <depend>interactive_markers</depend>
   <depend>moveit_visual_tools</depend>
+  <depend>robotiq_2f_gripper_msgs</depend>
 
   <!-- The export tag contains other, unspecified, tags -->
   <export>

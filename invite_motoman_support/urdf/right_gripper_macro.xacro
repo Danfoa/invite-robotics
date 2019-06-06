@@ -28,7 +28,7 @@ TO-DO: Add finger tips to 140mm xacro
 <robot xmlns:xacro="http://ros.org/wiki/xacro">
 	<xacro:macro name="invite_csda10f_right_gripper" params="prefix">
 		<!--Import macro from 2-finger adaptative robotiq gripper-->
-		<xacro:include filename="$(find robotiq_2f_140_gripper_visualization)/urdf/robotiq_arg2f_140_model_macro.xacro" />
+		<xacro:include filename="$(find robotiq_2f_85_gripper_visualization)/urdf/robotiq_arg2f_85_model_macro.xacro" />
 
 		<!--Aluminium Adapter plate for Robotiq coupling and CSDA10F arm flange-->	
 		<link name="${prefix}link_gripper_adapter_plate">
@@ -71,7 +71,7 @@ TO-DO: Add finger tips to 140mm xacro
 		</link>-->
 
 		<!-- Instance of C3 140mm Model  -->
-		<xacro:robotiq_arg2f_140 prefix="${prefix}"/>
+		<xacro:robotiq_arg2f_85 prefix="${prefix}"/>
 
 	<!--Joints ******************************************************************************************************************-->		
 		<!--Joint from the adapter plate to the robotiq gripper coupling-->

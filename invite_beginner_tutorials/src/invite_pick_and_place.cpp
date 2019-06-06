@@ -10,6 +10,9 @@
 #include "geometric_shapes/mesh_operations.h"
 #include "geometric_shapes/shape_operations.h"
 
+#include <tf2_eigen/tf2_eigen.h>
+
+
 namespace rvt = rviz_visual_tools;
 moveit_visual_tools::MoveItVisualToolsPtr visual_tools;
 
@@ -27,8 +30,8 @@ int main(int argc, char** argv) {
 
   csda10f.right_gripper->open();
   csda10f.left_gripper->open();
-  csda10f.visual_tools->removeAllCollisionObjects();
 
+  csda10f.visual_tools->removeAllCollisionObjects();
   csda10f.visual_tools->loadRemoteControl();  // Optional UI control
   // ----------------------------------------------------------------------------------------------
 
@@ -55,14 +58,14 @@ int main(int argc, char** argv) {
   rod_obj.primitive_poses.push_back(rod_obj_pose);
 
   collision_objects.push_back(rod_obj);
-  // Add Tables Collision object ----------------------------------------
+  // Add Table Collision object ----------------------------------------
   moveit_msgs::CollisionObject tables_obj;
 
   tables_obj.header.frame_id = "base_link";
   tables_obj.id = "table";
 
   /* Define the primitive and its dimensions. */
-  tables_obj.primitives.resize(2);
+  tables_obj.primitives.resize(1);
   tables_obj.primitives[0].type = tables_obj.primitives[0].BOX;
   tables_obj.primitives[0].dimensions.resize(3);
   tables_obj.primitives[0].dimensions[0] = 1.0;
@@ -82,11 +85,10 @@ int main(int argc, char** argv) {
   // Create Grap Message
   // --------------------------------------------------------------------------
   moveit_msgs::Grasp grasp;
-  grasp.grasp_pose.header.frame_id = "base_link";
   // Get the gripper grasping posture by providing the desired distance between
   // fingers in [m]
-  grasp.grasp_posture = csda10f.getRightGripperPosture(0.02);
-  grasp.pre_grasp_posture = csda10f.getRightGripperPosture(0.120);
+  grasp.grasp_posture = csda10f.getRightGripperPosture(0.04);
+  grasp.pre_grasp_posture = csda10f.getRightGripperPosture(0.085);              // Open
   // Configure pre grasp approach motion
   grasp.pre_grasp_approach.direction.header.frame_id = "arm_right_link_tcp";    // Motion relative to tool frame
   grasp.pre_grasp_approach.direction.vector.z = 1.0;  // Approach from above
@@ -107,25 +109,67 @@ int main(int argc, char** argv) {
 
   csda10f.visual_tools->publishAxisLabeled(grasp.grasp_pose.pose, "grasp pose",
                                            rvt::scales::SMALL);
+  csda10f.visual_tools->publishGrasps(std::vector<moveit_msgs::Grasp>{grasp},
+      csda10f.current_robot_state_ptr->getJointModelGroup("right_gripper"));
+
+  Eigen::Affine3d current_pose, target_pose;
+  tf2::fromMsg(grasp.grasp_pose.pose, current_pose);
+
+  target_pose.translation()[2] = -0.1;
+  target_pose.linear().setIdentity();
+  target_pose = current_pose * target_pose;
+
+  csda10f.visual_tools->publishAxisLabeled(tf2::toMsg(target_pose), "pre_approach pose",
+                                           rvt::scales::SMALL);
+  csda10f.visual_tools->trigger();
   // ----------------------------------------------------------------------------------------------
 
-  csda10f.visual_tools->publishGrasps(
-      std::vector<moveit_msgs::Grasp>{grasp},
-      csda10f.current_robot_state_ptr->getJointModelGroup("right_gripper"));
+  // Create Place Message
+  // --------------------------------------------------------------------------
+  moveit_msgs::PlaceLocation place_msg;
+  place_msg.post_place_posture = csda10f.getRightGripperPosture(0.085);
+  place_msg.allowed_touch_objects = std::vector<std::string>{};
+  place_msg.pre_place_approach.direction.header.frame_id = "base_link";
+  place_msg.pre_place_approach.direction.vector.z = 1.0;
+  place_msg.pre_place_approach.desired_distance = 0.1;
+  place_msg.pre_place_approach.min_distance = 0.01;
+
+  place_msg.post_place_retreat.direction.header.frame_id = "arm_right_link_tcp";
+  place_msg.post_place_retreat.direction.vector.z = -1.0;
+  place_msg.post_place_retreat.desired_distance = 0.05;
+  place_msg.post_place_retreat.min_distance = 0.005;
+
+  place_msg.place_pose.pose = grasp.grasp_pose.pose;
+  place_msg.place_pose.header.frame_id = "base_link";
+  place_msg.id = "0";
+  // place_msg.place_pose.pose.position.x = 0.8;
+  // place_msg.place_pose.pose.position.y = -0.6;
+  // place_msg.place_pose.pose.position.z += 0.2;
+  // orientation.setRPY(0.0, 110* M_PI / 180, 0);
+  // place_msg.place_pose.pose.orientation = tf2::toMsg(orientation);
+
+  csda10f.visual_tools->publishAxisLabeled(place_msg.place_pose.pose, "place pose",
+                                           rvt::scales::SMALL);
   csda10f.visual_tools->trigger();
-  csda10f.visual_tools->prompt("Perform grasp?");
 
   // Plan and perform grasp motion
   // ----------------------------------------------------------------
-  csda10f.right_arm_mg.setSupportSurfaceName("table");
-  MoveItErrorCode error_code = csda10f.right_arm_mg.pick("rod", grasp);
-  ROS_WARN("Pick executon returned %s",
-           invite_utils::CSDA10F::getErrorMsg(error_code).c_str());
+  csda10f.right_arm_with_torso_mg.setSupportSurfaceName("table");
+  while (!ros::isShuttingDown()) {
 
-  // Detach the object from robot arm
-  csda10f.right_arm_mg.detachObject("rod");
+    csda10f.right_gripper->open(true);
 
-  csda10f.visual_tools->prompt("We are done over here...");
+    MoveItErrorCode error_code = csda10f.right_arm_with_torso_mg.pick("rod", grasp);
+    ROS_WARN("Pick executon returned: %s",
+            invite_utils::CSDA10F::getErrorMsg(error_code).c_str());
+
+    error_code = csda10f.right_arm_with_torso_mg.place("rod", place_msg.place_pose);
+    ROS_WARN("Place executon returned: %s",
+            invite_utils::CSDA10F::getErrorMsg(error_code).c_str());
+    
+    csda10f.right_arm_with_torso_mg.detachObject("rod");
+    // planning_scene_interface.applyCollisionObjects(collision_objects);
+  }
   ros::shutdown();
   return 0;
 }

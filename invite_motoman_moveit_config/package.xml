@@ -29,7 +29,8 @@
   <!-- <run_depend>warehouse_ros_mongo</run_depend> -->
   <build_depend>invite_motoman_support</build_depend>
   <run_depend>invite_motoman_support</run_depend>
+
   <run_depend>trac_ik_kinematics_plugin</run_depend>
-  <build_depend>trac_ik_kinematics_plugin</build_depend>
+
 
 </package>

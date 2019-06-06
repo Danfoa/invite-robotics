@@ -32,8 +32,9 @@ typedef moveit::planning_interface::MoveGroupInterface MoveGroupInterface;
 class CartesianTaskPlanner {
  
  private:
- 
+  // Set of most recent discarted robot configurations
   std::vector<std::vector<double>> invalid_states;
+
   ros::NodeHandlePtr nh_;
 
  public:
@@ -57,6 +58,22 @@ class CartesianTaskPlanner {
     invalid_states = {};
   }
 
+  /** Finds the most suitable robot configuration to perform the given cartesian `waypoints`
+   * trajectory, by checking initially if a given robot configuration can be reached from the
+   * currento robot state, and then evaluating how suitable is that particular configuration to
+   * follow the cartesian trajectory.
+   * 
+   * @param move_group: Robot group to plan with
+   * @param waypoints: Points defining the desire cartesian trajectory
+   * @param motion_planes: Reference to a vector of motion plans that will be filled with the
+   * approach and cartesian motion, result of the selection of the best robot start configuration
+   * @param allow_collision_objecs: Vector with the IDs of collision objects that the gripper links
+   * can touch during the cartesian motion
+   * @param max_configurations: Maximum number of IK configuration to consider for a given target
+   * pose. (usually the max number of IK solutions your robot has)
+   *
+   * @return percentage or cartesian motion achievable by the "best" robot start pose.
+   */
   float planCartesianMotionTask(MoveGroupInterface* move_group,
                                 std::vector<geometry_msgs::Pose> waypoints,
                                 std::vector<MoveGroupInterface::Plan>& motion_plans,
@@ -183,11 +200,9 @@ class CartesianTaskPlanner {
       best_approach_plan = approach_plan;
       best_trajectory = trajectory;
     }
-    invalid_states.clear();
     
     // Return original state to start state
     move_group->setStartStateToCurrentState();
-    invalid_states.clear();
 
     if (max_cartesian_motion == 0)
       return 0;
@@ -213,6 +228,7 @@ class CartesianTaskPlanner {
     return max_cartesian_motion;
   }
 
+  /*
   float planCartesianMotionTask(MoveGroupInterface* move_group,
                                 std::vector<geometry_msgs::Pose> start_poses,
                                 std::vector<geometry_msgs::Pose> final_poses,
@@ -348,7 +364,6 @@ class CartesianTaskPlanner {
     }
     // Return original state to start state
     move_group->setStartStateToCurrentState();
-    invalid_states.clear();
 
     if (max_cartesian_motion == 0)
       return 0;
@@ -386,9 +401,26 @@ class CartesianTaskPlanner {
                                    motion_plans, allow_collision_objects,
                                    max_configurations);
   }
+  */
+  
+  /** Return the set of discarted robot configuration of the last task planning.
+   */
+  std::vector<trajectory_msgs::JointTrajectoryPoint> getDiscartedRobotConfigurations(){ 
+    std::vector<trajectory_msgs::JointTrajectoryPoint> ik_states;
+    ROS_INFO("Publishing %d discarted start IK configurations.", invalid_states.size());
+    for (auto invalid_ik = invalid_states.cbegin();
+            invalid_ik != invalid_states.cend(); invalid_ik++) {
+      trajectory_msgs::JointTrajectoryPoint ik;
+      ik.positions = *invalid_ik;
+      ik_states.push_back(ik);
+    }
+    return ik_states;
+  
+  }
 
   private:
 
+    // Saves the `robot_state` joint values as invalid IK solution/robot configuration
     void saveInvalidIK(const robot_state::RobotState& robot_state,
                       const robot_state::JointModelGroup* jmb) {
       std::vector<int> joint_indices = jmb->getVariableIndexList();
@@ -401,6 +433,7 @@ class CartesianTaskPlanner {
       invalid_states.push_back(invalid_group_ik);
     }
 
+    // Check if a given set of joint values are not already in the discarted robot configurations array
     bool validateIKSolution(robot_state::RobotState* robot_state,
                             const robot_state::JointModelGroup* joint_group,
                             const double* joint_group_variable_value) {
@@ -428,14 +461,19 @@ class CartesianTaskPlanner {
                       (int)invalid_states.size() + 1);
       return is_ik_solution_valid;
     }
-
+    
+    /** Check if a robot configuration (`target_state`) can be reached from the a certain `start_state`
+     *  @param `move_group`: Robot group to plan with
+     *  @param `start_state`: Plan start robot configuration/IK.
+     *  @param `target_state`: Plan final robot configuration/IK. 
+     */
     bool validateJointSpaceTargetMotion(MoveGroupInterface* move_group,
                                         const robot_state::RobotState& start_state,
                                         const robot_state::RobotState& target_state,
-                                        MoveGroupInterface::Plan* cartesian_motion_plan) {
+                                        MoveGroupInterface::Plan* motion_plan) {
       move_group->setStartState(start_state);
       move_group->setJointValueTarget(target_state);
-      if (move_group->plan(*cartesian_motion_plan) != MoveItErrorCode::SUCCESS) {
+      if (move_group->plan(*motion_plan) != MoveItErrorCode::SUCCESS) {
         return false;
       }
       return true;

@@ -11,7 +11,7 @@
   <!--Import macro for left arm gripper-->
   <xacro:include filename="$(find invite_motoman_support)/urdf/left_gripper_macro.xacro" />
   <!--Create an instance of the left arm gripper macro-->
-  <xacro:invite_csda10f_left_gripper prefix="arm_left_"/>
+  <xacro:invite_csda10f_left_gripper prefix=""/>
 
   <!--Base frame for reference-->
   <link name="base_link" />
@@ -19,7 +19,7 @@
   <!--Reference Gripper to base joint-->
   <joint name="world_joint" type="fixed">
     <parent link="base_link" />
-    <child link="arm_left_link_force_sensor_adapter_plate" />
+    <child link="link_gripper_adapter_plate" />
     <origin xyz="0 0 0" rpy="0 0 0"/>
     <axis xyz="0 0 1"/>
   </joint>

@@ -13,7 +13,7 @@ find_package(Eigen3 REQUIRED)
 ## CATKIN_DEPENDS: catkin_packages dependent projects also need
 ## DEPENDS: system dependencies of this project that dependent projects also need
 find_package(catkin REQUIRED
-  trac_ik_kinematics_plugin             ## Kinematics solver for both arms
+  #trac_ik_kinematics_plugin             ## Kinematics solver for both arms
   invite_motoman_support
   pluginlib
   geometric_shapes

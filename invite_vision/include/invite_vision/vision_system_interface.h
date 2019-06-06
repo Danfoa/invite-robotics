@@ -3,7 +3,7 @@
  *
  * To-Do: Add licence description
  * 
- * File name: csda10f_interface.h
+ * File name: vision_system_interface.h
  * 
  * Description: 
  *        This header defines the necessary classes, constants and functions to easily operate, and process the
@@ -11,7 +11,7 @@
  *          
  *        The `VisionInterface` class should allow the user to:
  *             - Request single or dual camera data (continuously or on user request)
- *             - Query the current state of the sisten (busy, idle, error, etc)
+ *             - Query the current state of the system (busy, idle, error, etc)
  * 
  * Author: 
  *        Daniel Felipe Ordonez Apraez - daniels.ordonez@gmail.com - OrdonezApraez@invite-research.com  
@@ -30,7 +30,8 @@ typedef ensenso_camera_msgs::RequestDataGoal RequestDataGoal;
 typedef ensenso_camera_msgs::RequestDataResult RequestDataResult; 
 
 namespace invite_vision{
-    
+    /** Enum type representing the possible operation stages of the camera system
+     */
     enum class SystemStatus {
         ERROR = 0,
         IDLE = 1,
@@ -38,16 +39,28 @@ namespace invite_vision{
         INITALIZING = -2        
     };
 
-   
+    /** Provides a high level control over the cameras system, managing the connection to the
+     * cameras action servers, requesting pointclouds and monitoring the operation status. 
+     * Example:  
+     *   invite_vision::VisionInterface vision_system_interface;
+     *
+     *  if (vision_system_interface.system_status != invite_vision::SystemStatus::IDLE)
+     *      ROS_ERROR("Camera system initialization failed")
+     *   else 
+     *       vision_system_interface.requestDualCameraData();
+     */
     class VisionInterface{
 
         private:
+            // Cameras action clients
             actionlib::SimpleActionClient<RequestDataAction> * upper_camera_client_;
             actionlib::SimpleActionClient<RequestDataAction> * lower_camera_client_;
+            // Type of camera data request
             RequestDataGoal default_data_goal_;
-            bool request_continuous = false;
         public:
+            // Status of both cameras as a hole system
             SystemStatus system_status = SystemStatus::INITALIZING;
+            // Independent camera status
             SystemStatus upper_camera_status = SystemStatus::INITALIZING;
             SystemStatus lower_camera_status = SystemStatus::INITALIZING;
             
@@ -56,14 +69,13 @@ namespace invite_vision{
                 upper_camera_client_ = new actionlib::SimpleActionClient<RequestDataAction>("/n35_upper_camera/request_data", true);
                 lower_camera_client_ = new actionlib::SimpleActionClient<RequestDataAction>("/n35_lower_camera/request_data", true);
                 
-                // Wait for camera action server to be ready
-                ROS_INFO("Waiting for camera action servers");
-
                 // To-Do: Make user defined !.
                 default_data_goal_.publish_results = true;
                 default_data_goal_.request_point_cloud = true;
                 default_data_goal_.request_normals = true;
-
+                
+                // Wait for camera action server to be ready
+                ROS_INFO("Waiting for camera action servers");
                 if(upper_camera_client_->waitForServer(ros::Duration(10)) && lower_camera_client_->waitForServer(ros::Duration(10))){
                     ROS_DEBUG("Cameras action servers are ready for data request");  
                     system_status = SystemStatus::IDLE;
@@ -92,7 +104,8 @@ namespace invite_vision{
                     ROS_ERROR("Request rejected: Previous data request has not been processed yet");
                 }
             }
-
+            
+            // Upper camera action client result callback 
             void upperCameraDataReceivedCallback(const actionlib::SimpleClientGoalState& state, const RequestDataResult::ConstPtr& result){
                 upper_camera_status = SystemStatus::IDLE;   // Set camera as ready to receive new goals now.
                 if( state == actionlib::SimpleClientGoalState::SUCCEEDED ){
@@ -104,7 +117,7 @@ namespace invite_vision{
                 }
             }
 
-
+            // Lower camera action client result callback 
             void lowerCameraDataReceivedCallback(const actionlib::SimpleClientGoalState& state, const RequestDataResult::ConstPtr& result){
                 lower_camera_status = SystemStatus::IDLE;   // Set camera as ready to receive new goals now.
                 if( state == actionlib::SimpleClientGoalState::SUCCEEDED ){
@@ -116,6 +129,9 @@ namespace invite_vision{
                 }
             }
 
+
+        private:
+            // Modify state variable for both cameras a single system.
             void updateSystemStatus(){
                 if (lower_camera_status == SystemStatus::IDLE && upper_camera_status == SystemStatus::IDLE){
                     system_status = SystemStatus::IDLE;
