@@ -47,9 +47,9 @@ link_directories(${catkin_LIBRARY_DIRS})
 
 # Tutorial executables.
 
-add_executable(invite_pick_and_place src/invite_pick_and_place.cpp)
-target_link_libraries(invite_pick_and_place ${catkin_LIBRARIES} ${Boost_LIBRARIES})
-install(TARGETS invite_pick_and_place DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION})
+add_executable(pick_and_place src/pick_and_place.cpp)
+target_link_libraries(pick_and_place ${catkin_LIBRARIES} ${Boost_LIBRARIES})
+install(TARGETS pick_and_place DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION})
 
 add_executable(cartesian_task_planning src/cartesian_task_planning.cpp)
 target_link_libraries(cartesian_task_planning ${catkin_LIBRARIES} ${Boost_LIBRARIES})

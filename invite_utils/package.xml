@@ -34,7 +34,7 @@
   
   <depend>robotiq_2f_gripper_control</depend>
   <depend>sound_play</depend>
-
+  <depend>robotiq_ft_sensor</depend>
   <!-- The export tag contains other, unspecified, tags -->
   <export>
     <!-- Other tools can request additional information be placed here -->

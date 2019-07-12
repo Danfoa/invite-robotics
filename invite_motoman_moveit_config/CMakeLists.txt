@@ -22,7 +22,7 @@ find_package(catkin REQUIRED
 
 catkin_package(
   CATKIN_DEPENDS 
-    trac_ik_kinematics_plugin 
+    #trac_ik_kinematics_plugin 
     invite_motoman_support
   DEPENDS
     EIGEN3

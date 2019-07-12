@@ -50,7 +50,7 @@
     </rosparam>
   </node>
 
-  <!-- Remove Noisy Data by an stadistical outliner removal filter
+  <!-- Remove Noisy Data by an stadistical outliner removal filter -->
   <node pkg="nodelet" type="nodelet" name="stadistical_outliner_removal" args="load pcl/StatisticalOutlierRemoval  pcl_pre_processing" output="screen">
     <remap from="~input" to="$(arg input_topic)/area_of_interest" />
     <remap from="~output" to="$(arg input_topic)/sor_filtered" />
@@ -60,7 +60,7 @@
       stddev: 0.7                   # The standard deviation multiplier threshold. All points outside the mean +- sigma * std_mul will be considered outliers. Range: 0.0 to 5.0 
       max_queue_size: 1             # Incomming messages queue.
     </rosparam>
-  </node> -->
+  </node>
 
   <!-- If enable, launch rqt GUI for realtime Node parameter tunning; this will allow users to tune pre and post processing parameters -->
   <group if="$(arg tunning)">

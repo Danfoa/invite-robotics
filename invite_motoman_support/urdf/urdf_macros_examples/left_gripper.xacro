@@ -19,7 +19,7 @@
   <!--Reference Gripper to base joint-->
   <joint name="world_joint" type="fixed">
     <parent link="base_link" />
-    <child link="link_gripper_adapter_plate" />
+    <child link="ft300_adapter_plate" />
     <origin xyz="0 0 0" rpy="0 0 0"/>
     <axis xyz="0 0 1"/>
   </joint>

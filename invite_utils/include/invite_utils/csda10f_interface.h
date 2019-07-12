@@ -2,19 +2,19 @@
  * This file is part of invite_utils package.
  *
  * To-Do: Add licence description
- * 
+ *
  * File name: csda10f_interface.h
- * 
- * Description: 
+ *
+ * Description:
  *        This header defines the necessary classes, constants and functions to easily operate the CSDA10F robot.
- *        
- *        The main class is the `CSDA10F`, which on instantiation creates the relevant move groups and robot 
- *        variables/clients to properly control the robot and its grippers. 
- * 
+ *
+ *        The main class is the `CSDA10F`, which on instantiation creates the relevant move groups and robot
+ *        variables/clients to properly control the robot and its grippers.
+ *
  *        This is a robot specific file, but with the appropiate changes can be used with other robots.
- * 
- * Author: 
- *        Daniel Felipe Ordonez Apraez - daniels.ordonez@gmail.com - OrdonezApraez@invite-research.com  
+ *
+ * Author:
+ *        Daniel Felipe Ordonez Apraez - daniels.ordonez@gmail.com - OrdonezApraez@invite-research.com
  */
 #include <ros/ros.h>
 #include <actionlib/client/simple_action_client.h>
@@ -30,9 +30,10 @@
 #include <robotiq_2f_gripper_control/robotiq_gripper_client.h>
 
 #include <industrial_msgs/RobotStatus.h>
+#include <industrial_msgs/StopMotion.h>
 #include <std_srvs/Trigger.h>
 #include <sound_play/SoundRequest.h>
-
+#include <robotiq_ft_sensor/sensor_accessor.h>
 
 typedef moveit::planning_interface::MoveItErrorCode MoveItErrorCode;
 typedef moveit::planning_interface::MoveGroupInterface MoveGroupInterface;
@@ -48,17 +49,17 @@ namespace invite_utils{
      * variables to control and monitor the state of the robot and its grippers.
      */
     class CSDA10F{
-        private:        
+        private:
           // Max velocity in percentage from 0 to 1 (100%) of robot motions
-          float max_velocity_scaling_factor;  
+          float max_velocity_scaling_factor;
           // Default joint orientation tolerance
           float joint_goal_orientation_tolerance = 1e-4;
           // Publisher to Robot sound generator topic
           ros::Publisher sound_pub;
           // Boolean indicating whether robot should speak or not.
-          bool talkative = false; 
+          bool talkative = false;
 
-          // Planning scene monitor and client 
+          // Planning scene monitor and client
           planning_scene_monitor::PlanningSceneMonitorPtr psm_;
           ros::ServiceClient planning_scene_diff_client_;
 
@@ -68,12 +69,17 @@ namespace invite_utils{
 
           MoveItErrorCode error_code;
           
-          // Action clients to enable or disable robot operation 
-          ros::ServiceClient enabler_;
-          ros::ServiceClient disabler_;
+          // Service clients to enable or disable robot servos
+          ros::ServiceClient robot_enabler_srv_;
+          ros::ServiceClient robot_disabler_srv_;
+          // Serice client to stop robot motion
+          ros::ServiceClient stop_motion_srv_;
+          // Service Client to command Robotiq FT300 force/torque sensors
+          ros::ServiceClient left_ft300_srv_;
+
 
           ros::NodeHandlePtr nh_;
-  
+
         public:
           // Move groups
           MoveGroupInterface csda10f_mg;
@@ -87,15 +93,16 @@ namespace invite_utils{
           industrial_msgs::RobotStatus status;
           // Robot state pointer
           robot_state::RobotStatePtr current_robot_state_ptr;
-          // Grippers action clients 
+          // Grippers action clients
           RobotiqActionClient* left_gripper;
           RobotiqActionClient* right_gripper;
           // Member variable to provide visual debugging
           moveit_visual_tools::MoveItVisualToolsPtr visual_tools;
 
           // ---------
+          // TO-DO: Initialize move-groups on demand, or in a secondary thread.
 
-          CSDA10F(float max_speed = 0.1) : csda10f_mg("csda10f"), 
+          CSDA10F(float max_speed = 0.1) : csda10f_mg("csda10f"),
                                             arms_mg("arms"),
                                             torso_mg("torso"),
                                             left_arm_mg("arm_left"),
@@ -109,21 +116,26 @@ namespace invite_utils{
             // Start gripper action servers.
             left_gripper = new RobotiqActionClient("/left_gripper/command_robotiq_action", true);
             right_gripper = new RobotiqActionClient("/right_gripper/command_robotiq_action", true);
+            // Service client for FT300 sensor
+            left_ft300_srv_ = nh_->serviceClient<robotiq_ft_sensor::sensor_accessor>("robotiq_ft_sensor_acc", true);
+
             // Check current robot state is obtainable.
             if ( !csda10f_mg.startStateMonitor() ) {
               ROS_FATAL("Robot state monitor was not created, restart robot firmware");
               throw("Robot state monitor was not created, restart robot firmware");
             }
+
             current_robot_state_ptr = csda10f_mg.getCurrentState(3.0);
             configureRobotInterface();
-            // Connect to YASKAWAS robot state messages  
-            ros::Subscriber sub = nh_->subscribe<industrial_msgs::RobotStatus>("/robot_status", 
+            // Connect to YASKAWAS robot state messages
+            ros::Subscriber sub = nh_->subscribe<industrial_msgs::RobotStatus>("/robot_status",
                                                                               1,
                                                                               &CSDA10F::updateRobotStatus,
                                                                               this);
             //  Generate client to enable/dissable robot servo-power / motions
-            enabler_ = nh_->serviceClient<std_srvs::Trigger>("/robot_enable", true);
-            disabler_ = nh_->serviceClient<std_srvs::Trigger>("/robot_enable", true);
+            robot_enabler_srv_ = nh_->serviceClient<std_srvs::Trigger>("/robot_enable", true);
+            robot_disabler_srv_ = nh_->serviceClient<std_srvs::Trigger>("/robot_enable", true);
+            stop_motion_srv_ = nh_->serviceClient<industrial_msgs::StopMotion>("/stop_motion", true);
             enable_robot();
 
             ROS_WARN("Robot ready for motion at %.1f%% of its max speed", max_velocity_scaling_factor * 100);
@@ -135,10 +147,10 @@ namespace invite_utils{
             // psm_->requestPlanningSceneState();
             psm_->publishDebugInformation(true);
             psm_->startSceneMonitor("/move_group/monitored_planning_scene");
-            
+
             planning_scene_diff_client_ = nh_->serviceClient<moveit_msgs::ApplyPlanningScene>("apply_planning_scene");
             planning_scene_diff_client_.waitForExistence();
-            // Visualization functions 
+            // Visualization functions
             visual_tools.reset(new moveit_visual_tools::MoveItVisualTools("base_link", "/rviz_visual_tools", psm_));
             // visual_tools->loadPlanningSceneMonitor();
             visual_tools->loadMarkerPub(true);
@@ -150,10 +162,10 @@ namespace invite_utils{
             // visual_tools->hideRobot();
             visual_tools->trigger();
             // visual_tools->setManualSceneUpdating();
-            
-            // Load default collision scene if path is given 
+
+            // Load default collision scene if path is given
             std::string collision_scene_path, param_key;
-            if (nh_->searchParam("bag_handling/collision_scene", param_key)) {
+            if (nh_->searchParam("csda10f/collision_scene", param_key)) {
               nh_->getParam(param_key, collision_scene_path);
               ROS_WARN("Loading collision scene (%s)", collision_scene_path.c_str());
               visual_tools->loadCollisionSceneFromFile(collision_scene_path);
@@ -167,10 +179,10 @@ namespace invite_utils{
 
           // Enable robot servomotor motions
           bool enable_robot() {
-            if (enabler_) {
+            if (robot_enabler_srv_) {
               ROS_WARN("Enabling Robot");
               std_srvs::Trigger cmd;
-              enabler_.call(cmd);
+              robot_enabler_srv_.call(cmd);
               if(cmd.response.success)
                 ROS_WARN("Robot is now enabled for motion");
               else
@@ -178,15 +190,50 @@ namespace invite_utils{
             }
           }
 
+
+          bool tareLeftForceSensor() {
+            robotiq_ft_sensor::sensor_accessor command;
+            command.request.command_id = robotiq_ft_sensor::sensor_accessor::Request::COMMAND_SET_ZERO;
+            if(left_ft300_srv_.exists()) {
+              left_ft300_srv_.call(command.request, command.response);
+              return command.response.success;
+            } else {
+              ROS_ERROR("Left force sensor tare service [%s] is not available",
+                        left_ft300_srv_.getService().c_str());
+              return false;
+            }
+          }
+
           // Disable robot servomotor motions
           bool disable_robot() {
-            if (disabler_) {
-              ROS_DEBUG("Disabling Robot");
+            if (robot_disabler_srv_) {
+              ROS_WARN("Disabling Robot");
               std_srvs::Trigger cmd;
-              enabler_.call(cmd);
+              robot_enabler_srv_.call(cmd);
               if(!cmd.response.success)
                 ROS_ERROR("Robot was not disabled: %s", cmd.response.message.c_str());
             }
+          }
+
+          // Stop robot motion
+          bool stopMotion() {
+            ROS_WARN("Stopping robot motion");
+            if (stop_motion_srv_) {
+              industrial_msgs::StopMotion cmd;
+              // robot_enabler_srv_.call(cmd);
+              if (cmd.response.code.val == 1)
+                ROS_INFO("CSDA10F Interface: Robot motion stopped");
+              else
+                ROS_ERROR("CSDA10F Interface: Error while stopping robot motion");
+            }
+            // Notify Moveit of the cancel/stop request
+            csda10f_mg.stop();
+            arms_mg.stop();
+            left_arm_with_torso_mg.stop();
+            right_arm_with_torso_mg.stop();
+            left_arm_mg.stop();
+            right_arm_mg.stop();
+            torso_mg.stop();
           }
 
           bool goHome(std::string home_pose_name = "home") {
@@ -198,8 +245,8 @@ namespace invite_utils{
             csda10f_mg.setNamedTarget(home_pose_name);
             error_code = csda10f_mg.move();
             if (error_code != MoveItErrorCode::SUCCESS){
-              ROS_ERROR("Motion to position (%s) impossible, error code: (%d) %s", 
-                          home_pose_name.c_str(), 
+              ROS_ERROR("Motion to position (%s) impossible, error code: (%d) %s",
+                          home_pose_name.c_str(),
                           (int)error_code.val,
                           getErrorMsg(error_code).c_str()
                           );
@@ -227,7 +274,7 @@ namespace invite_utils{
             left_arm_mg.setMaxVelocityScalingFactor(max_velocity_scaling_factor);
             right_arm_mg.setMaxVelocityScalingFactor(max_velocity_scaling_factor);
             torso_mg.setMaxVelocityScalingFactor(max_velocity_scaling_factor * 2);
-            
+
             // Set Joint orientation tolerance (This is needed to cope with the `joint_trajectory_streamer` start
             // position tolerance limit `start_pos_tol_`
             // csda10f_mg.setGoalJointTolerance( joint_goal_orientation_tolerance );
@@ -239,7 +286,7 @@ namespace invite_utils{
             // torso_mg.setGoalJointTolerance( joint_goal_orientation_tolerance );
             speak("I am ready");
           }
-          
+
           void speak(std::string msg) {
             if (!talkative) {
               // ROS_INFO(msg);
@@ -293,7 +340,7 @@ namespace invite_utils{
           posture.header.stamp = ros::Time::now();
           posture.joint_names = std::vector<std::string>{"left_gripper_finger_joint"};
           trajectory_msgs::JointTrajectoryPoint close_state;
-          
+
           float joint_position = 0.8 - (0.8/0.085 * distance_between_fingers);
           joint_position = joint_position > 0.8 ? 0.8 : joint_position;
           joint_position = joint_position < 0.0 ? 0.0 : joint_position;
@@ -311,30 +358,30 @@ namespace invite_utils{
           std::string msg;
           switch(error_code.val){
             case 1: msg = "Success"; break;
-            case 99999: msg = "Failure"; break;              
-            case -1: msg = "Plannning failed"; break;              
-            case -2: msg = "Invalid motion plan"; break;              
-            case -3: msg = "Motion plan invalidated by environment change"; break;              
-            case -4: msg = "Control failed"; break;              
-            case -5: msg = "Unable to aquire sensor data"; break;              
-            case -6: msg = "Time out reach"; break;              
-            case -7: msg = "Preemted"; break;              
-            case -10: msg = "Start state is in collision"; break;              
-            case -11: msg = "Start state violates path constraints"; break;              
-            case -12: msg = "Goal state is in collision"; break;              
-            case -13: msg = "Goal state violates path constraints"; break;              
-            case -14: msg = "Goal constraints violated"; break;              
-            case -15: msg = "Invalid group name"; break;              
-            case -16: msg = "Invalid goal constraints"; break;              
-            case -17: msg = "Invalid robot state"; break;              
-            case -18: msg = "Invalid link name"; break;              
-            case -19: msg = "Invalid object name"; break;              
-            case -21: msg = "Frame transform failure"; break;              
-            case -22: msg = "Collision checking unavailable"; break;              
-            case -23: msg = "Robot state stale"; break;              
-            case -24: msg = "Sensor info stale"; break;              
+            case 99999: msg = "Failure"; break;
+            case -1: msg = "Plannning failed"; break;
+            case -2: msg = "Invalid motion plan"; break;
+            case -3: msg = "Motion plan invalidated by environment change"; break;
+            case -4: msg = "Control failed"; break;
+            case -5: msg = "Unable to aquire sensor data"; break;
+            case -6: msg = "Time out reach"; break;
+            case -7: msg = "Preemted"; break;
+            case -10: msg = "Start state is in collision"; break;
+            case -11: msg = "Start state violates path constraints"; break;
+            case -12: msg = "Goal state is in collision"; break;
+            case -13: msg = "Goal state violates path constraints"; break;
+            case -14: msg = "Goal constraints violated"; break;
+            case -15: msg = "Invalid group name"; break;
+            case -16: msg = "Invalid goal constraints"; break;
+            case -17: msg = "Invalid robot state"; break;
+            case -18: msg = "Invalid link name"; break;
+            case -19: msg = "Invalid object name"; break;
+            case -21: msg = "Frame transform failure"; break;
+            case -22: msg = "Collision checking unavailable"; break;
+            case -23: msg = "Robot state stale"; break;
+            case -24: msg = "Sensor info stale"; break;
             case -31: msg = "No Inverse Kinematics solution found"; break;
-            default: msg = "Unknown error code";              
+            default: msg = "Unknown error code";
           };
           return msg;
         }

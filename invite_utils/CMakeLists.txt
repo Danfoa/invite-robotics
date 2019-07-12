@@ -20,6 +20,7 @@ find_package(catkin
   COMPONENTS
     roscpp
     robotiq_2f_gripper_control
+    robotiq_ft_sensor
     sound_play
 )
 
@@ -38,7 +39,7 @@ find_package(catkin
 catkin_package(
   INCLUDE_DIRS include
 #  LIBRARIES invite_utils
-   CATKIN_DEPENDS roscpp robotiq_2f_gripper_control sound_play
+   CATKIN_DEPENDS roscpp robotiq_2f_gripper_control sound_play robotiq_ft_sensor
   DEPENDS
     EIGEN3
 )

@@ -5,15 +5,19 @@ This repository contains the integration of the [CSDA10F dual-arm Motoman Robot]
 
 ## Contents
 * [Installation Instructions](https://github.com/Danfoa/invite-robotics/wiki/Intallation)
-* [CSDA10F Robot Moveit configuration](https://github.com/Danfoa/invite-robotics/wiki/CSDA10F-Moveit-Configuration)
 * [Robot URDF configuration](https://github.com/Danfoa/invite-robotics/wiki/Robot-URDF-configuration)
+* [Robot Moveit configuration](https://github.com/Danfoa/invite-robotics/wiki/CSDA10F-Moveit-Configuration)
+* [Vision System Interface](https://github.com/Danfoa/invite-robotics/wiki/Tutorial---Vision-System-Interface)   
 * Tutorials
-    * [Move Group Interface Tutorial Cpp](https://github.com/Danfoa/invite-robotics/wiki/Tutorial---Move-Group-Interface-Cpp) 
-    * [Connect to Robot Controller](https://github.com/Danfoa/invite-robotics/wiki/Tutorial---Connect-to-Robot-Controller)
-    * [Pick and Place Test](https://github.com/Danfoa/invite-robotics/wiki/Tutorial---Robot-Test-Pick-and-Place)  
-    * [Control Robotiq gripper through Modbus RTU](https://github.com/Danfoa/invite-robotics/wiki/Tutorial---Control-Robotiq-grippers-through-ModbusRTU) 
-    * [Simulation Scene Objects](https://github.com/Danfoa/invite-robotics/wiki/Tutorial---Simulation-Scene-Objects)   
-    * [3D Sensor Integration](https://github.com/Danfoa/invite-robotics/wiki/Tutorial---3D-Sensor-Integration)   
+  
+
+  * [Connect to FS100 Robot Controller](https://github.com/Danfoa/invite-robotics/wiki/Tutorial---Connect-to-Robot-Controller)
+  * [Move Group Interface Tutorial Cpp](https://github.com/Danfoa/invite-robotics/wiki/Tutorial---Move-Group-Interface-Cpp)
+  * [CSDA10F Robot Interface](https://github.com/Danfoa/invite-robotics/wiki/Tutorial---CSDA10F-Interface) 
+  * [Cartesian Task Planner Cpp](https://github.com/Danfoa/invite-robotics/wiki/Tutorial---Cartesian-Task-Planning) 
+  * [CSDA10F Pick and Place](https://github.com/Danfoa/invite-robotics/wiki/Tutorial---Robot-Test-Pick-and-Place)  
+  * [Simulation Scene Objects](https://github.com/Danfoa/invite-robotics/wiki/Tutorial---Simulation-Scene-Objects)
+
 * [Release notes](https://github.com/Danfoa/invite-robotics/wiki/release-notes)
 * [Notes for safety operation](https://github.com/Danfoa/invite-robotics/wiki/Notes-for-safety-operation)
 ***

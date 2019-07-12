@@ -31,11 +31,11 @@ TO-DO: Add finger tips to 140mm xacro
 		<xacro:include filename="$(find robotiq_2f_85_gripper_visualization)/urdf/robotiq_arg2f_85_model_macro.xacro" />
 
 		<!--Aluminium Adapter plate for Robotiq coupling and CSDA10F arm flange-->	
-		<link name="${prefix}link_gripper_adapter_plate">
+		<link name="${prefix}gripper_adapter_plate">
 			<visual>
 				<origin rpy="0 0 0" xyz="0 0 0"/>
 				<geometry>
-					<mesh filename="package://invite_motoman_support/meshes/robotiq-yaskawa_adapter_plate.stl" scale="0.001 0.001 0.001"/>
+					<mesh filename="package://invite_motoman_support/meshes/visual/robotiq-yaskawa_adapter_plate.stl" scale="0.001 0.001 0.001"/>
 				</geometry>
 				<material name="Aluminium">
   			        <color rgba="0.816 0.816 0.816 1.0"/>
@@ -51,11 +51,11 @@ TO-DO: Add finger tips to 140mm xacro
 		</link>
 
 		<!--Robotiq coupling, that connects the gripper with the Adapter plate; this part host the cable connections of the gripper-->
-		<link name="${prefix}link_robotiq_coupling">
+		<link name="${prefix}robotiq_coupling">
 			<visual>
 				<origin rpy="0 0 0" xyz="0 0 0"/>
 				<geometry>
-					<mesh filename="package://invite_motoman_support/meshes/robotiq_gripper_coupling.stl" scale="0.001 0.001 0.001"/>
+					<mesh filename="package://invite_motoman_support/meshes/visual/robotiq_gripper_coupling.stl" scale="0.001 0.001 0.001"/>
 				</geometry>
 				<material name="light_balck">
   			        <color rgba="0.17 0.17 0.17 1.0"/>
@@ -77,13 +77,13 @@ TO-DO: Add finger tips to 140mm xacro
 		<!--Joint from the adapter plate to the robotiq gripper coupling-->
 		<joint name="${prefix}gripper_coupling_joint" type="fixed">
 			<origin  xyz="0 0.0160 0" rpy="${-pi/2} 0 0"/>
-			<parent link="${prefix}link_gripper_adapter_plate" />
-			<child link="${prefix}link_robotiq_coupling" />
+			<parent link="${prefix}gripper_adapter_plate" />
+			<child link="${prefix}robotiq_coupling" />
 		</joint>
 		<!--Joint from the robotiq coupling to the gripper itself-->
 		<joint name="${prefix}joint" type="fixed">
 			<origin xyz="0 0.0 0.0039" rpy="0 0 ${pi}" />
-			<parent link="${prefix}link_robotiq_coupling" />
+			<parent link="${prefix}robotiq_coupling" />
 			<child link="${prefix}robotiq_arg2f_base_link" />
 		</joint>
 

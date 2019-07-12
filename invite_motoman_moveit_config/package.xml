@@ -30,7 +30,5 @@
   <build_depend>invite_motoman_support</build_depend>
   <run_depend>invite_motoman_support</run_depend>
 
-  <run_depend>trac_ik_kinematics_plugin</run_depend>
-
 
 </package>

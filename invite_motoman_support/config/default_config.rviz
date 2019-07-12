@@ -7,7 +7,8 @@ Panels:
         - /Global Options1
         - /Status1
         - /RobotModel1
-        - /Axes1
+        - /RobotModel1/Links1
+        - /RobotModel1/Links1/arm_left_link_tool01
       Splitter Ratio: 0.5
     Tree Height: 843
   - Class: rviz/Selection
@@ -102,7 +103,7 @@ Visualization Manager:
           Show Trail: false
         arm_left_link_tool0:
           Alpha: 1
-          Show Axes: false
+          Show Axes: true
           Show Trail: false
         arm_right_link_1_s:
           Alpha: 1
@@ -156,10 +157,12 @@ Visualization Manager:
           Alpha: 1
           Show Axes: false
           Show Trail: false
+          Value: true
         ensenso_upper_optical_frame:
           Alpha: 1
           Show Axes: false
           Show Trail: false
+          Value: true
         left_gripper_left_inner_finger:
           Alpha: 1
           Show Axes: false
@@ -181,16 +184,6 @@ Visualization Manager:
           Show Trail: false
           Value: true
         left_gripper_left_outer_knuckle:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        left_gripper_link_force_sensor:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        left_gripper_link_force_sensor_adapter_plate:
           Alpha: 1
           Show Axes: false
           Show Trail: false
@@ -231,6 +224,11 @@ Visualization Manager:
           Show Trail: false
           Value: true
         left_gripper_robotiq_arg2f_base_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        lifting_rings:
           Alpha: 1
           Show Axes: false
           Show Trail: false
@@ -358,25 +356,25 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz/Orbit
-      Distance: 3.87763643
+      Distance: 1.39453173
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.0599999987
         Stereo Focal Distance: 1
         Swap Stereo Eyes: false
         Value: false
       Focal Point:
-        X: -0.24517706
-        Y: 0.464905947
-        Z: 0.754350126
+        X: -0.300923944
+        Y: 0.500303626
+        Z: 0.819451153
       Focal Shape Fixed Size: true
       Focal Shape Size: 0.0500000007
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.00999999978
-      Pitch: 0.57539767
+      Pitch: 0.420397818
       Target Frame: <Fixed Frame>
       Value: Orbit (rviz)
-      Yaw: 5.40359783
+      Yaw: 0.925412774
     Saved: ~
 Window Geometry:
   Displays:

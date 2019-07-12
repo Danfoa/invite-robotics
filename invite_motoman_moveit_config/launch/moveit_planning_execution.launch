@@ -51,6 +51,8 @@
     <arg name="run_test" value="false"/>
   </include>
 
+  <!-- Launch FT300 sesnor -->
+  <!-- <node="left_ft300_sensor" pkg="robotiq_ft_sensor" type=""> -->
   <!-- publish the robot state (tf transforms) -->
   <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" />
 

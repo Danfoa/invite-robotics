@@ -5,54 +5,54 @@
 		both 2-Finger Adaptative Robotiq Grippers (140mm one for the right arm and 80mm one for the left one)
 -->
 
-<robot name="motoman_csda10f" xmlns:xacro="http://ros.org/wiki/xacro">
-<!-- Import macros required-->
+<robot name="motoman_csda10f" 
+	xmlns:xacro="http://ros.org/wiki/xacro">
+	<!-- Import macros required-->
 	<!--Import macro for the CSDA10F robot-->
 	<xacro:include filename="$(find motoman_csda10f_support)/urdf/csda10f_macro.xacro" />
 	<!--Import macro for left arm gripper-->
-  	<xacro:include filename="$(find invite_motoman_support)/urdf/left_gripper_macro.xacro" />
-  	<!--Import macro for right arm gripper-->
-  	<xacro:include filename="$(find invite_motoman_support)/urdf/right_gripper_macro.xacro" />
+	<xacro:include filename="$(find invite_motoman_support)/urdf/left_gripper_macro.xacro" />
+	<!--Import macro for right arm gripper-->
+	<xacro:include filename="$(find invite_motoman_support)/urdf/right_gripper_macro.xacro" />
 
-<!--Create instance of the macros imported-->
+	<!--Create instance of the macros imported-->
 	<!--Create an instance of YASKAWA Motoman CSDA10F robot-->
 	<xacro:motoman_csda10f prefix=""/>
 	<!--Create an instance of the right arm gripper macro-->
-  	<xacro:invite_csda10f_right_gripper prefix="right_gripper_"/>
+	<xacro:invite_csda10f_right_gripper prefix="right_gripper_"/>
 	<!--Create an instance of the right left gripper macro-->
-  	<xacro:invite_csda10f_left_gripper prefix="left_gripper_"/>
+	<xacro:invite_csda10f_left_gripper prefix="left_gripper_"/>
 
-<!--Joints joining the grippers to the robot-->
+	<!--Joints joining the grippers to the robot-->
 	<joint name="left_gripper_to_robot_joint" type="fixed">
-    	<parent link="arm_left_link_tool0" />
-    	<child link="left_gripper_link_gripper_adapter_plate" />
-		<origin xyz="0 0 0" rpy="0 0 0"/>
+		<parent link="arm_left_link_tool0" />
+		<child link="left_gripper_ft300_adapter_plate" />
+		<origin xyz="0 0 0" rpy="0 0 ${pi}"/>
 		<axis xyz="0 0 1"/>
- 	 </joint>
+	</joint>
 
 	<joint name="right_gripper__to_robot_joint" type="fixed">
 		<parent link="arm_right_link_tool0" />
-		<child link="right_gripper_link_gripper_adapter_plate" />
+		<child link="right_gripper_gripper_adapter_plate" />
 		<origin xyz="0 0 0" rpy="${pi/2} 0 ${pi/2}"/>
 		<axis xyz="0 0 1"/>
-  	</joint>
+	</joint>
 
-<!--Define the TCP of the grippers -->
-  <link name="arm_right_link_tcp" />
+	<!--Define the TCP of the grippers -->
+	<link name="arm_right_link_tcp" />
 	<link name="arm_left_link_tcp" />
 
-<!--Define the position of the TCP with respect to the arm flange-->
-    <joint name="arm_right_joint_tcp" type="fixed" >
-      <origin xyz="0 0 ${0.1994 - 0.059 + 0.015}" rpy="0 0 ${pi/2}"/>
-      <parent link="arm_right_link_tool0" />
-      <child link="arm_right_link_tcp" />
-    </joint>
+	<joint name="arm_right_joint_tcp" type="fixed">
+		<origin xyz="0 0 ${0.1994 - 0.059 + 0.015}" rpy="0 0 ${pi/2}"/>
+		<parent link="arm_right_link_tool0" />
+		<child link="arm_right_link_tcp" />
+	</joint>
 
-	<joint name="arm_left_joint_tcp" type="fixed" >
-      <origin xyz="0 0 ${0.2094 + 0.01 - 0.059}" rpy="0 0 0"/>
-      <parent link="arm_left_link_tool0" />
-      <child link="arm_left_link_tcp" />
-    </joint>
+	<joint name="arm_left_joint_tcp" type="fixed">
+		<origin xyz="0 0 ${0.21}" rpy="0 0 ${(50 + 90)*pi/180}"/>
+		<parent link="arm_left_link_tool0" />
+		<child link="arm_left_link_tcp" />
+	</joint>
 
 	<link name="ensenso_upper_optical_frame">
 		<visual>
@@ -61,7 +61,7 @@
 				<box size="0.4 0.25 0.25"/>
 			</geometry>
 			<material name="ensenso_color">
-						<color rgba="0.0 0.2 0.7 0.7"/>
+				<color rgba="0.0 0.2 0.7 0.7"/>
 			</material>
 		</visual>
 		<collision>
@@ -79,7 +79,7 @@
 				<box size="0.4 0.25 0.25"/>
 			</geometry>
 			<material name="ensenso_color">
-						<color rgba="0.0 0.2 0.7 0.7"/>
+				<color rgba="0.0 0.2 0.7 0.7"/>
 			</material>
 		</visual>
 		<collision>
@@ -89,49 +89,25 @@
 			</geometry>
 		</collision>
 	</link>
-	
-	<joint name="upper_camera_joint" type="fixed" >
-      <origin xyz="0.860775 0.265338 1.88787" rpy="-2.89701 0.0272259 1.57315"/>
-      <!-- <origin xyz="0.865275 0.259338 1.89787" rpy="-2.89701 0.0272259 1.57315"/> -->
-      <!-- <origin xyz="0.875275 0.259338 1.89787" rpy="-2.89701 0.0272259 1.57315"/> -->
-      <parent link="base_link" />
-      <child link="ensenso_upper_optical_frame" />
-    </joint>
 
-	<joint name="lower_camera_joint" type="fixed" >
-      <origin xyz="0.685186 1.32848 1.41829" rpy="-1.9854 -0.00862869 -3.13558"/>
-      <!-- <origin xyz="0.695186 1.32848 1.41829" rpy="-1.9854 -0.00862869 -3.13558"/> -->
-      <parent link="base_link" />
-      <child link="ensenso_lower_optical_frame" />
-    </joint>
-	
+	<joint name="upper_camera_joint" type="fixed">
+		<origin xyz="0.860775 0.265338 1.88787" rpy="-2.89701 0.0272259 1.57315"/>
+		<!-- <origin xyz="0.865275 0.259338 1.89787" rpy="-2.89701 0.0272259 1.57315"/> -->
+		<!-- <origin xyz="0.875275 0.259338 1.89787" rpy="-2.89701 0.0272259 1.57315"/> -->
+		<parent link="base_link" />
+		<child link="ensenso_upper_optical_frame" />
+	</joint>
+
+	<joint name="lower_camera_joint" type="fixed">
+		<origin xyz="0.685186 1.32848 1.41829" rpy="-1.9854 -0.00862869 -3.13558"/>
+		<!-- <origin xyz="0.695186 1.32848 1.41829" rpy="-1.9854 -0.00862869 -3.13558"/> -->
+		<parent link="base_link" />
+		<child link="ensenso_lower_optical_frame" />
+	</joint>
+
 	<!-- Q upper cammera   0.087429787325731 -0.7070500191913 -0.695960729680754 0.0898608112137424 -->
 	<!-- Q lower cammera   0.00419018865331527 -0.00815435540059931 -0.83807389015755
 	0.545479700303542 -->
-	
-	<!-- Define lifting rings collision objects -->
-	<link name="lifting_rings">
-		<visual>
-			<origin rpy="0 0 0" xyz="0 0 0"/>
-			<geometry>
-				<box size="0.0001 0.0001 0.0001"/>
-			</geometry>
-			<!-- <material name="yellow"/> -->
-		</visual>
-		<collision>
-			<origin rpy="0 0 0" xyz="0 0 0"/>
-			<geometry>
-				<box size="0.055 0.17 0.075"/>
-			</geometry>
-			<material name="yellow"/>
-		</collision>
-	</link>
 
-	<joint name="lifting_rings_joint" type="fixed">
-		<origin xyz="0.1 0.0 0.515" rpy="0 0 0"/>
-		<parent link="torso_link_b1" />
-		<child link="lifting_rings" />
-	</joint>
-	
 </robot>
 
