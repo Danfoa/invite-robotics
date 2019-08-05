@@ -38,7 +38,7 @@ find_package(catkin
 ## DEPENDS: system dependencies of this project that dependent projects also need
 catkin_package(
   INCLUDE_DIRS include
-#  LIBRARIES invite_utils
+  LIBRARIES invite_utils
    CATKIN_DEPENDS roscpp robotiq_2f_gripper_control sound_play robotiq_ft_sensor
   DEPENDS
     EIGEN3
@@ -59,10 +59,11 @@ include_directories(SYSTEM ${Boost_INCLUDE_DIR} ${EIGEN3_INCLUDE_DIRS})
 link_directories(${catkin_LIBRARY_DIRS})
 
 ## Declare a C++ library
-# add_library(${PROJECT_NAME}
-#   src/${PROJECT_NAME}/invite_utils.cpp
-# )
-
+ add_library( invite_utils
+   src/csda10f_interface.cpp
+   src/cartesian_task_planner.cpp
+ )
+add_dependencies(invite_utils ${catkin_EXPORTED_TARGETS})
 
 
 #############
@@ -80,11 +81,15 @@ link_directories(${catkin_LIBRARY_DIRS})
 # )
 
 ## Mark executables and/or libraries for installation
-# install(TARGETS ${PROJECT_NAME} ${PROJECT_NAME}_node
+ install(
+    TARGETS 
+      invite_utils
+    DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
+
 #   ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
 #   LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
 #   RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
-# )
+ )
 
 ## Mark cpp header files for installation
 install(DIRECTORY include/${PROJECT_NAME}/
