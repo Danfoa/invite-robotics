@@ -54,6 +54,7 @@
 		<child link="arm_left_link_tcp" />
 	</joint>
 
+  <!-- TO-Do: Move to the collision scene  -->
 	<link name="ensenso_upper_optical_frame">
 		<visual>
 			<origin rpy="0 0 0" xyz="0 0 0"/>
@@ -92,15 +93,12 @@
 
 	<joint name="upper_camera_joint" type="fixed">
 		<origin xyz="0.860775 0.265338 1.88787" rpy="-2.89701 0.0272259 1.57315"/>
-		<!-- <origin xyz="0.865275 0.259338 1.89787" rpy="-2.89701 0.0272259 1.57315"/> -->
-		<!-- <origin xyz="0.875275 0.259338 1.89787" rpy="-2.89701 0.0272259 1.57315"/> -->
 		<parent link="base_link" />
 		<child link="ensenso_upper_optical_frame" />
 	</joint>
 
 	<joint name="lower_camera_joint" type="fixed">
 		<origin xyz="0.685186 1.32848 1.41829" rpy="-1.9854 -0.00862869 -3.13558"/>
-		<!-- <origin xyz="0.695186 1.32848 1.41829" rpy="-1.9854 -0.00862869 -3.13558"/> -->
 		<parent link="base_link" />
 		<child link="ensenso_lower_optical_frame" />
 	</joint>

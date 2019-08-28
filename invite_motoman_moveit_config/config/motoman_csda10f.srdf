@@ -540,10 +540,8 @@
     <disable_collisions link1="left_gripper_ft300_mounting_plate" link2="left_gripper_right_outer_knuckle" reason="Never" />
     <disable_collisions link1="left_gripper_ft300_mounting_plate" link2="left_gripper_robotiq_arg2f_base_link" reason="Never" />
     <disable_collisions link1="left_gripper_ft300_mounting_plate" link2="left_gripper_robotiq_gripper_coupling" reason="Never" />
-    <disable_collisions link1="left_gripper_ft300_mounting_plate" link2="right_gripper_left_inner_finger_pad" reason="User" />
-    <disable_collisions link1="left_gripper_ft300_mounting_plate" link2="right_gripper_right_inner_finger" reason="Never" />
-    <disable_collisions link1="left_gripper_ft300_mounting_plate" link2="right_gripper_right_inner_finger_pad" reason="Never" />
-    <disable_collisions link1="left_gripper_ft300_mounting_plate" link2="right_gripper_right_inner_knuckle" reason="Never" />
+    <disable_collisions link1="left_gripper_ft300_mounting_plate" link2="right_gripper_left_outer_knuckle" reason="Never" />
+    <disable_collisions link1="left_gripper_ft300_mounting_plate" link2="right_gripper_right_outer_knuckle" reason="Never" />
     <disable_collisions link1="left_gripper_ft300_sensor" link2="left_gripper_gripper_adapter_plate" reason="Adjacent" />
     <disable_collisions link1="left_gripper_ft300_sensor" link2="left_gripper_left_inner_finger" reason="Never" />
     <disable_collisions link1="left_gripper_ft300_sensor" link2="left_gripper_left_inner_finger_pad" reason="Never" />
@@ -569,7 +567,6 @@
     <disable_collisions link1="left_gripper_gripper_adapter_plate" link2="left_gripper_right_outer_knuckle" reason="Never" />
     <disable_collisions link1="left_gripper_gripper_adapter_plate" link2="left_gripper_robotiq_arg2f_base_link" reason="Never" />
     <disable_collisions link1="left_gripper_gripper_adapter_plate" link2="left_gripper_robotiq_gripper_coupling" reason="Adjacent" />
-    <disable_collisions link1="left_gripper_gripper_adapter_plate" link2="right_gripper_left_outer_knuckle" reason="Never" />
     <disable_collisions link1="left_gripper_left_inner_finger" link2="left_gripper_left_inner_finger_pad" reason="Adjacent" />
     <disable_collisions link1="left_gripper_left_inner_finger" link2="left_gripper_left_inner_knuckle" reason="Default" />
     <disable_collisions link1="left_gripper_left_inner_finger" link2="left_gripper_left_outer_finger" reason="Adjacent" />
@@ -600,6 +597,7 @@
     <disable_collisions link1="left_gripper_left_inner_knuckle" link2="left_gripper_right_outer_knuckle" reason="Never" />
     <disable_collisions link1="left_gripper_left_inner_knuckle" link2="left_gripper_robotiq_arg2f_base_link" reason="Adjacent" />
     <disable_collisions link1="left_gripper_left_inner_knuckle" link2="left_gripper_robotiq_gripper_coupling" reason="Never" />
+    <disable_collisions link1="left_gripper_left_inner_knuckle" link2="right_gripper_left_outer_knuckle" reason="Never" />
     <disable_collisions link1="left_gripper_left_outer_finger" link2="left_gripper_left_outer_knuckle" reason="Adjacent" />
     <disable_collisions link1="left_gripper_left_outer_finger" link2="left_gripper_right_inner_finger" reason="Never" />
     <disable_collisions link1="left_gripper_left_outer_finger" link2="left_gripper_right_inner_finger_pad" reason="Never" />
@@ -608,6 +606,8 @@
     <disable_collisions link1="left_gripper_left_outer_finger" link2="left_gripper_right_outer_knuckle" reason="Never" />
     <disable_collisions link1="left_gripper_left_outer_finger" link2="left_gripper_robotiq_arg2f_base_link" reason="Never" />
     <disable_collisions link1="left_gripper_left_outer_finger" link2="left_gripper_robotiq_gripper_coupling" reason="Never" />
+    <disable_collisions link1="left_gripper_left_outer_finger" link2="right_gripper_left_outer_finger" reason="Never" />
+    <disable_collisions link1="left_gripper_left_outer_finger" link2="right_gripper_left_outer_knuckle" reason="Never" />
     <disable_collisions link1="left_gripper_left_outer_knuckle" link2="left_gripper_right_inner_finger" reason="Never" />
     <disable_collisions link1="left_gripper_left_outer_knuckle" link2="left_gripper_right_inner_finger_pad" reason="Never" />
     <disable_collisions link1="left_gripper_left_outer_knuckle" link2="left_gripper_right_inner_knuckle" reason="Never" />
@@ -615,12 +615,17 @@
     <disable_collisions link1="left_gripper_left_outer_knuckle" link2="left_gripper_right_outer_knuckle" reason="Never" />
     <disable_collisions link1="left_gripper_left_outer_knuckle" link2="left_gripper_robotiq_arg2f_base_link" reason="Adjacent" />
     <disable_collisions link1="left_gripper_left_outer_knuckle" link2="left_gripper_robotiq_gripper_coupling" reason="Never" />
+    <disable_collisions link1="left_gripper_left_outer_knuckle" link2="right_gripper_left_outer_finger" reason="Never" />
+    <disable_collisions link1="left_gripper_left_outer_knuckle" link2="right_gripper_left_outer_knuckle" reason="Never" />
+    <disable_collisions link1="left_gripper_left_outer_knuckle" link2="right_gripper_right_outer_knuckle" reason="Never" />
     <disable_collisions link1="left_gripper_right_inner_finger" link2="left_gripper_right_inner_finger_pad" reason="Adjacent" />
     <disable_collisions link1="left_gripper_right_inner_finger" link2="left_gripper_right_inner_knuckle" reason="Default" />
     <disable_collisions link1="left_gripper_right_inner_finger" link2="left_gripper_right_outer_finger" reason="Adjacent" />
     <disable_collisions link1="left_gripper_right_inner_finger" link2="left_gripper_right_outer_knuckle" reason="Never" />
     <disable_collisions link1="left_gripper_right_inner_finger" link2="left_gripper_robotiq_arg2f_base_link" reason="Never" />
     <disable_collisions link1="left_gripper_right_inner_finger" link2="left_gripper_robotiq_gripper_coupling" reason="Never" />
+    <disable_collisions link1="left_gripper_right_inner_finger" link2="right_gripper_left_outer_knuckle" reason="Never" />
+    <disable_collisions link1="left_gripper_right_inner_finger" link2="right_gripper_right_inner_finger" reason="Never" />
     <disable_collisions link1="left_gripper_right_inner_finger_pad" link2="left_gripper_right_inner_knuckle" reason="Never" />
     <disable_collisions link1="left_gripper_right_inner_finger_pad" link2="left_gripper_right_outer_finger" reason="Never" />
     <disable_collisions link1="left_gripper_right_inner_finger_pad" link2="left_gripper_right_outer_knuckle" reason="Never" />
@@ -630,11 +635,18 @@
     <disable_collisions link1="left_gripper_right_inner_knuckle" link2="left_gripper_right_outer_knuckle" reason="Never" />
     <disable_collisions link1="left_gripper_right_inner_knuckle" link2="left_gripper_robotiq_arg2f_base_link" reason="Adjacent" />
     <disable_collisions link1="left_gripper_right_inner_knuckle" link2="left_gripper_robotiq_gripper_coupling" reason="Never" />
+    <disable_collisions link1="left_gripper_right_inner_knuckle" link2="right_gripper_left_outer_knuckle" reason="Never" />
+    <disable_collisions link1="left_gripper_right_inner_knuckle" link2="right_gripper_right_outer_knuckle" reason="Never" />
     <disable_collisions link1="left_gripper_right_outer_finger" link2="left_gripper_right_outer_knuckle" reason="Adjacent" />
     <disable_collisions link1="left_gripper_right_outer_finger" link2="left_gripper_robotiq_arg2f_base_link" reason="Never" />
     <disable_collisions link1="left_gripper_right_outer_finger" link2="left_gripper_robotiq_gripper_coupling" reason="Never" />
+    <disable_collisions link1="left_gripper_right_outer_finger" link2="right_gripper_left_outer_knuckle" reason="Never" />
     <disable_collisions link1="left_gripper_right_outer_knuckle" link2="left_gripper_robotiq_arg2f_base_link" reason="Adjacent" />
     <disable_collisions link1="left_gripper_right_outer_knuckle" link2="left_gripper_robotiq_gripper_coupling" reason="Never" />
+    <disable_collisions link1="left_gripper_right_outer_knuckle" link2="right_gripper_left_outer_knuckle" reason="Never" />
+    <disable_collisions link1="left_gripper_right_outer_knuckle" link2="right_gripper_right_inner_finger" reason="Never" />
+    <disable_collisions link1="left_gripper_right_outer_knuckle" link2="right_gripper_right_inner_knuckle" reason="Never" />
+    <disable_collisions link1="left_gripper_right_outer_knuckle" link2="right_gripper_right_outer_knuckle" reason="Never" />
     <disable_collisions link1="left_gripper_robotiq_arg2f_base_link" link2="left_gripper_robotiq_gripper_coupling" reason="Adjacent" />
     <disable_collisions link1="right_gripper_gripper_adapter_plate" link2="right_gripper_left_inner_finger" reason="Never" />
     <disable_collisions link1="right_gripper_gripper_adapter_plate" link2="right_gripper_left_inner_finger_pad" reason="Never" />
@@ -663,14 +675,14 @@
     <disable_collisions link1="right_gripper_left_inner_finger_pad" link2="right_gripper_left_outer_finger" reason="Never" />
     <disable_collisions link1="right_gripper_left_inner_finger_pad" link2="right_gripper_left_outer_knuckle" reason="Never" />
     <disable_collisions link1="right_gripper_left_inner_finger_pad" link2="right_gripper_right_inner_finger" reason="Never" />
-    <disable_collisions link1="right_gripper_left_inner_finger_pad" link2="right_gripper_right_inner_finger_pad" reason="Never" />
+    <disable_collisions link1="right_gripper_left_inner_finger_pad" link2="right_gripper_right_inner_finger_pad" reason="User" />
     <disable_collisions link1="right_gripper_left_inner_finger_pad" link2="right_gripper_right_inner_knuckle" reason="Never" />
     <disable_collisions link1="right_gripper_left_inner_finger_pad" link2="right_gripper_right_outer_finger" reason="Never" />
     <disable_collisions link1="right_gripper_left_inner_finger_pad" link2="right_gripper_right_outer_knuckle" reason="Never" />
     <disable_collisions link1="right_gripper_left_inner_finger_pad" link2="right_gripper_robotiq_arg2f_base_link" reason="Never" />
     <disable_collisions link1="right_gripper_left_inner_finger_pad" link2="right_gripper_robotiq_coupling" reason="Never" />
     <disable_collisions link1="right_gripper_left_inner_knuckle" link2="right_gripper_left_outer_finger" reason="Never" />
-    <disable_collisions link1="right_gripper_left_inner_knuckle" link2="right_gripper_left_outer_knuckle" reason="Never" />
+    <disable_collisions link1="right_gripper_left_inner_knuckle" link2="right_gripper_left_outer_knuckle" reason="Default" />
     <disable_collisions link1="right_gripper_left_inner_knuckle" link2="right_gripper_right_inner_finger" reason="Never" />
     <disable_collisions link1="right_gripper_left_inner_knuckle" link2="right_gripper_right_inner_finger_pad" reason="Never" />
     <disable_collisions link1="right_gripper_left_inner_knuckle" link2="right_gripper_right_inner_knuckle" reason="Never" />
@@ -705,7 +717,7 @@
     <disable_collisions link1="right_gripper_right_inner_finger_pad" link2="right_gripper_robotiq_arg2f_base_link" reason="Never" />
     <disable_collisions link1="right_gripper_right_inner_finger_pad" link2="right_gripper_robotiq_coupling" reason="Never" />
     <disable_collisions link1="right_gripper_right_inner_knuckle" link2="right_gripper_right_outer_finger" reason="Never" />
-    <disable_collisions link1="right_gripper_right_inner_knuckle" link2="right_gripper_right_outer_knuckle" reason="Never" />
+    <disable_collisions link1="right_gripper_right_inner_knuckle" link2="right_gripper_right_outer_knuckle" reason="Default" />
     <disable_collisions link1="right_gripper_right_inner_knuckle" link2="right_gripper_robotiq_arg2f_base_link" reason="Adjacent" />
     <disable_collisions link1="right_gripper_right_inner_knuckle" link2="right_gripper_robotiq_coupling" reason="Never" />
     <disable_collisions link1="right_gripper_right_outer_finger" link2="right_gripper_right_outer_knuckle" reason="Adjacent" />

@@ -1,5 +1,5 @@
 <launch>
-	<param name="robot_description" command="$(find xacro)/xacro.py '$(find invite_motoman_support)/urdf/right_gripper.xacro'" />
+	<param name="robot_description" command="$(find xacro)/xacro.py '$(find invite_motoman_support)/urdf/urdf_macros_examples/right_gripper.xacro'" />
 	<param name="use_gui" value="true" />
 	<node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher" />
 	<node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" />

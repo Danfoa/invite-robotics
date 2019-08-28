@@ -4,12 +4,8 @@ Panels:
     Name: Displays
     Property Tree Widget:
       Expanded:
-        - /Global Options1
-        - /Status1
-        - /RobotModel1
-        - /RobotModel1/Links1
-        - /RobotModel1/Links1/arm_left_link_tool01
-      Splitter Ratio: 0.5
+        - /Grid1
+      Splitter Ratio: 0.583333313
     Tree Height: 843
   - Class: rviz/Selection
     Name: Selection
@@ -34,10 +30,10 @@ Toolbars:
 Visualization Manager:
   Class: ""
   Displays:
-    - Alpha: 0.5
+    - Alpha: 0.300000012
       Cell Size: 1
       Class: rviz/Grid
-      Color: 160; 160; 164
+      Color: 200; 217; 203
       Enabled: true
       Line Style:
         Line Width: 0.0299999993
@@ -99,7 +95,7 @@ Visualization Manager:
           Value: true
         arm_left_link_tcp:
           Alpha: 1
-          Show Axes: false
+          Show Axes: true
           Show Trail: false
         arm_left_link_tool0:
           Alpha: 1
@@ -142,7 +138,7 @@ Visualization Manager:
           Value: true
         arm_right_link_tcp:
           Alpha: 1
-          Show Axes: false
+          Show Axes: true
           Show Trail: false
         arm_right_link_tool0:
           Alpha: 1
@@ -159,6 +155,26 @@ Visualization Manager:
           Show Trail: false
           Value: true
         ensenso_upper_optical_frame:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        left_gripper_ft300_adapter_plate:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        left_gripper_ft300_mounting_plate:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        left_gripper_ft300_sensor:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        left_gripper_gripper_adapter_plate:
           Alpha: 1
           Show Axes: false
           Show Trail: false
@@ -184,16 +200,6 @@ Visualization Manager:
           Show Trail: false
           Value: true
         left_gripper_left_outer_knuckle:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        left_gripper_link_gripper_adapter_plate:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        left_gripper_link_robotiq_coupling:
           Alpha: 1
           Show Axes: false
           Show Trail: false
@@ -228,7 +234,16 @@ Visualization Manager:
           Show Axes: false
           Show Trail: false
           Value: true
-        lifting_rings:
+        left_gripper_robotiq_ft_frame_id:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        left_gripper_robotiq_gripper_coupling:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        right_gripper_gripper_adapter_plate:
           Alpha: 1
           Show Axes: false
           Show Trail: false
@@ -254,16 +269,6 @@ Visualization Manager:
           Show Trail: false
           Value: true
         right_gripper_left_outer_knuckle:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        right_gripper_link_gripper_adapter_plate:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        right_gripper_link_robotiq_coupling:
           Alpha: 1
           Show Axes: false
           Show Trail: false
@@ -294,6 +299,11 @@ Visualization Manager:
           Show Trail: false
           Value: true
         right_gripper_robotiq_arg2f_base_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        right_gripper_robotiq_coupling:
           Alpha: 1
           Show Axes: false
           Show Trail: false
@@ -337,7 +347,7 @@ Visualization Manager:
       Value: true
   Enabled: true
   Global Options:
-    Background Color: 48; 48; 48
+    Background Color: 13; 41; 52
     Default Light: true
     Fixed Frame: base_link
     Frame Rate: 30
@@ -356,25 +366,25 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz/Orbit
-      Distance: 1.39453173
+      Distance: 4.3987112
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.0599999987
         Stereo Focal Distance: 1
         Swap Stereo Eyes: false
         Value: false
       Focal Point:
-        X: -0.300923944
-        Y: 0.500303626
-        Z: 0.819451153
+        X: -1.16966414
+        Y: 0.664756179
+        Z: 0.650380909
       Focal Shape Fixed Size: true
       Focal Shape Size: 0.0500000007
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.00999999978
-      Pitch: 0.420397818
+      Pitch: 0.245397523
       Target Frame: <Fixed Frame>
       Value: Orbit (rviz)
-      Yaw: 0.925412774
+      Yaw: 6.13360548
     Saved: ~
 Window Geometry:
   Displays:
@@ -382,7 +392,7 @@ Window Geometry:
   Height: 1056
   Hide Left Dock: false
   Hide Right Dock: false
-  QMainWindow State: 000000ff00000000fd000000040000000000000349000003dafc0200000005fb0000001200530065006c0065006300740069006f006e00000001e10000009b0000006100fffffffb0000001e0054006f006f006c002000500072006f007000650072007400690065007302000001ed000001df00000185000000a3fb000000120056006900650077007300200054006f006f02000001df000002110000018500000122fb000000200054006f006f006c002000500072006f0070006500720074006900650073003203000002880000011d000002210000017afb000000100044006900730070006c0061007900730100000028000003da000000d700ffffff0000000100000132000003dafc0200000003fb0000001e0054006f006f006c002000500072006f00700065007200740069006500730100000041000000780000000000000000fb0000000a005600690065007700730100000028000003da000000ad00fffffffb0000001200530065006c0065006300740069006f006e010000025a000000b200000000000000000000000200000490000000a9fc0100000001fb0000000a00560069006500770073030000004e00000080000002e10000019700000003000004a00000003efc0100000002fb0000000800540069006d00650000000000000004a00000030000fffffffb0000000800540069006d00650100000000000004500000000000000000000002f9000003da00000004000000040000000800000008fc0000000100000002000000010000000a0054006f006f006c00730100000000ffffffff0000000000000000
+  QMainWindow State: 000000ff00000000fd00000004000000000000018f000003dafc0200000005fb0000001200530065006c0065006300740069006f006e00000001e10000009b0000006100fffffffb0000001e0054006f006f006c002000500072006f007000650072007400690065007302000001ed000001df00000185000000a3fb000000120056006900650077007300200054006f006f02000001df000002110000018500000122fb000000200054006f006f006c002000500072006f0070006500720074006900650073003203000002880000011d000002210000017afb000000100044006900730070006c0061007900730100000028000003da000000d700ffffff0000000100000132000003dafc0200000003fb0000001e0054006f006f006c002000500072006f00700065007200740069006500730100000041000000780000000000000000fb0000000a005600690065007700730000000028000003da000000ad00fffffffb0000001200530065006c0065006300740069006f006e010000025a000000b200000000000000000000000200000490000000a9fc0100000001fb0000000a00560069006500770073030000004e00000080000002e10000019700000003000004a00000003efc0100000002fb0000000800540069006d00650000000000000004a00000030000fffffffb0000000800540069006d00650100000000000004500000000000000000000005eb000003da00000004000000040000000800000008fc0000000100000002000000010000000a0054006f006f006c00730100000000ffffffff0000000000000000
   Selection:
     collapsed: false
   Time:
@@ -392,5 +402,5 @@ Window Geometry:
   Views:
     collapsed: false
   Width: 1920
-  X: 0
+  X: 1920
   Y: 24

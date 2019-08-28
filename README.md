@@ -22,7 +22,7 @@ This repository contains the integration of the [CSDA10F dual-arm Motoman Robot]
 * [Notes for safety operation](https://github.com/Danfoa/invite-robotics/wiki/Notes-for-safety-operation)
 ***
 
-![cover2](https://user-images.githubusercontent.com/8356912/40397357-ef27e30c-5df7-11e8-92bd-06e8669fd6d0.jpg)
+![new_home](https://user-images.githubusercontent.com/8356912/62937615-6d3a6680-bdcd-11e9-8d8a-c0b8e64db622.jpg)
 
 
 For further information please see the repository [Wiki](https://github.com/Danfoa/invite-robotics/wiki).

@@ -34,7 +34,6 @@
 
   <!-- run the "real robot" interface nodes -->
   <!--   - this typically includes: robot_state, motion_interface, and joint_7_trajectory_action nodes -->
-  <!--   - replace these calls with appropriate robot-specific calls or launch files -->
   <group unless="$(arg sim)">
     <include file="$(find invite_motoman_support)/launch/robot_interface_streaming_csda10f.launch" >
       <arg name="robot_ip" value="$(arg robot_ip)"/>
@@ -47,12 +46,12 @@
     <arg name="sim" value="$(arg sim_grippers)"/>
     <arg name="right_gripper_comport" value="/dev/ttyRobotiq1" unless="$(arg sim_grippers)"/>
     <arg name="left_gripper_comport" value="/dev/ttyRobotiq0" unless="$(arg sim_grippers)"/>
+    <arg name="right_gripper_stroke" value="0.085" />
+    <arg name="left_gripper_stroke" value="0.085" />
     <arg name="rate" value="90"/>
     <arg name="run_test" value="false"/>
   </include>
 
-  <!-- Launch FT300 sesnor -->
-  <!-- <node="left_ft300_sensor" pkg="robotiq_ft_sensor" type=""> -->
   <!-- publish the robot state (tf transforms) -->
   <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" />
 

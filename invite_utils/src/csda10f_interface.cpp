@@ -248,13 +248,13 @@ namespace invite_utils{
     switch(error_code.val){
       case 1: msg = "Success"; break;
       case 99999: msg = "Failure"; break;
-      case -1: msg = "Plannning failed"; break;
+      case -1: msg = "Planning failed"; break;
       case -2: msg = "Invalid motion plan"; break;
       case -3: msg = "Motion plan invalidated by environment change"; break;
       case -4: msg = "Control failed"; break;
-      case -5: msg = "Unable to aquire sensor data"; break;
+      case -5: msg = "Unable to acquire sensor data"; break;
       case -6: msg = "Time out reach"; break;
-      case -7: msg = "Preemted"; break;
+      case -7: msg = "Preempted"; break;
       case -10: msg = "Start state is in collision"; break;
       case -11: msg = "Start state violates path constraints"; break;
       case -12: msg = "Goal state is in collision"; break;

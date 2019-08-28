@@ -15,7 +15,7 @@ INTRUCTIONS:
 
 	<xacro:macro name="invite_csda10f_left_gripper" params="prefix">
 
-		<!--Import macro from 2-finger adaptative robotiq gripper-->
+		<!-- Import macro from 2-finger adaptative robotiq gripper -->
 		<xacro:include filename="$(find robotiq_2f_85_gripper_visualization)/urdf/robotiq_arg2f_85_model_macro.xacro" />
 		<!-- Import macro of Robotiq force sensor FT300 -->
 		<xacro:include filename="$(find robotiq_ft_sensor)/urdf/robotiq_ft300.urdf.xacro" />
