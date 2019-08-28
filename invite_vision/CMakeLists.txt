@@ -17,6 +17,7 @@ find_package(catkin
     roscpp 
     rospy 
     ensenso_camera 
+    ensenso_camera_msgs
     pcl_conversions 
     pcl_ros 
     sensor_msgs
@@ -36,7 +37,7 @@ find_package(catkin
 catkin_package(
   INCLUDE_DIRS include
 #  LIBRARIES invite_vision
-#  CATKIN_DEPENDS other_catkin_pkg
+  CATKIN_DEPENDS ensenso_camera_msgs
   DEPENDS
     EIGEN3
 )
