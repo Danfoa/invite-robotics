@@ -43,3 +43,13 @@ This is a non-profit/collaborative project between the National University of Co
 | Gazebo robot simulation             |  Supported      | 
 | Gazebo grippers simulation          |  In progress          | 
 | Grippers control through ROS control|  Supported | 
+
+## Main Project Contributions
+1. In order to operate the Motoman Dual-Arm CSD10F robot, we modified the MotoROS driver to enable the simultaneous planning and control of the different robot joint groups (torso, left arm, right arm), which at the time was not supported. (https://github.com/ros-industrial/motoman/pull/259)
+
+2. Development of a simple cartesian task motion planner, that enables automatic planning and control of the most common sequential motions performed by the robots at INVITE (e.g. pick and place, apply tape to object, open bottle caps). This feature was developed before the MoveIt! task motion planner was published but shares most of its philosophy. (Users are encouraged to use MoveIt!'s version as it is far more flexible) (https://github.com/Danfoa/invite-robotics/blob/kinetic-devel/invite_utils/include/invite_utils/cartesian_task_planner.h)
+
+3. The development of a high-level control interface for the Robotiq grippers, enabling the control of the hardware through ROS action servers, the introduction of the gripper fingers as joints considered in the motion planning process, and the simulation of the robot grippers for off-line development. (https://github.com/Danfoa/robotiq_2finger_grippers)
+
+4. Documentation and tutorial generation intended to ease the learning curve of the new robotics engineers joining INVITE GmbH (https://github.com/Danfoa/invite-robotics/wiki)
+
