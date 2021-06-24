@@ -53,3 +53,5 @@ This is a non-profit/collaborative project between the National University of Co
 
 4. Documentation and tutorial generation intended to ease the learning curve of the new robotics engineers joining INVITE GmbH (https://github.com/Danfoa/invite-robotics/wiki)
 
+5. Configuration and sharing of the CSDA10F [URDF and Moveit Config files](https://github.com/ros-industrial/motoman_experimental/pull/43), along with the [Grippers, and sensors URDF and acollision meshes](https://github.com/ros-industrial/robotiq/pull/138) 
+
